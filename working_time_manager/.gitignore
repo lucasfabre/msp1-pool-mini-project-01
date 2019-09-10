@@ -1,14 +1,14 @@
 # The directory Mix will write compiled artifacts to.
-working_time_manager/_build/*
+/_build/*
 
 # If you run "mix test --cover", coverage assets end up here.
-working_time_manager/cover/*
+/cover/*
 
 node_modules
 .vscode
 
 # The directory Mix downloads your dependencies sources to.
-/working_time_manager/deps/
+/deps/
 
 # Where 3rd-party dependencies like ExDoc output generated docs.
 /doc/
