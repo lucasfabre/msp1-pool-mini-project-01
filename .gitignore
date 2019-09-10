@@ -37,3 +37,4 @@ npm-debug.log
 /priv/static/
 
 *~
+working_time_manager/deps/*
