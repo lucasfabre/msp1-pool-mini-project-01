@@ -1,13 +1,24 @@
 defmodule WorkingTimeManagerWeb.UserController do
   use WorkingTimeManagerWeb, :controller
 
+  import Ecto.Query
+
+  alias WorkingTimeManager.Repo
+
   alias WorkingTimeManager.Resource
   alias WorkingTimeManager.Resource.User
 
   action_fallback WorkingTimeManagerWeb.FallbackController
 
   def index(conn, _params) do
-    users = Resource.list_users()
+    conn = Plug.Conn.fetch_query_params(conn)
+    params = conn.query_params
+    users = if Map.has_key?(params, "username") and Map.has_key?(params, "email") do
+      query = from(u in User, where: u.username == ^params["username"] and u.email == ^params["email"])
+      Repo.all(query)
+    else
+      []
+    end
     render(conn, "index.json", users: users)
   end
 
