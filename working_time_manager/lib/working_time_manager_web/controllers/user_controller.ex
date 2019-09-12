@@ -24,10 +24,15 @@ defmodule WorkingTimeManagerWeb.UserController do
 
   def create(conn, %{"user" => user_params}) do
     with {:ok, %User{} = user} <- Resource.create_user(user_params) do
-      conn
-      |> put_status(:created)
-      |> put_resp_header("location", Routes.user_path(conn, :show, user))
-      |> render("show.json", user: user)
+      email = user_params["email"]
+      if Regex.match?(~r/[A-Za-z0-9-_]+@[A-Za-z0-9]+.[A-Za-z0-9]+$/, email) == true do
+        conn
+        |> put_status(:created)
+        |> put_resp_header("location", Routes.user_path(conn, :show, user))
+        |> render("show.json", user: user)
+      else
+        raise "Your email #{email} is incorrect. Email must have this pattern : X@X.X"
+      end
     end
   end
 
