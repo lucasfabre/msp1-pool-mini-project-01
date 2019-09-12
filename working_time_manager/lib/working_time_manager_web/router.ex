@@ -13,6 +13,7 @@ defmodule WorkingTimeManagerWeb.Router do
     scope "/workingtimes/" do
       post "/:userid", WorkingTimeController, :create
       get "/:userid/:id", WorkingTimeController, :show
+      delete "/:id", WorkingTimeController, :delete
     end
 
     scope "/clocks" do
