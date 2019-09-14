@@ -22,7 +22,7 @@ defmodule WorkingTimeManagerWeb.UserController do
     if users != nil do
       render(conn, "index.json", users: users)
     else
-      send_resp(conn, :bad_request, "Bad Request")
+      send_resp(conn, :not_found, "Not found")
     end
   end
 
@@ -37,15 +37,20 @@ defmodule WorkingTimeManagerWeb.UserController do
       else
         raise "Your email #{email} is incorrect. Email must have this pattern : X@X.X"
       end
+    else
+      {:error, message} -> send_resp(conn, :bad_request, "Bad request, cannot create user")
     end
   end
 
   def show(conn, %{"id" => id}) do
-    user = Resource.get_user!(id)
-    render(conn, "show.json", user: user)
+    case Resource.get_user(id) do
+      nil -> send_resp(conn, :not_found, "User not found")
+      user -> render(conn, "show.json", user: user)
+    end
   end
 
   def update(conn, %{"id" => id, "user" => user_params}) do
+    IO.inspect("UPDATE")
     user = Resource.get_user!(id)
 
     with {:ok, %User{} = user} <- Resource.update_user(user, user_params) do
