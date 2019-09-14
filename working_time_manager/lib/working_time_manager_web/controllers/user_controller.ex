@@ -16,8 +16,6 @@ defmodule WorkingTimeManagerWeb.UserController do
     users = if Map.has_key?(params, "username") and Map.has_key?(params, "email") do
       query = from(u in User, where: u.username == ^params["username"] and u.email == ^params["email"])
       Repo.all(query)
-    else
-      users = nil
     end
     if users != nil do
       render(conn, "index.json", users: users)
@@ -38,7 +36,7 @@ defmodule WorkingTimeManagerWeb.UserController do
         raise "Your email #{email} is incorrect. Email must have this pattern : X@X.X"
       end
     else
-      {:error, message} -> send_resp(conn, :bad_request, "Bad request, cannot create user")
+      {:error, _message} -> send_resp(conn, :bad_request, "Bad request, cannot create user")
     end
   end
 
@@ -50,11 +48,12 @@ defmodule WorkingTimeManagerWeb.UserController do
   end
 
   def update(conn, %{"id" => id, "user" => user_params}) do
-    IO.inspect("UPDATE")
     user = Resource.get_user!(id)
 
     with {:ok, %User{} = user} <- Resource.update_user(user, user_params) do
       render(conn, "show.json", user: user)
+    else
+      {:error, _message} -> send_resp(conn, :bad_request, "Bad request, cannot update user")
     end
   end
 
