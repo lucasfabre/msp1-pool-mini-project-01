@@ -17,9 +17,13 @@ defmodule WorkingTimeManagerWeb.UserController do
       query = from(u in User, where: u.username == ^params["username"] and u.email == ^params["email"])
       Repo.all(query)
     else
-      []
+      users = nil
     end
-    render(conn, "index.json", users: users)
+    if users != nil do
+      render(conn, "index.json", users: users)
+    else
+      send_resp(conn, :bad_request, "Bad Request")
+    end
   end
 
   def create(conn, %{"user" => user_params}) do
