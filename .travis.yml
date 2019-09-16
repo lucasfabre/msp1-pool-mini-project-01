@@ -1,8 +1,7 @@
 language: bash
 services: docker
 
-env: 
-  - DIR=1.8 VARIANT=otp-22
+env: DIR=1.8 VARIANT=otp-22
 
 install: 
   - curl -fsSL https://github.com/docker-library/official-images/archive/master.tar.gz | {
