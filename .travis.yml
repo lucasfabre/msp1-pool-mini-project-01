@@ -3,18 +3,8 @@ services: docker
 
 env: DIR=1.8 VARIANT=otp-22
 
-install: 
-  - curl -fsSL https://github.com/docker-library/official-images/archive/master.tar.gz | {
-      mkdir -vp ./official-images/;
-      tar -C ./official-images/ --strip-components=1 -zxvv official-images-master/test/; }
-
-before_script:
-  - eval $(awk '/ELIXIR_VERSION=/ { sub(/@/, "-", $2); print $2; exit }' ${DIR}/${VARIANT}/Dockerfile)
-  - image="elixir:${ELIXIR_VERSION#v}${VARIANT:+-$VARIANT}"
-
 script:
-  - docker build --pull -t "$image" "${DIR}/${VARIANT}"
-  - ./official-images/test/run.sh "$image"
+  - docker-compose up -d
 
 after_script:
-  - docker images
+  - docker ps
