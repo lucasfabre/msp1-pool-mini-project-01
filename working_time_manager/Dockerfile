@@ -4,10 +4,10 @@ WORKDIR /api
 
 COPY mix* ./
 
-RUN apt-get update                      && \
-    apt-get install build-essential -y  && \
-    mix local.hex --force               && \
-    mix local.rebar --force             && \
+RUN apt-get update                                      && \
+    apt-get install -y build-essential inotify-tools    && \
+    mix local.hex --force                               && \
+    mix local.rebar --force                             && \
     mix deps.get
 
 COPY . .
