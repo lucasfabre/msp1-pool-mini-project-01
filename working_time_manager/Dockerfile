@@ -10,11 +10,12 @@ RUN apt-get update                                                      && \
     apt-get install -y nodejs                                           && \
     mix local.hex --force                                               && \
     mix local.rebar --force                                             && \
-    mix deps.get                                                        && \
-    cd assets && npm install                                            && \
-    cd ..
+    mix deps.get
 
 COPY . .
+
+RUN cd assets && npm install                                            && \
+    cd ..
 
 EXPOSE 4000
 
