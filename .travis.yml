@@ -4,7 +4,6 @@ services: docker
 env: DIR=1.8 VARIANT=otp-22
 
 script:
-  - docker-compose up --build
   - docker-compose up -d
 
 after_script:
