@@ -5,18 +5,14 @@ WORKDIR /api
 COPY mix* ./
 
 RUN apt-get update                                                      && \
-    apt-get install -y build-essential inotify-tools sudo                    && \
+    apt-get install -y build-essential inotify-tools sudo               && \
     curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -     && \
     apt-get install -y build-essential inotify-tools nodejs             && \
     mix local.hex --force                                               && \
     mix local.rebar --force                                             && \
-    mix deps.get
-
-WORKDIR /api/assets
-
-RUN npm install
-
-WORKDIR /api
+    mix deps.get                                                        && \
+    cd assets && npm install                                            && \
+    cd ..
 
 COPY . .
 
