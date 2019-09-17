@@ -1,21 +1,29 @@
 defmodule WorkingTimeManagerWeb.WorkingTimeController do
   use WorkingTimeManagerWeb, :controller
 
+  import Ecto.Query
+
   require Logger
 
+  alias WorkingTimeManager.Repo
   alias WorkingTimeManager.Resource
+  alias WorkingTimeManager.Utils.DateTimeHelper
   alias WorkingTimeManager.Resource.WorkingTime
 
   action_fallback WorkingTimeManagerWeb.FallbackController
 
-  def index(conn, _params) do
-    workingtimes = Resource.list_workingtimes()
+  def index(conn, %{"userid" => userid_param, "start" => start_param, "end" => end_param}) do
+    start_date   = DateTimeHelper.parse(start_param)
+    end_date     = DateTimeHelper.parse(end_param)
+    {userid, _}  = Integer.parse(userid_param)
+    workingtimes = from(w in WorkingTime, where: w.start >= ^start_date and w.end <= ^end_date and w.user == ^userid)
+      |> Repo.all()
     render(conn, "index.json", workingtimes: workingtimes)
   end
 
   def create(conn, %{"userid" => userid, "working_time" => working_time_userparams}) do
-    {:ok, startdate, _} = DateTime.from_iso8601(Map.get(working_time_userparams, "start") <> "+00:00")
-    {:ok, enddate, _} = DateTime.from_iso8601(Map.get(working_time_userparams, "end") <> "+00:00")
+    enddate = DateTimeHelper.parse(Map.get(working_time_userparams, "end"))
+    startdate = DateTimeHelper.parse(Map.get(working_time_userparams, "start"))
     working_time_params = %{
       :user  => userid,
       :start => startdate,
@@ -41,7 +49,6 @@ defmodule WorkingTimeManagerWeb.WorkingTimeController do
 
   def update(conn, %{"id" => id, "working_time" => working_time_params}) do
     working_time = Resource.get_working_time!(id)
-
     with {:ok, %WorkingTime{} = working_time} <- Resource.update_working_time(working_time, working_time_params) do
       render(conn, "show.json", working_time: working_time)
     end

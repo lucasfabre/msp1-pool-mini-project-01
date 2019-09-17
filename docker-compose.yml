@@ -1,0 +1,27 @@
+version: '3.3'
+services:
+
+  phoenix:
+    build:
+      context: ./working_time_manager
+    restart: unless-stopped
+    depends_on:
+      - db
+    ports:
+      - "4000:4000"
+    environment: 
+      - DATABASE_URL=ecto://postgres:postgres@db:5432/working_time_manager_dev
+
+  db:
+    image: postgres:latest
+    volumes:
+      - dbdata:/var/lib/postgresql/data
+    restart: unless-stopped
+    environment:
+      - POSTGRES_DB=working_time_manager_dev
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+
+volumes:
+  dbdata:
+    external: false
