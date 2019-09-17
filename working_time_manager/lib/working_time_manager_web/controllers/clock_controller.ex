@@ -7,7 +7,6 @@ defmodule WorkingTimeManagerWeb.ClockController do
 
   alias WorkingTimeManager.Repo
   alias WorkingTimeManager.Resource
-  alias WorkingTimeManager.Resource.User
   alias WorkingTimeManager.Resource.Clock
 
   action_fallback WorkingTimeManagerWeb.FallbackController
