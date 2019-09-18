@@ -20,7 +20,7 @@ defmodule WorkingTimeManagerWeb.UserController do
     if users != nil do
       render(conn, "index.json", users: users)
     else
-      send_resp(conn, :not_found, "Not found")
+      send_resp(conn, :ok, "No content")
     end
   end
 
