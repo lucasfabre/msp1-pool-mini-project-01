@@ -4,27 +4,23 @@ services:
   phoenix:
     build:
       context: ./working_time_manager
-      dockerfile: ./docker-resources/Dockerfile-Backend
     restart: unless-stopped
     depends_on:
       - db
     ports:
-      - "80:80"
+      - "4000:4000"
     environment: 
-      - DATABASE_URL=ecto://${PGUSER}:${PGPASSWORD}@${PGHOST}:${PGPORT}/${PGDATABASE}
-    links:
-      - "db:database"
+      - DATABASE_URL=ecto://postgres:postgres@db:5432/working_time_manager_dev
 
   db:
     image: postgres:latest
     volumes:
       - dbdata:/var/lib/postgresql/data
     restart: unless-stopped
-    command: -p ${PGPORT}
     environment:
-      POSTGRES_DB: ${PGDATABASE}
-      POSTGRES_USER: ${PGUSER}
-      POSTGRES_PASSWORD: ${PGPASSWORD}
+      - POSTGRES_DB=working_time_manager_dev
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
 
 volumes:
   dbdata:
