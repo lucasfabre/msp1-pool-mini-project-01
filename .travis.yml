@@ -1,18 +1,11 @@
-language: bash
-services: docker
-
-env: DIR=1.8 VARIANT=otp-22
-
-addons:
-  apt:
-    packages: 
-      - curl
+services: 
+  - docker
 
 script:
   - docker-compose build
   - docker-compose up -d
-  - sleep 2m
-  - curl -X GET http://localhost:4000/api/users/1 -H 'Content-Type: application/json' -H 'Postman-Token: bd33ccdd-503d-48b7-a687-081a675e9004' -H 'cache-control: no-cache' -d '{"user": {"email": "johny@test.com", "firstname": "johny", "lastname": "doe", "password": "testhash", "roles": 1}}'
+  - sleep 5
+  - curl -X GET http://localhost:4000/api/users/1 -H 'Content-Type: application/json' -H 'Postman-Token: bd33ccdd-503d-48b7-a687-081a675e9004' -H 'cache-control: no-cache' -d "{'user': {'email': 'johny@test.com', 'firstname': 'johny', 'lastname': 'doe', 'password': 'testhash', 'roles': '1'}}"
 
 after_script:
   - docker-compose ps
