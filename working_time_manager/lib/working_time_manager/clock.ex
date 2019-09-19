@@ -3,8 +3,8 @@ defmodule WorkingTimeManager.Clock do
   import Ecto.Changeset
 
   schema "clocks" do
+    field :date, :naive_datetime
     field :status, :boolean, default: false
-    field :time, :naive_datetime
     field :user, :id
 
     timestamps()
@@ -13,7 +13,7 @@ defmodule WorkingTimeManager.Clock do
   @doc false
   def changeset(clock, attrs) do
     clock
-    |> cast(attrs, [:time, :status])
-    |> validate_required([:time, :status])
+    |> cast(attrs, [:date, :status])
+    |> validate_required([:date, :status])
   end
 end
