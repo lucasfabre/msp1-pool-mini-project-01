@@ -2,8 +2,10 @@ defmodule WorkingTimeManagerWeb.UserController do
   use WorkingTimeManagerWeb, :controller
 
   import Ecto.Query
+  import Logger
 
   alias WorkingTimeManager.Repo
+  alias WorkingTimeManager.Token
 
   alias WorkingTimeManager.Resource
   alias WorkingTimeManager.Resource.User
@@ -48,10 +50,34 @@ defmodule WorkingTimeManagerWeb.UserController do
   end
 
   def show(conn, %{"id" => id}) do
+    token = fetch_cookies(conn).req_cookies["session_jwt"]
+    {:ok, claims} = Token.verify_and_validate(token)
+    Logger.info("connected user id: " <> claims["user_id"])
     case Resource.get_user(id) do
       nil -> send_resp(conn, :not_found, "User not found")
       user -> render(conn, "show.json", user: user)
     end
+  end
+
+  def sign_in(conn, %{"email" => email, "password" => password}) do
+      hashed_password = Bcrypt.hash_pwd_salt(password)
+      query = from(u in User, where: u.email == ^email and u.password == ^hashed_password)
+      user = Repo.one(query)
+      if user != nil do
+        extra_claims = %{"user_id" => Integer.to_string(user.id)}
+        token = Token.generate_and_sign!(extra_claims)
+        conn
+        |> put_resp_cookie("session_jwt", token)
+        |> json(%{ status: true })
+      else
+        json conn, %{ status: false }
+      end
+  end
+
+  def sign_out(conn, _params) do
+    conn
+    |> delete_resp_cookie("session_jwt")
+    |> json(%{message: "ok"})
   end
 
   def update(conn, %{"id" => id, "user" => user_params}) do
