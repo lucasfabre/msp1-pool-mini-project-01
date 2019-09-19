@@ -13,9 +13,15 @@ RUN cd /working_time_manager; \
 
 ENV DATABASE_URL=ecto://postgres:postgres@database/database
 ENV SECRET_KEY_BASE=XRpZ+3dLc8bJnzMdFwJl7mcKrW+UBr/Vwf1otPKW3YG7KmsVKt6Zg6mUndkLs/7x
+ENV PGDATABASE="database"
+ENV PGUSER="postgres"
+ENV PGPASSWORD="postgres"
+ENV PGDATABASE="db"
 
 RUN cd /working_time_manager; \
     MIX_ENV=prod mix compile
+
+RUN env
 
 COPY ./docker-resources/entrypoint.sh /entrypoint.sh
 
