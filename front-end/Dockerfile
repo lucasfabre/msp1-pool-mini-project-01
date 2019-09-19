@@ -15,6 +15,4 @@ RUN npm run build
 
 EXPOSE 8080
 
-RUN chmod +x ./entrypoint.sh
-
 CMD [ "http-server", "dist" ]
