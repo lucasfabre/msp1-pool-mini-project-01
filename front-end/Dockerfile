@@ -1,12 +1,8 @@
 FROM node:lts-alpine
 
-WORKDIR /app
+RUN npm install -g http-server
 
-RUN apt-get update                                                      && \
-    apt-get install -y build-essential inotify-tools                    && \
-    curl -sL https://deb.nodesource.com/setup_12.x | bash -             && \
-    apt-get install -y nodejs                                           && \
-    npm install -g http-server
+WORKDIR /app
 
 COPY package*.json ./
 
