@@ -11,10 +11,11 @@ defmodule WorkingTimeManagerWeb.Router do
     resources "/users", UserController, except: [:new, :edit]
 
     scope "/workingtimes/" do
-      get "/:userid",     WorkingTimeController, :index
-      post "/:userid",    WorkingTimeController, :create
-      get "/:userid/:id", WorkingTimeController, :show
-      delete "/:id",      WorkingTimeController, :delete
+      get    "/:userid",     WorkingTimeController, :index
+      get    "/:userid/:id", WorkingTimeController, :show
+      post   "/:userid",     WorkingTimeController, :create
+      delete "/:id",         WorkingTimeController, :delete
+      put    "/:id",         WorkingTimeController, :update
     end
 
     scope "/clocks" do
