@@ -13,8 +13,8 @@ defmodule WorkingTimeManagerWeb.UserController do
   def index(conn, _params) do
     conn = Plug.Conn.fetch_query_params(conn)
     params = conn.query_params
-    users = if Map.has_key?(params, "username") and Map.has_key?(params, "email") do
-      query = from(u in User, where: u.username == ^params["username"] and u.email == ^params["email"])
+    users = if Map.has_key?(params, "email") do
+      query = from(u in User, where: u.email == ^params["email"])
       Repo.all(query)
     end
     if users != nil do
