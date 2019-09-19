@@ -3,7 +3,7 @@ services:
 
   phoenix:
     build:
-      context: ./working_time_manager
+      context: ./back-end
     restart: unless-stopped
     depends_on:
       - db
@@ -21,6 +21,15 @@ services:
       - PGDATABASE=working_time_manager_dev
       - PGUSER=postgres
       - PGPASSWORD=postgres
+
+  app:
+    build:
+      context: ./front-end
+    restart: unless-stopped
+    depends_on:
+      - phoenix
+    ports:
+      - "8080:8080"
 
 volumes:
   dbdata:
