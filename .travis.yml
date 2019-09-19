@@ -3,6 +3,11 @@ services: docker
 
 env: DIR=1.8 VARIANT=otp-22
 
+addons:
+  apt:
+    packages: 
+      - curl
+
 script:
   - docker-compose build
   - docker-compose up -d
