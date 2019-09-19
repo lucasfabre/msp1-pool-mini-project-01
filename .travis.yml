@@ -9,6 +9,20 @@ script:
 
 after_script:
   - docker-compose ps
+  - curl -X POST \
+  http://localhost:4000/api/users/ \
+  -H 'Content-Type: application/json' \
+  -H 'Postman-Token: 0859bab1-0855-4455-a764-6febe0b00649' \
+  -H 'cache-control: no-cache,no-cache' \
+  -d '{
+    "user": {
+        "email": "mathilde.chabeau@epitech.eu",
+        "firstname": "Mathilde",
+        "lastname": "Chabeau",
+        "password": "plop",
+        "roles": 0
+    }
+}'
 
 notifications:
   webhooks: https://outlook.office.com/webhook/fda60e47-d851-46da-9879-4a6c58bbfc04@901cb4ca-b862-4029-9306-e5cd0f6d9f86/TravisCI/7ca4246150114f65a5b731008b9d8bc6/c755656a-9f25-4fa1-8c17-f1c880043093

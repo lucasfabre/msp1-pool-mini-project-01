@@ -3,8 +3,11 @@ defmodule WorkingTimeManager.Resource.User do
   import Ecto.Changeset
 
   schema "users" do
+    field :firstname, :string
+    field :lastname, :string
     field :email, :string
-    field :username, :string
+    field :password, :string
+    field :roles, :integer
 
     timestamps()
   end
@@ -12,7 +15,19 @@ defmodule WorkingTimeManager.Resource.User do
   @doc false
   def changeset(user, attrs) do
     user
-    |> cast(attrs, [:username, :email])
-    |> validate_required([:username, :email])
+    |> cast(attrs, [
+      :firstname,
+      :lastname,
+      :email,
+      :password,
+      :roles
+      ])
+    |> validate_required([
+      :firstname,
+      :lastname,
+      :email,
+      :password,
+      :roles
+    ])
   end
 end

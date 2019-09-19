@@ -12,7 +12,7 @@ defmodule WorkingTimeManagerWeb.ClockController do
   action_fallback WorkingTimeManagerWeb.FallbackController
 
   def getclock(conn, %{"user" => user}) do
-    clock = from(c in Clock, where: c.user == ^user, order_by: [desc: c.time], limit: 1)
+    clock = from(c in Clock, where: c.user == ^user, order_by: [desc: c.date], limit: 1)
       |> Repo.one()
     if clock != nil do
       render(conn, "show.json", clock: clock)
@@ -23,12 +23,12 @@ defmodule WorkingTimeManagerWeb.ClockController do
 
   def clock(conn, %{"user" => useridstring}) do
     {userid, _} = Integer.parse(useridstring)
-    last_clock = from(c in Clock, where: c.user == ^userid, order_by: [desc: c.time], limit: 1)
+    last_clock = from(c in Clock, where: c.user == ^userid, order_by: [desc: c.date], limit: 1)
       |> Repo.one()
     clock_params = %{
       "status" => last_clock == nil || last_clock.status == false,
       "user" => userid,
-      "time" => DateTime.utc_now()}
+      "date" => DateTime.utc_now()}
     with {:ok, %Clock{} = clock} <- Resource.create_clock(clock_params) do
       conn
       |> put_status(:created)

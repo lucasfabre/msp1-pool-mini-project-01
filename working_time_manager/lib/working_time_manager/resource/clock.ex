@@ -4,7 +4,7 @@ defmodule WorkingTimeManager.Resource.Clock do
 
   schema "clocks" do
     field :status, :boolean, default: false
-    field :time, :utc_datetime
+    field :date, :naive_datetime
     field :user, :id
 
     timestamps()
@@ -13,7 +13,7 @@ defmodule WorkingTimeManager.Resource.Clock do
   @doc false
   def changeset(clock, attrs) do
     clock
-    |> cast(attrs, [:time, :status, :user])
-    |> validate_required([:time, :status, :user])
+    |> cast(attrs, [:date, :status, :user])
+    |> validate_required([:date, :status, :user])
   end
 end
