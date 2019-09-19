@@ -14,10 +14,11 @@ RUN apt-get update                                                      && \
 
 COPY . .
 
-ENV PGDATABASE="database"
+ENV PGDATABASE="working_time_manager_dev"
+ENV PGPORT="5432"
+ENV PGHOST="db"
 ENV PGUSER="postgres"
 ENV PGPASSWORD="postgres"
-ENV PGDATABASE="db"
 
 RUN env
 
