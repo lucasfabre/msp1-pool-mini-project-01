@@ -18,9 +18,9 @@ services:
       - dbdata:/var/lib/postgresql/data
     restart: unless-stopped
     environment:
-      - POSTGRES_DB=working_time_manager_dev
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+      - PGDATABASE=working_time_manager_dev
+      - PGUSER=postgres
+      - PGPASSWORD=postgres
 
 volumes:
   dbdata:

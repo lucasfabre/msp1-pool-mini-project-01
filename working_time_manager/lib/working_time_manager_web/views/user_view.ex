@@ -15,7 +15,7 @@ defmodule WorkingTimeManagerWeb.UserView do
       firstname: user.firstname,
       lastname: user.lastname,
       email: user.email,
-      role: user.role}
+      roles: user.roles}
   end
 
   def render("error.json", %{code: code, message: message}) do

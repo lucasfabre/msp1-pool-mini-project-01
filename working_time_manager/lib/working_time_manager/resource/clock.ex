@@ -13,7 +13,7 @@ defmodule WorkingTimeManager.Resource.Clock do
   @doc false
   def changeset(clock, attrs) do
     clock
-    |> cast(attrs, [:time, :status, :user])
-    |> validate_required([:time, :status, :user])
+    |> cast(attrs, [:date, :status, :user])
+    |> validate_required([:date, :status, :user])
   end
 end
