@@ -11,7 +11,7 @@ RUN npm install		&& \
 
 COPY app .
 
-RUN npm run dev
+RUN npm run build
 
 EXPOSE 8080
 
