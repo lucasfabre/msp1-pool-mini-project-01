@@ -18,7 +18,11 @@ defmodule WorkingTimeManagerWeb.WorkingTimeController do
     {userid, _}  = Integer.parse(userid_param)
     workingtimes = from(w in WorkingTime, where: w.start >= ^start_date and w.end <= ^end_date and w.user == ^userid)
       |> Repo.all()
-    render(conn, "index.json", workingtimes: workingtimes)
+    if workingtimes =! nil do
+      render(conn, "index.json", workingtimes: workingtimes)
+    else
+      send_resp(conn, :ok, "No content")
+    end
   end
 
   def create(conn, %{"userid" => userid, "working_time" => working_time_userparams}) do
@@ -29,10 +33,14 @@ defmodule WorkingTimeManagerWeb.WorkingTimeController do
       :start => startdate,
       :end => enddate
     }
-    with {:ok, %WorkingTime{} = working_time} <- Resource.create_working_time(working_time_params) do
-      conn
-      |> put_status(:created)
-      |> render("show.json", working_time: working_time)
+    if Regex.match?(~r/(\d{4})-(\d{2})-(\d{2})\s(\d{2}):(\d{2}):(\d{2})$/, enddate) == false || Regex.match?(~r/(\d{4})-(\d{2})-(\d{2})\s(\d{2}):(\d{2}):(\d{2})$/, startdate) == false do
+      with {:ok, %WorkingTime{} = working_time} <- Resource.create_working_time(working_time_params) do
+        conn
+        |> put_status(:created)
+        |> render("show.json", working_time: working_time)
+      else
+        {:error, _message} -> send_resp(conn, :bad_request, "Bad request, cannot create workingtime")
+      end
     end
   end
 

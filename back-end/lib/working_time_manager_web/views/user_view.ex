@@ -14,6 +14,7 @@ defmodule WorkingTimeManagerWeb.UserView do
     %{id: user.id,
       firstname: user.firstname,
       lastname: user.lastname,
+      password: user.password,
       email: user.email,
       roles: user.roles}
   end

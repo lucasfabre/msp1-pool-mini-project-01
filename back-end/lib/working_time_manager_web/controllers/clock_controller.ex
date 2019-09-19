@@ -33,6 +33,8 @@ defmodule WorkingTimeManagerWeb.ClockController do
       conn
       |> put_status(:created)
       |> render("show.json", clock: clock)
+    else
+      {:error, _message} -> send_resp(conn, :not_found, "No clock")
     end
   end
 
