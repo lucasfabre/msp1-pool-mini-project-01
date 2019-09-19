@@ -5,7 +5,6 @@ script:
   - docker-compose build
   - docker-compose up -d
   - sleep 5
-  - curl -X GET http://phoenix:4000/api/users/1
 
 after_script:
   - docker-compose ps
