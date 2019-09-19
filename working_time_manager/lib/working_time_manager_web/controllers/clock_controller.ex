@@ -14,7 +14,11 @@ defmodule WorkingTimeManagerWeb.ClockController do
   def getclock(conn, %{"user" => user}) do
     clock = from(c in Clock, where: c.user == ^user, order_by: [desc: c.time], limit: 1)
       |> Repo.one()
-    render(conn, "show.json", clock: clock)
+    if clock != nil do
+      render(conn, "show.json", clock: clock)
+    else
+      send_resp(conn, :ok, "No content")
+    end
   end
 
   def clock(conn, %{"user" => useridstring}) do

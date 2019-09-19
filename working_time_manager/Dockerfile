@@ -14,6 +14,13 @@ RUN apt-get update                                                      && \
 
 COPY . .
 
+ENV PGDATABASE="database"
+ENV PGUSER="postgres"
+ENV PGPASSWORD="postgres"
+ENV PGDATABASE="db"
+
+RUN env
+
 RUN cd assets && npm install                                            && \
     cd ..
 

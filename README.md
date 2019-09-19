@@ -17,6 +17,7 @@
    - /!\ You must have a user named "postgres" with a password "postgres"
 
 # Initialisation du projet :
+ - source .env
  - mix deps.get
  - mix ecto.create
  - mix phx.server
