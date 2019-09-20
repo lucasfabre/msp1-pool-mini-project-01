@@ -68,7 +68,7 @@
             headers: headers
           }).then((res) => {
             console.log(res)
-            if (res && res.data && res.data.data) {
+            if (res && res.data && res.data.status) {
               console.log('sign in succeed')
             } else {
               console.log('sign in failed')
