@@ -3,6 +3,7 @@ defmodule WorkingTimeManagerWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+    plug WorkingTimeManagerWeb.Authent.AuthentPlug
   end
 
   scope "/api", WorkingTimeManagerWeb do
