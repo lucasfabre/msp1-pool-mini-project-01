@@ -11,6 +11,7 @@
         <input type='password' class='rectangle' name='password' v-model='input.signin.password' placeholder='Password'/>
         <br><br>
         <button type='button' class='loginbutton' v-on:click='signIn()'>Log in</button>
+        <p v-if="error">{{ error }}</p>
         <br><br>
       </div>
       <div id='newuser'>
@@ -51,7 +52,8 @@
             email: '',
             password: ''
           }
-        }
+        },
+        error: ''
       }
     },
     methods: {
@@ -71,6 +73,7 @@
             if (res && res.data && res.data.status) {
               console.log('sign in succeed')
             } else {
+              this.error = 'Sign in failed'
               console.log('sign in failed')
             }
           }).catch((err) => {
