@@ -65,7 +65,7 @@
             headers: headers
           }).then((res) => {
             console.log(res)
-            if (res && res.data && res.data && res.data.data.length) {
+            if (res && res.data && res.data.data) {
               console.log('sign in succeed')
             } else {
               console.log('sign in failed')
@@ -95,7 +95,7 @@
             headers: headers
           }).then((res) => {
             console.log(res)
-            if (res && res.data && res.data && res.data.data.length) {
+            if (res && res.data && res.data.data) {
               console.log('sign up succeed')
             } else {
               console.log('sign up failed')
