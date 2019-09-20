@@ -56,12 +56,15 @@
     },
     methods: {
       signIn () {
+        const data = {
+          'email': this.input.signup.email,
+          'password': this.input.signup.password
+        }
         const headers = {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*'
+          'Content-Type': 'application/json'
         }
         if (this.input.signin.email !== '' && this.input.signin.password !== '') {
-          axios.get('http://ec2-18-223-111-157.us-east-2.compute.amazonaws.com:4000/api/users?email=' + this.input.signin.email + '&password=' + this.input.signin.password, {
+          axios.post('http://ec2-18-223-111-157.us-east-2.compute.amazonaws.com:4000/api/sign_in', data, {
             headers: headers
           }).then((res) => {
             console.log(res)
