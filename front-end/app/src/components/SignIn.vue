@@ -61,7 +61,7 @@
           'Access-Control-Allow-Origin': '*'
         }
         if (this.input.signin.email !== '' && this.input.signin.password !== '') {
-          axios.get('http://ec2-18-218-129-108.us-east-2.compute.amazonaws.com:4000/api/users?email=' + this.input.signin.email + '&password=' + this.input.signin.password, {
+          axios.get('http://ec2-18-223-111-157.us-east-2.compute.amazonaws.com:4000/api/users?email=' + this.input.signin.email + '&password=' + this.input.signin.password, {
             headers: headers
           }).then((res) => {
             console.log(res)
@@ -91,7 +91,7 @@
           'Access-Control-Allow-Origin': '*'
         }
         if (this.input.signup.firstname !== '' && this.input.signup.lastname !== '' && this.input.signup.email !== '' && this.input.signup.password !== '' && this.input.signup.retypepassword === this.input.signup.password) {
-          axios.post('http://ec2-18-218-129-108.us-east-2.compute.amazonaws.com:4000/api/users', data, {
+          axios.post('http://ec2-18-223-111-157.us-east-2.compute.amazonaws.com:4000/api/users', data, {
             headers: headers
           }).then((res) => {
             console.log(res)
