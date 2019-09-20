@@ -1,6 +1,6 @@
-FROM node:lts-alpine
+FROM nginx:stable-alpine as production-stage
 
-RUN npm install -g http-server
+COPY --from=build-stage /app/dist /usr/share/nginx/html
 
 WORKDIR /app
 
@@ -13,6 +13,6 @@ COPY app .
 
 RUN npm run build
 
-EXPOSE 8080
+EXPOSE 80
 
-CMD [ "http-server", "dist" ]
+CMD ["nginx", "-g", "daemon off;"]
