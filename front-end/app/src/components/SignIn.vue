@@ -84,7 +84,7 @@
             'firstname': this.input.signup.firstname,
             'lastname': this.input.signup.firstname,
             'password': this.input.signup.password,
-            'role': 1
+            'roles': 1
           }
         }
         const headers = {
