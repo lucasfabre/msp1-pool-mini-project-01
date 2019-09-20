@@ -71,6 +71,7 @@
           }).then((res) => {
             console.log(res)
             if (res && res.data && res.data.status) {
+              this.error = 'Sign in succeed'
               console.log('sign in succeed')
             } else {
               this.error = 'Sign in failed'
