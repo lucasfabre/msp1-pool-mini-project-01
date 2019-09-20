@@ -57,8 +57,8 @@
     methods: {
       signIn () {
         const data = {
-          'email': this.input.signup.email,
-          'password': this.input.signup.password
+          'email': this.input.signin.email,
+          'password': this.input.signin.password
         }
         const headers = {
           'Content-Type': 'application/json'
