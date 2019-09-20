@@ -80,17 +80,18 @@
       signUp () {
         const data = {
           user: {
+            'email': this.input.signup.email,
             'firstname': this.input.signup.firstname,
             'lastname': this.input.signup.firstname,
-            'email': this.input.signup.email,
-            'password': this.input.signup.password
+            'password': this.input.signup.password,
+            'role': 1
           }
         }
         const headers = {
           'Content-Type': 'application/json',
           'Access-Control-Allow-Origin': '*'
         }
-        if (this.input.signup.firstname !== '' && this.input.signup.lastname !== '' && this.input.signup.email !== '' && this.input.signup.password !== '' && this.input.signup.retypepassword === this.input.signup.password) {
+        if (this.input.signup.email !== '' && this.input.signup.firstname !== '' && this.input.signup.lastname !== '' && this.input.signup.password !== '' && this.input.signup.retypepassword === this.input.signup.password) {
           axios.post('http://ec2-18-223-111-157.us-east-2.compute.amazonaws.com:4000/api/users', data, {
             headers: headers
           }).then((res) => {
