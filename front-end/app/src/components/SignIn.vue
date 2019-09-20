@@ -23,7 +23,7 @@
         <br><br>
         <input type='password' class='rectangle' name='password' v-model='input.signup.password' placeholder='Password'/>
         <br><br>
-        <input type='password' class='rectangle' name='retypepassword' v-model='input.signup.retypepassword' placeholder=' Retype password'/>
+        <input type='password' class='rectangle' name='retypepassword' v-model='input.signup.retypepassword' placeholder='Retype password'/>
         <br><br>
         <button type='button' class='newuserbutton' v-on:click='signUp()'>New user</button>
         <br><br>
