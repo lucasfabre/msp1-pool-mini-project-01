@@ -1,19 +1,18 @@
-FROM nginx:stable-alpine as production-stage
+FROM node:lts-alpine as build-stage
 
 WORKDIR /app
 
 COPY package*.json ./
 
-RUN apt-get update                                                      && \
-    apt-get install -y build-essential inotify-tools                    && \
-    curl -sL https://deb.nodesource.com/setup_12.x | bash -             && \
-    apt-get install -y nodejs 						&& \
-    npm install								&& \
-    npm install --save moment
+RUN npm install
 
-COPY app .
+COPY . .
 
 RUN npm run build
+
+FROM nginx:stable-alpine as production-stage
+
+COPY --from=build-stage /app/dist /usr/share/nginx/html
 
 EXPOSE 80
 
