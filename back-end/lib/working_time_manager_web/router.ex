@@ -3,10 +3,14 @@ defmodule WorkingTimeManagerWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+    plug WorkingTimeManagerWeb.Authent.AuthentPlug
   end
 
   scope "/api", WorkingTimeManagerWeb do
     pipe_through :api
+
+    post "/sign_in", UserController, :sign_in
+    post "/sign_out", UserController, :sign_out
 
     resources "/users", UserController, except: [:new, :edit]
 
