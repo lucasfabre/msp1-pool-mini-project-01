@@ -17,7 +17,7 @@
     </div>
     <br>
     <div id="chart">
-      <apexchart width="380" type="donut" :options="options" :series="series"></apexchart>
+      <apexchart width="380" type="donut" :options="chartOptions"></apexchart>
     </div>
   </div>
 </template>
@@ -42,9 +42,9 @@ export default {
       options: {
         xaxis: {
           categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998]
-        }
+        },
+        series: [30, 40, 35, 50, 49, 60, 70, 91]
       },
-      series: [30, 40, 35, 50, 49, 60, 70, 91]
     }
   },
   methods: {
