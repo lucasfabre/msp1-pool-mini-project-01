@@ -1,8 +1,8 @@
 defmodule WorkingTimeManagerWeb.UserController do
   use WorkingTimeManagerWeb, :controller
 
-  import Ecto.Query
   import Logger
+  import Ecto.Query
 
   alias WorkingTimeManager.Repo
   alias WorkingTimeManagerWeb.Authent.Token

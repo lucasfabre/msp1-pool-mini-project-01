@@ -7,6 +7,7 @@ script:
 
 after_script:
   - docker-compose ps
+  - ./test.sh
 
 notifications:
   webhooks: https://outlook.office.com/webhook/fda60e47-d851-46da-9879-4a6c58bbfc04@901cb4ca-b862-4029-9306-e5cd0f6d9f86/TravisCI/7ca4246150114f65a5b731008b9d8bc6/c755656a-9f25-4fa1-8c17-f1c880043093
