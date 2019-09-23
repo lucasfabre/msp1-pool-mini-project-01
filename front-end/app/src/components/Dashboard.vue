@@ -17,6 +17,20 @@
     </div>
     <br>
     <vc-donut background="white" foreground="grey" :size="200" unit="px" :thickness="30" has-legend legend-placement="top" :sections="sections" :total="100" :start-angle="0" @section-click="handleSectionClick">Working time situation</vc-donut>
+    <div id="app">
+      <div class="chart-wrap">
+        <div id="chart">
+          <apexchart type=donut width=380 :options="chartOptions" :series="series" />
+        </div>
+      </div>
+
+      <div class="actions">
+        <button @click="randomize">RANDOMIZE</button>
+        <button @click="appendData">ADD</button>
+        <button @click="removeData">REMOVE</button>
+        <button @click="reset">RESET</button>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -37,12 +51,7 @@ export default {
       username: '',
       user_id: '',
       clocknotify: '',
-      a: 160,
-      b: 15,
-      c: 100,
-      d: 1,
-      e: a + b + c + d,
-      sections: [{ label: 'Time performed', color: 'Green', value: a/e }, { label: 'Remaining time', color: 'Red', value: b/e }, { label: 'Overtime', color: 'Blue', value: c/e }, { color: 'black', value: d/e }]
+      sections: [{ label: 'Time performed', color: 'Green', value: 57 }, { label: 'Remaining time', color: 'Red', value: 13 }, { label: 'Overtime', color: 'Blue', value: 15 }, { color: 'black', value: 15 }]
     }
   },
   methods: {
