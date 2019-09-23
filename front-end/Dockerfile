@@ -14,7 +14,6 @@ RUN npm install -g npm@latest               && \
     npm install moment --save               && \
     npm install vue-localstorage --save     && \
     npm install vue-cookies --save          && \
-    npm install vue-morris --save           && \
     npm audit fix                           && \
     npm audit fix --force                   && \
     npm install
