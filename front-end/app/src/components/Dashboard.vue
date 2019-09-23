@@ -17,7 +17,9 @@
     </div>
     <br>
     <div id="chart">
-      <apexchart width="380" type="donut" :options="options" :series="series.data"></apexchart>
+      <apexchart ></apexchart>
+    </div>
+    <div id="chart">
     </div>
   </div>
 </template>
@@ -39,21 +41,31 @@ export default {
       username: '',
       user_id: '',
       clocknotify: '',
-      options: {},
-      series: [{
-        name: "Series 1",
-        data: [45, 52, 38, 45, 19, 33]
-      }],
-      xaxis: {
-        categories: [
-          "01 Jan",
-          "02 Jan",
-          "03 Jan",
-          "04 Jan",
-          "05 Jan",
-          "06 Jan"
-        ]
-      }
+      options = {
+        chart: {
+          height: 380,
+          width: "100%",
+          type: "line"
+        },
+        series: [
+          {
+            name: "Series 1",
+            data: [45, 52, 38, 45, 19, 33, 63]
+          }
+        ],
+        xaxis: {
+          categories: [
+            "01 Jan",
+            "02 Jan",
+            "03 Jan",
+            "04 Jan",
+            "05 Jan",
+            "06 Jan",
+            "07 Jan"
+          ]
+        }
+      },
+      chart = new ApexCharts(document.querySelector("#chart"), options)
     }
   },
   methods: {
@@ -96,9 +108,7 @@ export default {
   },
   mounted () {
     this.getuserinformation()
-    if (document.cookie.indexOf('session_jwt') > -1 ) {
-      alert("cookie session_jwt exists");
-    }
+    chart.render()
   }
 }
 </script>
