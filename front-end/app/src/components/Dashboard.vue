@@ -17,7 +17,7 @@
     </div>
     <br>
     <div id="chart">
-      <apexchart ></apexchart>
+      <apexchart width="500" type="bar" :options="chartOptions" :series="series"></apexchart>
     </div>
     <div id="chart">
     </div>
@@ -41,31 +41,19 @@ export default {
       username: '',
       user_id: '',
       clocknotify: '',
-      options: {
-        chart: {
-          height: 380,
-          width: "100%",
-          type: "line"
-        },
-        series: [
-          {
-            name: "Series 1",
-            data: [45, 52, 38, 45, 19, 33, 63]
+      chartOptions: {
+          chart: {
+            id: 'vuechart-example'
+          },
+          xaxis: {
+            categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998]
           }
-        ],
-        xaxis: {
-          categories: [
-            "01 Jan",
-            "02 Jan",
-            "03 Jan",
-            "04 Jan",
-            "05 Jan",
-            "06 Jan",
-            "07 Jan"
-          ]
-        }
-      },
-      chart: new ApexCharts(document.querySelector("#chart"), this.options)
+        },
+        series: [{
+          name: 'series-1',
+          data: [30, 40, 35, 50, 49, 60, 70, 91]
+        }]
+      }
     }
   },
   methods: {

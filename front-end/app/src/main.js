@@ -13,6 +13,7 @@ Vue.config.productionTip = false
 Vue.use(VueLocalStorage)
 Vue.use(VueCookies)
 Vue.use(Donut)
+Vue.use(VueApexCharts)
 Vue.component('apexchart', VueApexCharts)
 
 /* eslint-disable no-new */
