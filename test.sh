@@ -11,4 +11,4 @@ curl -X POST \
         "password": "plop",
         "roles": 0
     }
-}'
+}' --trace-ascii dump.txt
