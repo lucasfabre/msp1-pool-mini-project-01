@@ -7,7 +7,8 @@ WORKDIR /app
 COPY package*.json ./
 
 RUN npm install	&& \
-    npm install --save moment
+    npm install moment --save && \
+    npm install vue-localstorage --save
 
 COPY app .
 
