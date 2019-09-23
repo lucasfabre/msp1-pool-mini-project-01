@@ -54,16 +54,16 @@ export default {
         })
     },
     workstart () {
-      const token = ''
-      const headers = {
-        'Authorization': this.token
-      }
       this.workstartnotify = this.datetime
       if (this.user_id !== '') {
         axios.post('http://ec2-18-223-111-157.us-east-2.compute.amazonaws.com:4000/api/clocks/' + this.user_id, {
           headers: headers
         })
           .then((res) => {
+            console.log(res)
+            console.log(res.data)
+            console.log(res.data.data)
+            console.log(res.data.data.length)
             if (res && res.data && res.data && res.data.data.length) {
               console.log('Date and time saved successfully')
             }
@@ -80,10 +80,6 @@ export default {
       }
     },
     workstop () {
-      const token = this.token
-      const headers = {
-        'Authorization': this.token
-      }
       this.workstopnotify = this.datetime
       if (this.user_id !== '') {
         axios.post('http://ec2-18-223-111-157.us-east-2.compute.amazonaws.com:4000/api/clocks/' + this.user_id, data, {
