@@ -50,9 +50,9 @@ export default {
         .then((res) => {
           console.log(res.data.data)
           console.log(this.$cookies)
-          this.$cookies.isKey("token")
-          this.$cookies.isKey("session_jwt")
-          this.$cookies.keys().join("\n"); 
+          console.log(this.$cookies.isKey("token"))
+          console.log(this.$cookies.isKey("session_jwt"))
+          console.log(this.$cookies.keys().join("\n"))
           this.json = res.data.data
           this.username = this.json.firstname + ' ' + this.json.lastname
           this.user_id = this.json.id
