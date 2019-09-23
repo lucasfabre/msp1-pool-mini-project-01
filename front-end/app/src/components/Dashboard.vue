@@ -46,7 +46,7 @@ export default {
   },
   methods: {
     getuserinformation () {
-      axios.get('http://ec2-18-223-111-157.us-east-2.compute.amazonaws.com:4000/api/users?email=' + this.email)
+      axios.get('http://ec2-18-223-111-157.us-east-2.compute.amazonaws.com:4000/api/users/0')
         .then((res) => {
           console.log(res)
           console.log(res.data)
