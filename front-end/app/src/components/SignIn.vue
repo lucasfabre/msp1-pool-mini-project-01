@@ -6,8 +6,8 @@
     <div id='block'>
       <h1 id='title'>Sign in</h1>
       <br>
-      <p><label for="email">E-mail address<label><input type='text' class='rectangle' name='email' v-model='input.signin.email' @keyup.enter='trigger' placeholder='exemple@domain.com'/></p>
-      <p><label for="password">Password<label><input type='password' class='rectangle' name='password' v-model='input.signin.password' @keyup.enter='trigger' placeholder='Password'/></p>
+      <p><label for="email">E-mail address</label><input type='text' class='rectangle' name='email' v-model='input.signin.email' @keyup.enter='trigger' placeholder='exemple@domain.com'/></p>
+      <p><label for="password">Password</label><input type='password' class='rectangle' name='password' v-model='input.signin.password' @keyup.enter='trigger' placeholder='Password'/></p>
       <p v-if="loginnotify">{{ loginnotify }}</p><br>
       <div id='buttonblock'>
         <button type='button' class='button' v-on:click='signIn()'>Log in</button>

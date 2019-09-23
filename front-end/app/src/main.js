@@ -3,10 +3,12 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import VueLocalStorage from 'vue-localstorage'
+import VueLocalStorage from 'vue-localstorage' 
+import VueCookies from 'vue-cookies'
 
 Vue.config.productionTip = false
 Vue.use(VueLocalStorage)
+Vue.use(VueCookies)
 
 /* eslint-disable no-new */
 new Vue({

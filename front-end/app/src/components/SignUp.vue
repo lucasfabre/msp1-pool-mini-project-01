@@ -6,11 +6,11 @@
     <div id='block'>
       <h1 id='title'>Sign up</h1>
       <br>
-      <p><label for="firstname">First name<label><input type='text' class='rectangle' name='firstname' v-model='input.signup.firstname' placeholder='Antoine'/></p>
-      <p><label for="lastname">Last name<label><input type='text' class='rectangle' name='lastname' v-model='input.signup.lastname' placeholder='Dupont'/></p>
-      <p><label for="email">E-mail address<label><input type='email' class='rectangle' name='email' v-model='input.signup.email' placeholder='exemple@domain.com'/></p>
-      <p><label for="pasword">Password<label><input type='password' class='rectangle' name='password' v-model='input.signup.password' placeholder='Password'/></p>
-      <p><label for="retypepassword">Retype password<label><input type='password' class='rectangle' name='retypepassword' v-model='input.signup.retypepassword' placeholder='Retype password'/></p>
+      <p><label for="firstname">First name</label><input type='text' class='rectangle' name='firstname' v-model='input.signup.firstname' placeholder='Antoine'/></p>
+      <p><label for="lastname">Last name</label><input type='text' class='rectangle' name='lastname' v-model='input.signup.lastname' placeholder='Dupont'/></p>
+      <p><label for="email">E-mail address</label><input type='email' class='rectangle' name='email' v-model='input.signup.email' placeholder='exemple@domain.com'/></p>
+      <p><label for="pasword">Password</label><input type='password' class='rectangle' name='password' v-model='input.signup.password' placeholder='Password'/></p>
+      <p><label for="retypepassword">Retype password</label><input type='password' class='rectangle' name='retypepassword' v-model='input.signup.retypepassword' placeholder='Retype password'/></p>
       <div id='buttonblock'>
         <button type='button' class='button' v-on:click='signUp()'>Create account</button>
       </div>
