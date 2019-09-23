@@ -17,9 +17,7 @@
     </div>
     <br>
     <div id="chart">
-      <apexchart width="380" type="donut" :options="chartOptions" :series="series"></apexchart>
-    </div>
-    <div id="chart">
+      <apexchart width="380" type="donut" :options="options" :series="series"></apexchart>
     </div>
   </div>
 </template>
