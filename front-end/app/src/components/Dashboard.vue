@@ -35,6 +35,11 @@ export default {
       data: {},
       json: {},
       username: '',
+      user_id: '',
+      firstname: '',
+      lastname: '',
+      role: '',
+      password: '',
       workstartnotify: '',
       workstopnotify: ''
     }
@@ -53,13 +58,17 @@ export default {
           localStorage.firstname = this.firstname
           this.lastname = this.json.data[0].lastname
           localStorage.lastname = this.lastname
+          this.role = this.json.data[0].roles
+          localStorage.role = this.role
+          this.password = this.json.data[0].password
+          localStorage.password = this.password
         })
     },
     workstart () {
       const data = {
         clock: {
-          'user_id': 'test',
-          'start': this.datetime
+          'email': this.email,
+          'password': this.password
         }
       }
       const headers = {
@@ -67,7 +76,7 @@ export default {
       }
       this.workstartnotify = this.datetime
       if (this.user_id !== '') {
-        axios.post('http://ec2-18-223-111-157.us-east-2.compute.amazonaws.com:4000/api/clock', data, {
+        axios.post('http://ec2-18-223-111-157.us-east-2.compute.amazonaws.com:4000/api/clocks/' + this.role, data, {
           headers: headers
         })
           .then((res) => {
@@ -90,8 +99,8 @@ export default {
     workstop () {
       const data = {
         clock: {
-          'user_id': 'test',
-          'stop': this.datetime
+          'email': this.email,
+          'password': this.password
         }
       }
       const headers = {
@@ -99,7 +108,7 @@ export default {
       }
       this.workstopnotify = this.datetime
       if (this.user_id !== '') {
-        axios.post('http://ec2-18-223-111-157.us-east-2.compute.amazonaws.com:4000/api/workingtime', data, {
+        axios.post('http://ec2-18-223-111-157.us-east-2.compute.amazonaws.com:4000/api/clocks/' + this.role, data, {
           headers: headers
         })
           .then((res) => {
