@@ -1,27 +1,26 @@
-FROM node:lts-alpine
+FROM node:10.15.0 as ui-builder
 
-RUN npm install -g http-server
+RUN mkdir /usr/src/app
 
-WORKDIR /app
+WORKDIR /usr/src/app
 
-COPY package*.json ./
+ENV PATH /usr/src/app/node_modules/.bin:$PATH
 
-RUN npm install -g npm@latest               && \
-    npm install	                            && \
-    npm audit fix                           && \
-    npm audit fix --force                   && \
-    npm install	                            && \
+COPY package*.json /usr/src/app/
+
+RUN npm install                             && \
+    npm install -g @vue/cli                 && \
     npm install moment --save               && \
-    npm install vue-localstorage --save     && \
-    npm install vue-cookies --save          && \
-    npm audit fix                           && \
-    npm audit fix --force                   && \
-    npm install
+    npm install vue-cookies --save
 
-COPY app .
+COPY . /usr/src/app
 
 RUN npm run build
 
-EXPOSE 8080
+FROM nginx
 
-CMD [ "http-server", "dist" ]
+COPY  --from=ui-builder /usr/src/app/dist /usr/share/nginx/html
+
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]
