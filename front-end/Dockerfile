@@ -8,9 +8,9 @@ COPY package*.json ./
 
 RUN npm install -g npm@latest               && \
     npm install	                            && \
+    npm install node-gyp --save             && \
     npm audit fix                           && \
     npm audit fix --force                   && \
-    npm install node-gyp --save             && \
     npm install ajv-keywords --save         && \
     npm install fsevents --save             && \
     npm install moment --save               && \
