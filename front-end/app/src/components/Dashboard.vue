@@ -49,7 +49,7 @@ export default {
           x: 'Orange',
           y: 66
         }],
-      }
+      }]
     }
   },
   methods: {
