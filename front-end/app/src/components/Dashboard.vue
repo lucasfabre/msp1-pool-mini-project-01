@@ -17,7 +17,7 @@
     </div>
     <br>
     <div id="chart">
-      <apexchart width="500" type="bar" :options="chartOptions" :series="series"></apexchart>
+      <apexchart width="500" type="donut" :options="chartOptions" :series="series"></apexchart>
     </div>
     <div id="chart">
     </div>
@@ -95,7 +95,6 @@ export default {
   },
   mounted () {
     this.getuserinformation()
-    chart.render()
   }
 }
 </script>
