@@ -37,7 +37,7 @@ export default {
       username: '',
       user_id: '',
       clocknotify: '',
-      sections: [{ value: 25 }, { value: 25 }, { value: 25 }, { value: 25 }]
+      sections: [{ label: 'Yellow', value: 25 }, { label: 'Green', value: 25 }, { label: 'Black', value: 25 }, { label: 'Grey', value: 25 }]
     }
   },
   methods: {
