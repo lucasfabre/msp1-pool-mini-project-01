@@ -17,6 +17,8 @@
     </div>
     <br>
     <vc-donut :sections="sections">50%</vc-donut>
+    <p>Legend :</p>
+    <li>Green = Regular time</li>
   </div>
 </template>
 
@@ -37,7 +39,7 @@ export default {
       username: '',
       user_id: '',
       clocknotify: '',
-      sections: [{ color: 'Yellow', value: 25 }, { color: 'Green', value: 25 }, { color: 'Black', value: 25 }, { color: 'Grey', value: 25 }]
+      sections: [{ label: 'Regular time', color: 'Yellow', value: 57 }, { color: 'Green', value: 13 }, { color: 'Black', value: 15 }, { color: 'Grey', value: 15 }]
     }
   },
   methods: {
