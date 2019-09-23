@@ -7,11 +7,13 @@ import VueLocalStorage from 'vue-localstorage'
 import VueCookies from 'vue-cookies'
 import Donut from 'vue-css-donut-chart'
 import 'vue-css-donut-chart/dist/vcdonut.css'
+import VueApexCharts from 'vue-apexcharts'
 
 Vue.config.productionTip = false
 Vue.use(VueLocalStorage)
 Vue.use(VueCookies)
 Vue.use(Donut)
+Vue.component('apexchart', VueApexCharts)
 
 /* eslint-disable no-new */
 new Vue({
@@ -24,7 +26,7 @@ new Vue({
 new Vue({
   el: '#app',
   components: {
-    apexchart: Dashboard,
+    apexchart: VueApexCharts,
   },
   data: {
     series: [44, 55, 13, 33],
