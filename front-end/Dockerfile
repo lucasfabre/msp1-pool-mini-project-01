@@ -6,11 +6,13 @@ WORKDIR /app
 
 COPY package*.json ./
 
-RUN npm install	&& \
-    npm install moment --save && \
-    npm install vue-localstorage --save &&\
-    npm install vue-cookies --save && \
-    npm install vue-css-donut-chart
+RUN npm install	                            && \
+    npm install moment --save               && \
+    npm install vue-localstorage --save     &&\
+    npm install vue-cookies --save          && \
+    npm install vue-css-donut-chart         && \
+    npm install --save apexcharts           && \
+    npm install --save vue-apexcharts
 
 COPY app .
 
