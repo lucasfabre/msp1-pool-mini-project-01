@@ -48,37 +48,21 @@ export default {
     getuserinformation () {
       axios.get('http://ec2-18-223-111-157.us-east-2.compute.amazonaws.com:4000/api/users/0')
         .then((res) => {
-          console.log(res)
-          console.log(res.data)
           console.log(res.data.data)
-          this.json = res.data
-          this.username = this.json.data[0].firstname + ' ' + this.json.data[0].lastname
-          localStorage.username = this.username
-          this.user_id = this.json.data[0].id
-          localStorage.user_id = this.user_id
-          this.firstname = this.json.data[0].firstname
-          localStorage.firstname = this.firstname
-          this.lastname = this.json.data[0].lastname
-          localStorage.lastname = this.lastname
-          this.role = this.json.data[0].roles
-          localStorage.role = this.role
-          this.password = this.json.data[0].password
-          localStorage.password = this.password
+          console.log(this.$cookies);
+          this.json = res.data.data
+          this.username = this.json.firstname + ' ' + this.json.lastname
+          this.user_id = this.json.id
         })
     },
     workstart () {
-      const data = {
-        clock: {
-          'email': this.email,
-          'password': this.password
-        }
-      }
+      const token = ''
       const headers = {
-        'Content-Type': 'application/json'
+        'Authorization': this.token
       }
       this.workstartnotify = this.datetime
       if (this.user_id !== '') {
-        axios.post('http://ec2-18-223-111-157.us-east-2.compute.amazonaws.com:4000/api/clocks/' + this.role, data, {
+        axios.post('http://ec2-18-223-111-157.us-east-2.compute.amazonaws.com:4000/api/clocks/' + this.user_id, {
           headers: headers
         })
           .then((res) => {
@@ -99,18 +83,13 @@ export default {
       }
     },
     workstop () {
-      const data = {
-        clock: {
-          'email': this.email,
-          'password': this.password
-        }
-      }
+      const token = this.token
       const headers = {
-        'Content-Type': 'application/json'
+        'Authorization': this.token
       }
       this.workstopnotify = this.datetime
       if (this.user_id !== '') {
-        axios.post('http://ec2-18-223-111-157.us-east-2.compute.amazonaws.com:4000/api/clocks/' + this.role, data, {
+        axios.post('http://ec2-18-223-111-157.us-east-2.compute.amazonaws.com:4000/api/clocks/' + this.user_id, data, {
           headers: headers
         })
           .then((res) => {
@@ -135,9 +114,7 @@ export default {
     }
   },
   mounted () {
-    if (localStorage.email) {
-      this.email = localStorage.email
-    }
+    this.axioscookie()
     this.getuserinformation()
   }
 }
