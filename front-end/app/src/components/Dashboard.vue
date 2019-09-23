@@ -20,14 +20,8 @@
     <div id="app">
       <div class="chart-wrap">
         <div id="chart">
-          <apexchart type='donut' width=380 :options="chartOptions" :series="series" />
+          <apexchart width="380" type="donut" :options="options" :series="series"></apexchart>
         </div>
-      </div>
-      <div class="actions">
-        <button @click="randomize">RANDOMIZE</button>
-        <button @click="appendData">ADD</button>
-        <button @click="removeData">REMOVE</button>
-        <button @click="reset">RESET</button>
       </div>
     </div>
   </div>
@@ -50,6 +44,8 @@ export default {
       username: '',
       user_id: '',
       clocknotify: '',
+      options: {},
+      series: [44, 55, 41, 17, 15],
       sections: [{ label: 'Time performed', color: 'Green', value: 57 }, { label: 'Remaining time', color: 'Red', value: 13 }, { label: 'Overtime', color: 'Blue', value: 15 }, { color: 'black', value: 15 }]
     }
   },
