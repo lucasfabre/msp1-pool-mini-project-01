@@ -20,7 +20,7 @@
     <div id="app">
       <div class="chart-wrap">
         <div id="chart">
-          <apexchart type=donut width=380 :options="chartOptions" :series="series" />
+          <apexchart type='donut' width=380 :options="chartOptions" :series="series" />
         </div>
       </div>
       <div class="actions">
@@ -36,7 +36,6 @@
 <script>
 import axios from 'axios'
 import moment from 'moment'
-import VueApexCharts from 'vue-apexcharts'
 /* eslint-disable */
 
 moment.locale('fr')
