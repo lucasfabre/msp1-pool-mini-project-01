@@ -50,16 +50,15 @@ defmodule WorkingTimeManagerWeb.UserController do
     end
   end
 
-  def show(conn, %{"id" => id}) do
-    if conn.assigns.current_user != nil do
-      #The next command raise an error in postman if there is no check of current_user value : function nil.email/0 is undefined
-      Logger.info("connected user email: " <> conn.assigns.current_user.email)
-      case Resource.get_user(id) do
-        nil -> send_resp(conn, :not_found, "User not found")
-        user -> render(conn, "show.json", user: user)
-      end
+  def show(conn, %{"id" => req_id}) do
+    id = if req_id == "0" do
+      conn.assigns.current_user.id
     else
-      send_resp(conn, :not_found, "You must be sign in to access to this page")
+      req_id
+    end
+    case Resource.get_user(id) do
+      nil -> send_resp(conn, :not_found, "User not found")
+      user -> render(conn, "show.json", user: user)
     end
   end
 
