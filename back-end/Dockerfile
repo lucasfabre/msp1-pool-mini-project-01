@@ -23,7 +23,7 @@ ENV PGPASSWORD="postgres"
 
 RUN env
 
-RUN cd assets && npm install                                            && \
+RUN cd assets && npm install && npm audit fix                          && \
     cd ..
 
 EXPOSE 4000
