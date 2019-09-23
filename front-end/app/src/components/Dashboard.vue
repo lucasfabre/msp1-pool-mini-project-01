@@ -23,7 +23,6 @@
           <apexchart type=donut width=380 :options="chartOptions" :series="series" />
         </div>
       </div>
-
       <div class="actions">
         <button @click="randomize">RANDOMIZE</button>
         <button @click="appendData">ADD</button>
@@ -37,6 +36,7 @@
 <script>
 import axios from 'axios'
 import moment from 'moment'
+import VueApexCharts from 'vue-apexcharts'
 /* eslint-disable */
 
 moment.locale('fr')
