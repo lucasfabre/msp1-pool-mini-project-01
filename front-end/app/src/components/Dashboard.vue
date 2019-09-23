@@ -65,7 +65,7 @@ export default {
           ]
         }
       },
-      chart: new ApexCharts(document.querySelector("#chart"), options)
+      chart: new ApexCharts(document.querySelector("#chart"), this.options)
     }
   },
   methods: {
