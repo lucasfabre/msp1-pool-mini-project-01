@@ -16,7 +16,7 @@
       <button type='button' class='button' v-on:click='updatepage()'>Update your account</button>
     </div>
     <br>
-    <vc-donut background="white" foreground="grey" :size="200" unit="px" :thickness="30" has-legend legend-placement="top" :sections="sections" :start-angle="0" @section-click="handleSectionClick">Working time situation</vc-donut>
+    <vc-donut background="white" foreground="grey" :size="200" unit="px" :thickness="30" has-legend legend-placement="top" :sections="sections" :total="100" :start-angle="0" @section-click="handleSectionClick">Working time situation</vc-donut>
   </div>
 </template>
 
