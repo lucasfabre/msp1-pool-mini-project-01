@@ -37,7 +37,12 @@ export default {
       username: '',
       user_id: '',
       clocknotify: '',
-      sections: [{ label: 'Time performed', color: 'Green', value: 160 }, { label: 'Remaining time', color: 'Red', value: 13 }, { label: 'Overtime', color: 'Blue', value: 15 }, { color: 'black', value: 15 }]
+      a: '160',
+      b: '15',
+      c: '100',
+      d: '1',
+      e: a + b + c + d,
+      sections: [{ label: 'Time performed', color: 'Green', value: a/e }, { label: 'Remaining time', color: 'Red', value: b/e }, { label: 'Overtime', color: 'Blue', value: c/e }, { color: 'black', value: d/e }]
     }
   },
   methods: {
