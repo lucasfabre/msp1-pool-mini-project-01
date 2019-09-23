@@ -8,17 +8,12 @@ COPY package*.json ./
 
 RUN npm install -g npm@latest               && \
     npm install	                            && \
-    npm install node-gyp --save             && \
     npm audit fix                           && \
     npm audit fix --force                   && \
-    npm install ajv-keywords --save         && \
-    npm install fsevents --save             && \
+    npm install	                            && \
     npm install moment --save               && \
     npm install vue-localstorage --save     && \
-    npm install jquery --save               && \
     npm install vue-cookies --save          && \
-    npm audit fix                           && \
-    npm audit fix --force                   && \
     npm install vue-morris --save           && \
     npm audit fix                           && \
     npm audit fix --force                   && \
