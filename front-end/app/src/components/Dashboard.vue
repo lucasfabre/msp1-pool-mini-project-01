@@ -16,13 +16,8 @@
       <button type='button' class='button' v-on:click='updatepage()'>Update your account</button>
     </div>
     <br>
-    <vc-donut background="white" foreground="grey" :size="200" unit="px" :thickness="30" has-legend legend-placement="top" :sections="sections" :total="100" :start-angle="0" @section-click="handleSectionClick">Working time situation</vc-donut>
-    <div id="app">
-      <div class="chart-wrap">
-        <div id="chart">
-          <apexchart width="380" type="donut" :options="options" :series="series"></apexchart>
-        </div>
-      </div>
+    <div id="chart">
+      <apexchart width="380" type="donut" :options="options" :series="series" :categories></apexchart>
     </div>
   </div>
 </template>
@@ -45,8 +40,16 @@ export default {
       user_id: '',
       clocknotify: '',
       options: {},
-      series: [44, 55, 41, 17, 15],
-      sections: [{ label: 'Time performed', color: 'Green', value: 57 }, { label: 'Remaining time', color: 'Red', value: 13 }, { label: 'Overtime', color: 'Blue', value: 15 }, { color: 'black', value: 15 }]
+      series: [{
+        data: [{
+          x: 'Apple',
+          y: 54
+        },
+        {
+          x: 'Orange',
+          y: 66
+        }],
+      }
     }
   },
   methods: {
