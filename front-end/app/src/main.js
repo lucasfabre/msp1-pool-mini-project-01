@@ -20,14 +20,7 @@ new Vue({
   el: '#app',
   router,
   components: { App },
-  template: '<App/>'
-})
-
-new Vue({
-  el: '#app',
-  components: {
-    apexchart: VueApexCharts,
-  },
+  template: '<App/>',
   data: {
     series: [44, 55, 13, 33],
     chartOptions: {
@@ -49,7 +42,7 @@ new Vue({
       legend: {
         position: 'right',
         offsetY: 0,
-        height: 230,
+        height: 230
       }
     }
   },
