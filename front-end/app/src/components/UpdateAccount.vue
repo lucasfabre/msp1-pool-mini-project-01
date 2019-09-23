@@ -33,11 +33,11 @@ export default {
     return {
       input: {
         update: {
-          firstname: this.firstname,
-          lastname: this.lastname,
-          email: this.email,
-          password: this.password,
-          retypepassword: this.password
+          firstname: '',
+          lastname: '',
+          email: '',
+          password: '',
+          retypepassword: ''
         }
       }
     }
@@ -46,11 +46,11 @@ export default {
     updateaccount () {
       const data = {
         user: {
-          'user_id': this.user_id,
+          'email': this.input.update.email,
           'firstname': this.input.update.firstname,
           'lastname': this.input.update.lastname,
-          'email': this.input.update.email,
-          'password': this.input.update.password
+          'password': this.input.update.password,
+          'roles': 1
         }
       }
       const headers = {
