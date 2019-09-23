@@ -17,7 +17,7 @@
     </div>
     <br>
     <div id="chart">
-      <apexchart width="380" type="donut" :options="chartOptions"></apexchart>
+      <donut-chart id="donut" :data="donutData" colors='[ "#FF6384", "#36A2EB", "#FFCE56" ]' resize="true"></donut-chart>
     </div>
   </div>
 </template>
@@ -25,6 +25,9 @@
 <script>
 import axios from 'axios'
 import moment from 'moment'
+import Raphael from 'raphael/raphael'
+global.Raphael = Raphael
+import { DonutChart, BarChart, LineChart, AreaChart } from 'vue-morris'
 /* eslint-disable */
 
 moment.locale('fr')
@@ -39,12 +42,11 @@ export default {
       username: '',
       user_id: '',
       clocknotify: '',
-      options: {
-        xaxis: {
-          categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998]
-        },
-        series: [30, 40, 35, 50, 49, 60, 70, 91]
-      },
+      donutData: [
+        { label: 'Red', value: 300 },
+        { label: 'Blue', value: 50 },
+        { label: 'Yellow', value: 100 }
+      ]
     }
   },
   methods: {

@@ -12,7 +12,8 @@ RUN npm install	                            && \
     npm install vue-cookies --save          && \
     npm install vue-css-donut-chart         && \
     npm install --save apexcharts           && \
-    npm install --save vue-apexcharts
+    npm install --save vue-apexcharts       && \
+    npm install vue-morris --save
 
 COPY app .
 
