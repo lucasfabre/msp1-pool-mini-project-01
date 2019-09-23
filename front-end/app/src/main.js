@@ -24,7 +24,7 @@ new Vue({
 new Vue({
   el: '#app',
   components: {
-    apexchart: VueApexCharts,
+    apexchart: Dashboard,
   },
   data: {
     series: [44, 55, 13, 33],
