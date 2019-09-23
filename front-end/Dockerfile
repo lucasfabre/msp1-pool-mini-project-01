@@ -9,7 +9,8 @@ COPY package*.json ./
 RUN npm install	&& \
     npm install moment --save && \
     npm install vue-localstorage --save &&\
-    npm install vue-cookies --save
+    npm install vue-cookies --save && \
+    npm install vue-css-donut-chart
 
 COPY app .
 

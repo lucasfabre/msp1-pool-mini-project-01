@@ -7,9 +7,7 @@
       <h1 id='title'>Timestamp</h1>
       <br>
       <div id='buttonblock'>
-        <button type='button' class='button' v-on:click='workstart()'>Let work begin !</button><p v-if="workstartnotify">{{ workstartnotify }}</p>
-        <br><br>
-        <button type='button' class='button' v-on:click='workstop()'>The workday is over !</button><p v-if="workstopnotify">{{ workstopnotify }}</p>
+        <button type='button' class='button' v-on:click='clock()'>Let work begin !</button><p v-if="clocknotify">{{ clocknotify }}</p>
       </div>
       <br>
     </div>
@@ -17,6 +15,8 @@
     <div id='buttonblock'>
       <button type='button' class='button' v-on:click='updatepage()'>Update your account</button>
     </div>
+    <br>
+    <vc-donut :sections="sections">50%</vc-donut>
   </div>
 </template>
 
@@ -36,12 +36,8 @@ export default {
       json: {},
       username: '',
       user_id: '',
-      firstname: '',
-      lastname: '',
-      role: '',
-      password: '',
-      workstartnotify: '',
-      workstopnotify: ''
+      clocknotify: '',
+      sections: [{ value: 25 }, { value: 25 }, { value: 25 }, { value: 25 }]
     }
   },
   methods: {
@@ -53,40 +49,16 @@ export default {
           this.user_id = this.json.id
         })
     },
-    workstart () {
-      this.workstartnotify = this.datetime
+    clock () {
+      const datetime = ''
+      this.clocknotify = this.datetime
       if (this.user_id !== '') {
-        axios.post('http://ec2-18-223-111-157.us-east-2.compute.amazonaws.com:4000/api/clocks/' + this.user_id, {
-          headers: headers
-        })
+        axios.post('http://ec2-18-223-111-157.us-east-2.compute.amazonaws.com:4000/api/clocks/' + this.user_id)
           .then((res) => {
             console.log(res)
             console.log(res.data)
             console.log(res.data.data)
             console.log(res.data.data.length)
-            if (res && res.data && res.data && res.data.data.length) {
-              console.log('Date and time saved successfully')
-            }
-            else {
-              console.log('Can\'t save date and time')
-            }
-          })
-          .catch((err) => {
-            console.error(err)
-          })
-      }
-      else {
-        console.log('An user_id must be present')
-      }
-    },
-    workstop () {
-      this.workstopnotify = this.datetime
-      if (this.user_id !== '') {
-        axios.post('http://ec2-18-223-111-157.us-east-2.compute.amazonaws.com:4000/api/clocks/' + this.user_id, data, {
-          headers: headers
-        })
-          .then((res) => {
-            console.log(res)
             if (res && res.data && res.data && res.data.data.length) {
               console.log('Date and time saved successfully')
             }

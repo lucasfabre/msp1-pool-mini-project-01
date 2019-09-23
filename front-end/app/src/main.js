@@ -5,10 +5,13 @@ import App from './App'
 import router from './router'
 import VueLocalStorage from 'vue-localstorage'
 import VueCookies from 'vue-cookies'
+import Donut from 'vue-css-donut-chart'
+import 'vue-css-donut-chart/dist/vcdonut.css'
 
 Vue.config.productionTip = false
 Vue.use(VueLocalStorage)
 Vue.use(VueCookies)
+Vue.use(Donut)
 
 /* eslint-disable no-new */
 new Vue({
