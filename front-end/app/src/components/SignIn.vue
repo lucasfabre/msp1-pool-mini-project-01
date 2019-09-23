@@ -47,7 +47,6 @@ export default {
       const headers = {
         'Content-Type': 'application/json'
       }
-      const cookie = ''
       if (this.input.signin.email !== '' && this.input.signin.password !== '') {
         axios.post('http://ec2-18-223-111-157.us-east-2.compute.amazonaws.com:4000/api/sign_in', data, {
           headers: headers
@@ -55,10 +54,9 @@ export default {
           .then((res) => {
             console.log(res)
             if (res && res.data && res.data.status) {
-              this.logCookie(cookie)
               this.loginnotify = 'Welcome !'
               console.log('sign in succeed')
-              localStorage.email = this.input.signin.email
+              console.log(this.$cookies);
               this.$router.push({path: '/dashboard'})
             }
             else {
@@ -73,11 +71,6 @@ export default {
       else {
         this.loginnotify = 'Your e-mail address and your password must be present'
         console.log('An e-mail address and password must be present')
-      }
-    },
-    logCookie(cookie) {
-      if (cookie) {
-        console.log(cookie.value)
       }
     },
     enterClicked(){

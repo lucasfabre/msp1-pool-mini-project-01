@@ -7,15 +7,29 @@
       <h1 id='title'>Timestamp</h1>
       <br>
       <div id='buttonblock'>
-        <button type='button' class='button' v-on:click='workstart()'>Let work begin !</button><p v-if="workstartnotify">{{ workstartnotify }}</p>
-        <br><br>
-        <button type='button' class='button' v-on:click='workstop()'>The workday is over !</button><p v-if="workstopnotify">{{ workstopnotify }}</p>
+        <button type='button' class='button' v-on:click='clock()'>Let work begin !</button><p v-if="clocknotify">{{ clocknotify }}</p>
       </div>
       <br>
     </div>
     <br>
     <div id='buttonblock'>
       <button type='button' class='button' v-on:click='updatepage()'>Update your account</button>
+    </div>
+    <br>
+    <vc-donut background="white" foreground="grey" :size="200" unit="px" :thickness="30" has-legend legend-placement="top" :sections="sections" :total="100" :start-angle="0" @section-click="handleSectionClick">Working time situation</vc-donut>
+    <div id="app">
+      <div class="chart-wrap">
+        <div id="chart">
+          <apexchart type=donut width=380 :options="chartOptions" :series="series" />
+        </div>
+      </div>
+
+      <div class="actions">
+        <button @click="randomize">RANDOMIZE</button>
+        <button @click="appendData">ADD</button>
+        <button @click="removeData">REMOVE</button>
+        <button @click="reset">RESET</button>
+      </div>
     </div>
   </div>
 </template>
@@ -36,85 +50,29 @@ export default {
       json: {},
       username: '',
       user_id: '',
-      firstname: '',
-      lastname: '',
-      role: '',
-      password: '',
-      workstartnotify: '',
-      workstopnotify: ''
+      clocknotify: '',
+      sections: [{ label: 'Time performed', color: 'Green', value: 57 }, { label: 'Remaining time', color: 'Red', value: 13 }, { label: 'Overtime', color: 'Blue', value: 15 }, { color: 'black', value: 15 }]
     }
   },
   methods: {
     getuserinformation () {
       axios.get('http://ec2-18-223-111-157.us-east-2.compute.amazonaws.com:4000/api/users/0')
         .then((res) => {
-          console.log(res)
-          console.log(res.data)
-          console.log(res.data.data)
-          this.json = res.data
-          this.username = this.json.data[0].firstname + ' ' + this.json.data[0].lastname
-          localStorage.username = this.username
-          this.user_id = this.json.data[0].id
-          localStorage.user_id = this.user_id
-          this.firstname = this.json.data[0].firstname
-          localStorage.firstname = this.firstname
-          this.lastname = this.json.data[0].lastname
-          localStorage.lastname = this.lastname
-          this.role = this.json.data[0].roles
-          localStorage.role = this.role
-          this.password = this.json.data[0].password
-          localStorage.password = this.password
+          this.json = res.data.data
+          this.username = this.json.firstname + ' ' + this.json.lastname
+          this.user_id = this.json.id
         })
     },
-    workstart () {
-      const data = {
-        clock: {
-          'email': this.email,
-          'password': this.password
-        }
-      }
-      const headers = {
-        'Content-Type': 'application/json'
-      }
-      this.workstartnotify = this.datetime
+    clock () {
+      const datetime = ''
+      this.clocknotify = this.datetime
       if (this.user_id !== '') {
-        axios.post('http://ec2-18-223-111-157.us-east-2.compute.amazonaws.com:4000/api/clocks/' + this.role, data, {
-          headers: headers
-        })
+        axios.post('http://ec2-18-223-111-157.us-east-2.compute.amazonaws.com:4000/api/clocks/' + this.user_id)
           .then((res) => {
             console.log(res)
-            if (res && res.data && res.data && res.data.data.length) {
-              console.log('Date and time saved successfully')
-            }
-            else {
-              console.log('Can\'t save date and time')
-            }
-          })
-          .catch((err) => {
-            console.error(err)
-          })
-      }
-      else {
-        console.log('An user_id must be present')
-      }
-    },
-    workstop () {
-      const data = {
-        clock: {
-          'email': this.email,
-          'password': this.password
-        }
-      }
-      const headers = {
-        'Content-Type': 'application/json'
-      }
-      this.workstopnotify = this.datetime
-      if (this.user_id !== '') {
-        axios.post('http://ec2-18-223-111-157.us-east-2.compute.amazonaws.com:4000/api/clocks/' + this.role, data, {
-          headers: headers
-        })
-          .then((res) => {
-            console.log(res)
+            console.log(res.data)
+            console.log(res.data.data)
+            console.log(res.data.data.length)
             if (res && res.data && res.data && res.data.data.length) {
               console.log('Date and time saved successfully')
             }
@@ -135,10 +93,10 @@ export default {
     }
   },
   mounted () {
-    if (localStorage.email) {
-      this.email = localStorage.email
-    }
     this.getuserinformation()
+    if (document.cookie.indexOf('session_jwt') > -1 ) {
+      alert("cookie session_jwt exists");
+    }
   }
 }
 </script>
