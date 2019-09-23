@@ -16,20 +16,10 @@
       <button type='button' class='button' v-on:click='updatepage()'>Update your account</button>
     </div>
     <br>
-    <vc-donut background="white" foreground="grey" :size="200" unit="px" :thickness="30" has-legend legend-placement="top" :sections="sections" :total="100" :start-angle="0" @section-click="handleSectionClick">Working time situation</vc-donut>
-    <div id="app">
-      <div class="chart-wrap">
-        <div id="chart">
-          <apexchart type=donut width=380 :options="chartOptions" :series="series" />
-        </div>
-      </div>
-
-      <div class="actions">
-        <button @click="randomize">RANDOMIZE</button>
-        <button @click="appendData">ADD</button>
-        <button @click="removeData">REMOVE</button>
-        <button @click="reset">RESET</button>
-      </div>
+    <div id="chart">
+      <apexchart ></apexchart>
+    </div>
+    <div id="chart">
     </div>
   </div>
 </template>
@@ -51,7 +41,31 @@ export default {
       username: '',
       user_id: '',
       clocknotify: '',
-      sections: [{ label: 'Time performed', color: 'Green', value: 57 }, { label: 'Remaining time', color: 'Red', value: 13 }, { label: 'Overtime', color: 'Blue', value: 15 }, { color: 'black', value: 15 }]
+      options: {
+        chart: {
+          height: 380,
+          width: "100%",
+          type: "line"
+        },
+        series: [
+          {
+            name: "Series 1",
+            data: [45, 52, 38, 45, 19, 33, 63]
+          }
+        ],
+        xaxis: {
+          categories: [
+            "01 Jan",
+            "02 Jan",
+            "03 Jan",
+            "04 Jan",
+            "05 Jan",
+            "06 Jan",
+            "07 Jan"
+          ]
+        }
+      },
+      chart: new ApexCharts(document.querySelector("#chart"), options)
     }
   },
   methods: {
@@ -94,9 +108,7 @@ export default {
   },
   mounted () {
     this.getuserinformation()
-    if (document.cookie.indexOf('session_jwt') > -1 ) {
-      alert("cookie session_jwt exists");
-    }
+    chart.render()
   }
 }
 </script>

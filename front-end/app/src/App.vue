@@ -44,6 +44,11 @@ label {
 #buttonblock {
   text-align: center;
 }
+#chart {
+  text-align: center;
+  max-width: 650px;
+  margin: 35px auto;
+}
 #rectangle {
   text-align: left 2px;
   margin-top: 1%;
