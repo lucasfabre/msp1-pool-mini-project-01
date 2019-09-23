@@ -7,13 +7,18 @@ WORKDIR /app
 COPY package*.json ./
 
 RUN npm install	                            && \
-    npm audit fix --force                   && \
+    npm audit fix                           && \
     npm install moment --save               && \
     npm install vue-localstorage --save     && \
     npm install vue-cookies --save          && \
+    npm audit fix                           && \
+    npm install jquery                      && \
     npm install vue-morris --save           && \
-    npm install ajv-keywords --save               && \
-    npm install fsevents --save
+    npm audit fix                           && \
+    npm install ajv-keywords --save         && \
+    npm install fsevents --save             && \
+    npm audit fix --force                   && \
+    npm install
 
 COPY app .
 
