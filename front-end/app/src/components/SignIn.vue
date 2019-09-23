@@ -6,8 +6,8 @@
     <div id='block'>
       <h1 id='title'>Sign in</h1>
       <br>
-      <p><label for="email">E-mail address<label><input type='text' class='rectangle' name='email' v-model='input.signin.email' @keyup.enter='trigger' placeholder='exemple@domain.com'/></p>
-      <p><label for="password">Password<label><input type='password' class='rectangle' name='password' v-model='input.signin.password' @keyup.enter='trigger' placeholder='Password'/></p>
+      <p><label for="email">E-mail address</label><input type='text' class='rectangle' name='email' v-model='input.signin.email' @keyup.enter='trigger' placeholder='exemple@domain.com'/></p>
+      <p><label for="password">Password</label><input type='password' class='rectangle' name='password' v-model='input.signin.password' @keyup.enter='trigger' placeholder='Password'/></p>
       <p v-if="loginnotify">{{ loginnotify }}</p><br>
       <div id='buttonblock'>
         <button type='button' class='button' v-on:click='signIn()'>Log in</button>
@@ -35,7 +35,7 @@ export default {
           password: ''
         }
       },
-      loginnotify: ''
+      loginnotify: '',
     }
   },
   methods: {
@@ -47,6 +47,7 @@ export default {
       const headers = {
         'Content-Type': 'application/json'
       }
+      const cookie = ''
       if (this.input.signin.email !== '' && this.input.signin.password !== '') {
         axios.post('http://ec2-18-223-111-157.us-east-2.compute.amazonaws.com:4000/api/sign_in', data, {
           headers: headers
@@ -54,13 +55,14 @@ export default {
           .then((res) => {
             console.log(res)
             if (res && res.data && res.data.status) {
+              this.logCookie(cookie)
               this.loginnotify = 'Welcome !'
               console.log('sign in succeed')
               localStorage.email = this.input.signin.email
               this.$router.push({path: '/dashboard'})
             }
             else {
-              this.loginnotify = 'The e-mail address is incorrect'
+              this.loginnotify = 'The e-mail address is unknown'
               console.log('sign in failed')
             }
           })
@@ -71,6 +73,11 @@ export default {
       else {
         this.loginnotify = 'Your e-mail address and your password must be present'
         console.log('An e-mail address and password must be present')
+      }
+    },
+    logCookie(cookie) {
+      if (cookie) {
+        console.log(cookie.value)
       }
     },
     enterClicked(){

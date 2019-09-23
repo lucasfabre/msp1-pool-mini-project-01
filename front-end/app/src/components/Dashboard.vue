@@ -46,9 +46,11 @@ export default {
   },
   methods: {
     getuserinformation () {
-      axios.get('http://ec2-18-223-111-157.us-east-2.compute.amazonaws.com:4000/api/users?email=' + this.email)
+      axios.get('http://ec2-18-223-111-157.us-east-2.compute.amazonaws.com:4000/api/users/0')
         .then((res) => {
           console.log(res)
+          console.log(res.data)
+          console.log(res.data.data)
           this.json = res.data
           this.username = this.json.data[0].firstname + ' ' + this.json.data[0].lastname
           localStorage.username = this.username
