@@ -41,7 +41,7 @@ export default {
       username: '',
       user_id: '',
       clocknotify: '',
-      options = {
+      options: {
         chart: {
           height: 380,
           width: "100%",
@@ -65,7 +65,7 @@ export default {
           ]
         }
       },
-      chart = new ApexCharts(document.querySelector("#chart"), options)
+      chart: new ApexCharts(document.querySelector("#chart"), options)
     }
   },
   methods: {
