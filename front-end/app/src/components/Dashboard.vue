@@ -16,9 +16,7 @@
       <button type='button' class='button' v-on:click='updatepage()'>Update your account</button>
     </div>
     <br>
-    <vc-donut :sections="sections">50%</vc-donut>
-    <p>Legend :</p>
-    <li>Green = Regular time</li>
+    <vc-donut background="white" foreground="grey" :size="200" unit="px" :thickness="30" has-legend legend-placement="top" :sections="sections" :start-angle="0" @section-click="handleSectionClick">Working time situation</vc-donut>
   </div>
 </template>
 
@@ -39,7 +37,7 @@ export default {
       username: '',
       user_id: '',
       clocknotify: '',
-      sections: [{ label: 'Regular time', color: 'Yellow', value: 57 }, { color: 'Green', value: 13 }, { color: 'Black', value: 15 }, { color: 'Grey', value: 15 }]
+      sections: [{ label: 'Time performed', color: 'Green', value: 160 }, { label: 'Remaining time', color: 'Red', value: 13 }, { label: 'Overtime', color: 'Blue', value: 15 }, { color: 'black', value: 15 }]
     }
   },
   methods: {
