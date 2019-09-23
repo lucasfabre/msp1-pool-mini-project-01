@@ -41,15 +41,19 @@ export default {
       clocknotify: '',
       options: {},
       series: [{
-        data: [{
-          x: 'Apple',
-          y: 54
-        },
-        {
-          x: 'Orange',
-          y: 66
-        }],
-      }]
+        name: "Series 1",
+        data: [45, 52, 38, 45, 19, 33]
+      }],
+      xaxis: {
+        categories: [
+          "01 Jan",
+          "02 Jan",
+          "03 Jan",
+          "04 Jan",
+          "05 Jan",
+          "06 Jan"
+        ]
+      }
     }
   },
   methods: {
