@@ -49,7 +49,10 @@ export default {
       axios.get('http://ec2-18-223-111-157.us-east-2.compute.amazonaws.com:4000/api/users/0')
         .then((res) => {
           console.log(res.data.data)
-          console.log(this.$cookies);
+          console.log(this.$cookies)
+          this.$cookies.isKey("token")
+          this.$cookies.isKey("session_jwt")
+          this.$cookies.keys().join("\n"); 
           this.json = res.data.data
           this.username = this.json.firstname + ' ' + this.json.lastname
           this.user_id = this.json.id
@@ -114,7 +117,6 @@ export default {
     }
   },
   mounted () {
-    this.axioscookie()
     this.getuserinformation()
   }
 }
