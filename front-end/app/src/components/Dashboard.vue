@@ -48,11 +48,6 @@ export default {
     getuserinformation () {
       axios.get('http://ec2-18-223-111-157.us-east-2.compute.amazonaws.com:4000/api/users/0')
         .then((res) => {
-          console.log(res.data.data)
-          console.log(this.$cookies)
-          console.log(this.$cookies.isKey("token"))
-          console.log(this.$cookies.isKey("session_jwt"))
-          console.log(this.$cookies.keys().join("\n"))
           this.json = res.data.data
           this.username = this.json.firstname + ' ' + this.json.lastname
           this.user_id = this.json.id
@@ -69,7 +64,6 @@ export default {
           headers: headers
         })
           .then((res) => {
-            console.log(res)
             if (res && res.data && res.data && res.data.data.length) {
               console.log('Date and time saved successfully')
             }
@@ -118,6 +112,9 @@ export default {
   },
   mounted () {
     this.getuserinformation()
+    if (document.cookie.indexOf('session_jwt') > -1 ) {
+      alert("cookie session_jwt exists");
+    }
   }
 }
 </script>
