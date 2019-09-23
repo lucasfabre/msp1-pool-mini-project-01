@@ -10,11 +10,9 @@ RUN npm install	                            && \
     npm install moment --save               && \
     npm install vue-localstorage --save     && \
     npm install vue-cookies --save          && \
-    npm install vue-css-donut-chart         && \
-    npm install --save apexcharts           && \
-    npm install --save vue-apexcharts       && \
     npm install vue-morris --save           && \
-    npm install ajv-keywords
+    npm install ajv-keywords                && \
+    npm install fsevents
 
 COPY app .
 
