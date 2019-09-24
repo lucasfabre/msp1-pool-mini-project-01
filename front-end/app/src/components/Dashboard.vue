@@ -17,7 +17,7 @@
     </div>
     <br>
     <div id="chart">
-      <apexchart width="380" type="bar" :options="options"></apexchart>
+      <apexchart width="380" type="bar" :options="options" :series="series"></apexchart>
     </div>
   </div>
 </template>
