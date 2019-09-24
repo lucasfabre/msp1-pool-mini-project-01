@@ -1,23 +1,13 @@
-FROM node:10.15.0 as ui-builder
+FROM node:10
 
-RUN mkdir /usr/src/app
+WORKDIR /app
 
-WORKDIR /usr/src/app
-
-ENV PATH /usr/src/app/node_modules/.bin:$PATH
-
-COPY package*.json /usr/src/app/
+COPY . .
 
 RUN npm install                             && \
-    npm install -g @vue/cli                 && \
     npm install moment --save               && \
-    npm install vue-cookies --save
-
-COPY . /usr/src/app
-
-RUN npm run build
-
-FROM nginx
+    npm install vue-cookies --save          && \
+    npm run build
 
 COPY  --from=ui-builder /usr/src/app/dist /usr/share/nginx/html
 
