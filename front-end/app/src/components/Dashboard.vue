@@ -25,7 +25,9 @@
 <script>
 import axios from 'axios'
 import moment from 'moment'
+import VueApexCharts from 'vue-apexcharts'
 /* eslint-disable */
+
 moment.locale('fr')
 export default {
   name: 'dashboard',
@@ -39,6 +41,9 @@ export default {
       user_id: '',
       clocknotify: '',
       options: {
+        chart: {
+          id: 'vuechart-example'
+        },
         xaxis: {
           categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
         },
