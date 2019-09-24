@@ -25,7 +25,6 @@
 <script>
 import axios from 'axios'
 import moment from 'moment'
-import VueApexCharts from 'vue-apexcharts'
 /* eslint-disable */
 
 moment.locale('fr')
@@ -46,12 +45,12 @@ export default {
         },
         xaxis: {
           categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-        },
+        }
+      },
       series:[{
         name: 'Hours',
         data: [30, 40, 45, 50, 49, 60, 70, 91, 30, 40, 45, 50]
       }]
-      },
     }
   },
   methods: {
