@@ -27,7 +27,7 @@ services:
       context: ./nginx-front-end
     restart: unless-stopped
     depends_on:
-      -phoenix
+      - phoenix
     ports:
       - "80:80"
 
