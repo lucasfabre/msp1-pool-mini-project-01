@@ -1,0 +1,9 @@
+FROM node:10
+ 
+ADD . /app
+WORKDIR /app
+ 
+RUN npm install && \
+    npm run build
+
+ENTRYPOINT ["ls", "-l"]
