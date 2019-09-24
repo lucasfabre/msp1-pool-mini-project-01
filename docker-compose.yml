@@ -34,7 +34,7 @@ services:
   front:
     build: ./nginx-front-end
     volumes:
-        - build:/app/dist
+      - build:/app/dist
   
   proxy:
     image: nginx
