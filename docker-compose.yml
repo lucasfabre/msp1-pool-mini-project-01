@@ -33,7 +33,7 @@ services:
   
   front:
     build: ./nginx-front-end
-      volumes:
+    volumes:
         - build:/app/dist
   
   proxy:
