@@ -1,16 +1,23 @@
-FROM node:10
+FROM node:lts-alpine
+
+RUN npm install -g http-server
 
 WORKDIR /app
 
-COPY . .
+COPY package*.json ./
 
-RUN npm install                             && \
+RUN npm install	                            && \
     npm install moment --save               && \
+    npm install vue-localstorage --save     &&\
     npm install vue-cookies --save          && \
-    npm run build
+    npm install vue-css-donut-chart         && \
+    npm install --save apexcharts           && \
+    npm install --save vue-apexcharts
 
-COPY  --from=ui-builder /usr/src/app/dist /usr/share/nginx/html
+COPY app .
 
-EXPOSE 80
+RUN npm run build
 
-CMD ["nginx", "-g", "daemon off;"]
+EXPOSE 8080
+
+CMD [ "http-server", "dist" ]
