@@ -1,6 +1,6 @@
 FROM node:10
  
-ADD . /app
+ADD app /app
 WORKDIR /app
  
 RUN npm install
