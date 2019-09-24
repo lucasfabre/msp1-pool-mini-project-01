@@ -6,8 +6,8 @@ WORKDIR /app
 
 COPY package*.json ./
 
-RUN npm install     && \
-    npm install -g node-gyp
+RUN npm install -g node-gyp     && \
+    npm install
 
 COPY app .
 
