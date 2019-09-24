@@ -48,7 +48,7 @@ export default {
         'Content-Type': 'application/json'
       }
       if (this.input.signin.email !== '' && this.input.signin.password !== '') {
-        axios.post('http://ec2-18-223-111-157.us-east-2.compute.amazonaws.com:4000/api/sign_in', data, {
+        axios.post('http://ec2-3-15-32-161.us-east-2.compute.amazonaws.com:4000/api/sign_in', data, {
           headers: headers
         })
           .then((res) => {
