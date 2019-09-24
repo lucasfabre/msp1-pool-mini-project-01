@@ -50,7 +50,7 @@ export default {
         .then((res) => {
           console.log(res)
           this.json = res.data
-          this.username = this.json.data[0].firstname + ' ' + this.json.data[0].lastname
+          this.username = this.json.data.firstname + ' ' + this.json.data[0].lastname
           localStorage.username = this.username
           this.user_id = this.json.data[0].id
           localStorage.user_id = this.user_id
