@@ -1,11 +1,22 @@
-FROM node:10
- 
-ADD app /app
+FROM node:latest as builder
+
 WORKDIR /app
- 
-RUN npm install
-RUN npm install apexcharts --save
-RUN npm install vue-apexcharts --save
+
+COPY ./app/package.json .
+
+RUN apt-get update && apt-get upgrade -y                        && \
+    apt-get install -y apt-utils git openssh-client python2.7
+
+RUN npm install                                                 &&\
+    npm install -g node-gyp 
+
+COPY ./app .
+
 RUN npm run build
 
-ENTRYPOINT ["ls", "-l"]
+FROM nginx:alpine
+COPY --from=builder /app/dist /usr/share/nginx/html
+RUN rm /etc/nginx/conf.d/default.conf
+COPY nginx.conf /etc/nginx/conf.d
+EXPOSE 80
+CMD [ "nginx", "-g", "daemon off;" ]
