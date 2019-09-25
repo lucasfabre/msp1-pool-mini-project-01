@@ -7,6 +7,8 @@ script:
 
 after_script:
   - docker-compose ps
+
+tests_routing:
   - ./unit-test/create_user.sh
   - ./unit-test/get_user.sh && ./unit-test/get_user_by_id.sh
   - ./unit-test/update_user.sh
