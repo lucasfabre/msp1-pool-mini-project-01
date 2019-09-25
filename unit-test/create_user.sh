@@ -5,7 +5,7 @@ curl -X POST \
   -H 'cache-control: no-cache,no-cache' \
   -d '{
     "user": {
-        "email": "test@epitech.eu",
+        "email": "mathilde.chabeau@epitech.eu",
         "firstname": "Mathilde",
         "lastname": "Chabeau",
         "password": "plop",

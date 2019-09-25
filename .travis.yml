@@ -9,18 +9,27 @@ jobs:
       after_script:
         - docker-compose ps
     - stage: "Tests users"
-      name: "Tests users"
-      script: ./unit-test/create_user.sh
       name: "create user"
-    - script: ./unit-test/get_user.sh && ./unit-test/get_user_by_id.sh
+      script: ./unit-test/create_user.sh
+    - script: ./unit-test/get_user.sh
       name: "get users"
+    - script: ./unit-test/get_user_by_id.sh
+      name: "get users by  id"
     - script: ./unit-test/update_user.sh
       name: "update user"
-    - script: ./unit-test/create_user.sh && ./unit-test/delete_user.sh
+    - script: ./unit-test/delete_user.sh
       name: "delete user"
+    - stage: "Tests clocks"
+      name: "create clock in"
+      script: ./unit-test/create_clock.sh
+    - script : ./unit-test/create_clock.sh
+      name: "create clock out"
+    - script: ./unit-test/get_clock.sh
+      name: "Get clock"
 
 after_script:
     - cat dumps.txt
+    - rm dumps.txt
 
 notifications:
   webhooks: https://outlook.office.com/webhook/fda60e47-d851-46da-9879-4a6c58bbfc04@901cb4ca-b862-4029-9306-e5cd0f6d9f86/TravisCI/7ca4246150114f65a5b731008b9d8bc6/c755656a-9f25-4fa1-8c17-f1c880043093
