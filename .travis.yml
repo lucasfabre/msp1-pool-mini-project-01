@@ -1,6 +1,9 @@
 services: 
   - docker
 
+before-script:
+  - sudo apt-get install -y jq
+
 jobs:
   include:
     - stage: "Build Docker"

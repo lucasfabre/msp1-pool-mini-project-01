@@ -1,5 +1,5 @@
-env && curl -X GET \
-  http://ec2-13-59-172-229.us-east-2.compute.amazonaws.com:4000/api/users/${ID_USER} \
+ne curl -X GET \
+  http://ec2-13-59-172-229.us-east-2.compute.amazonaws.com:4000/api/users/{cat id_user} \
   -H 'Content-Type: application/json' \
   -H 'Postman-Token: 30db51d8-5838-42ad-abe7-699643926744' \
   -H 'cache-control: no-cache' \

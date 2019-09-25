@@ -1,0 +1,40 @@
+== Info:   Trying 127.0.0.1...
+== Info: TCP_NODELAY set
+== Info: Connected to localhost (127.0.0.1) port 4000 (#0)
+=> Send header, 230 bytes (0xe6)
+0000: POST /api/sign_up HTTP/1.1
+001c: Host: localhost:4000
+0032: User-Agent: curl/7.63.0
+004b: Accept: */*
+0058: Content-Type: application/json
+0078: Postman-Token: fb207571-5301-488f-ada4-2913e2487311
+00ad: cache-control: no-cache,no-cache
+00cf: Content-Length: 172
+00e4: 
+=> Send data, 172 bytes (0xac)
+0000: {.    "user": {.        "email": "test11@epitech.eu",.        "f
+0040: irstname": "Mathilde",.        "lastname": "Chabeau",.        "p
+0080: assword": "plop",.        "roles": 0.    }.}
+== Info: upload completely sent off: 172 out of 172 bytes
+<= Recv header, 22 bytes (0x16)
+0000: HTTP/1.1 201 Created
+<= Recv header, 52 bytes (0x34)
+0000: cache-control: max-age=0, private, must-revalidate
+<= Recv header, 21 bytes (0x15)
+0000: content-length: 100
+<= Recv header, 47 bytes (0x2f)
+0000: content-type: application/json; charset=utf-8
+<= Recv header, 37 bytes (0x25)
+0000: date: Wed, 25 Sep 2019 13:36:07 GMT
+<= Recv header, 25 bytes (0x19)
+0000: location: /api/users/33
+<= Recv header, 16 bytes (0x10)
+0000: server: Cowboy
+<= Recv header, 36 bytes (0x24)
+0000: x-request-id: Fcex30b568XbwzAAAA6B
+<= Recv header, 2 bytes (0x2)
+0000: 
+<= Recv data, 100 bytes (0x64)
+0000: {"data":{"email":"test11@epitech.eu","firstname":"Mathilde","id"
+0040: :33,"lastname":"Chabeau","roles":0}}
+== Info: Connection #0 to host localhost left intact
