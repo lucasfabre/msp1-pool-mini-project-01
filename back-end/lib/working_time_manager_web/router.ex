@@ -22,6 +22,10 @@ defmodule WorkingTimeManagerWeb.Router do
     plug Authent.IsAdminPlug
   end
 
+  scope "/", WorkingTimeManagerWeb do
+    get "/", PageController, :index
+  end
+
   scope "/api", WorkingTimeManagerWeb do
     pipe_through :api
 
