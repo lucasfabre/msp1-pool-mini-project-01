@@ -21,16 +21,17 @@ services:
       - PGDATABASE=working_time_manager_dev
       - PGUSER=postgres
       - PGPASSWORD=postgres
-
-  app:
+  
+  front:
     build:
-      context: ./front-end
+      context: ./nginx-front-end
     restart: unless-stopped
     depends_on:
       - phoenix
     ports:
-      - "8080:8080"
+      - "80:80"
 
 volumes:
+  build:
   dbdata:
     external: false
