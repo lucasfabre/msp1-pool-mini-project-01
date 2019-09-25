@@ -6,6 +6,13 @@ import router from './router'
 import VueLocalStorage from 'vue-localstorage'
 import VueCookies from 'vue-cookies'
 import VueApexCharts from 'vue-apexcharts'
+import Raphael from 'raphael/raphael'
+global.Raphael = Raphael
+
+// JQUERY
+global.jQuery = require('jquery')
+let $ = global.jQuery
+window.$ = $
 
 Vue.config.productionTip = false
 Vue.use(VueLocalStorage)
