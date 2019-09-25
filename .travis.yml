@@ -19,8 +19,6 @@ jobs:
       name: "get users by  id"
     - script: ./unit-test/update_user.sh
       name: "update user"
-    - script: ./unit-test/delete_user.sh
-      name: "delete user"
     - stage: "Tests clocks"
       name: "create clock in"
       script: ./unit-test/create_clock.sh
@@ -28,6 +26,10 @@ jobs:
       name: "create clock out"
     - script: ./unit-test/get_clock.sh
       name: "Get clock"
+    - stage: "Delete user"
+      script: ./unit-test/delete_user.sh
+      name: "delete user"
+
 
 after_script:
     - cat dumps.txt
