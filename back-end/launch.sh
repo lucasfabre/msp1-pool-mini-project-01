@@ -2,4 +2,5 @@
 
 mix deps.get
 source ../.env
-mix phx.server
+cd assets && npm install && cd ..
+mix phx.server&
