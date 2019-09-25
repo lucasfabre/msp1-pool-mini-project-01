@@ -13,7 +13,7 @@ jobs:
       after_script:
         - docker-compose ps
     - stage: "Tests users"
-    - script: ./unit-test/get_user.sh
+      script: ./unit-test/get_user.sh
       name: "get users"
     - script: ./unit-test/get_user_by_id.sh
       name: "get users by  id"
