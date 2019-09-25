@@ -1,22 +1,22 @@
-FROM node:lts-alpine
-
-RUN npm install -g http-server
+FROM node:latest as builder
 
 WORKDIR /app
 
-COPY app/package*.json ./
+COPY ./app/package.json .
 
-RUN npm install	&& npm audit fix            && \
-    npm install moment --save               && \
-    npm install vue-localstorage --save     &&\
-    npm install vue-cookies --save          && \
-    npm install --save apexcharts           && \
-    npm install --save vue-apexcharts
+RUN apt-get update && apt-get upgrade -y                        && \
+    apt-get install -y apt-utils git openssh-client python2.7
 
-COPY app .
+RUN npm install && npm audit fix                                && \
+    npm install -g node-gyp 
+
+COPY ./app .
 
 RUN npm run build
 
-EXPOSE 8080
-
-CMD [ "http-server", "dist" ]
+FROM nginx:alpine
+COPY --from=builder /app/dist /usr/share/nginx/html
+RUN rm /etc/nginx/conf.d/default.conf
+COPY nginx.conf /etc/nginx/conf.d
+EXPOSE 80
+CMD [ "nginx", "-g", "daemon off;" ]
