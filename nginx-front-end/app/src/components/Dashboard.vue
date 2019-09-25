@@ -18,6 +18,7 @@
     <br>
     <div id="chart">
       <apexchart width="500" type="bar" :options="options" :series="series"></apexchart>
+      <donut-chart id="donut" :data="donutData" colors='[ "#FF6384", "#36A2EB", "#FFCE56" ]' resize="true"></donut-chart>
     </div>
   </div>
 </template>
@@ -25,7 +26,7 @@
 <script>
 import axios from 'axios'
 import moment from 'moment'
-/* eslint-disable */
+import { DonutChart } from 'vue-morris'
 
 moment.locale('fr')
 export default {
@@ -47,10 +48,15 @@ export default {
           categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
         }
       },
-      series:[{
+      series: [{
         name: 'Hours',
         data: [30, 40, 45, 50, 49, 60, 70, 91, 30, 40, 45, 50]
-      }]
+      }],
+      donutData: [
+        { label: 'Red', value: 300 },
+        { label: 'Blue', value: 50 },
+        { label: 'Yellow', value: 100 }
+      ]
     }
   },
   methods: {
@@ -93,6 +99,9 @@ export default {
   },
   mounted () {
     this.getuserinformation()
+  },
+  components: {
+    'donut-chart': DonutChart
   }
 }
 </script>
