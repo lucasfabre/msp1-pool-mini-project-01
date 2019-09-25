@@ -17,9 +17,8 @@
     </div>
     <br>
     <div id="chart">
-      <apexchart ></apexchart>
-    </div>
-    <div id="chart">
+      <apexchart width="500" type="bar" :options="options" :series="series"></apexchart>
+      <donut-chart id="donut" :data="donutData" colors='[ "#FF6384", "#36A2EB", "#FFCE56" ]' resize="true"></donut-chart>
     </div>
   </div>
 </template>
@@ -27,6 +26,9 @@
 <script>
 import axios from 'axios'
 import moment from 'moment'
+import Raphael from 'raphael/raphael'
+global.Raphael = Raphael
+import { DonutChart } from 'vue-morris'
 /* eslint-disable */
 
 moment.locale('fr')
@@ -43,34 +45,26 @@ export default {
       clocknotify: '',
       options: {
         chart: {
-          height: 380,
-          width: "100%",
-          type: "line"
+          id: 'vuechart-example'
         },
-        series: [
-          {
-            name: "Series 1",
-            data: [45, 52, 38, 45, 19, 33, 63]
-          }
-        ],
         xaxis: {
-          categories: [
-            "01 Jan",
-            "02 Jan",
-            "03 Jan",
-            "04 Jan",
-            "05 Jan",
-            "06 Jan",
-            "07 Jan"
-          ]
+          categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
         }
       },
-      chart: new ApexCharts(document.querySelector("#chart"), options)
+      series:[{
+        name: 'Hours',
+        data: [30, 40, 45, 50, 49, 60, 70, 91, 30, 40, 45, 50]
+      }],
+      donutData: [
+        { label: 'Red', value: 300 },
+        { label: 'Blue', value: 50 },
+        { label: 'Yellow', value: 100 }
+      ]
     }
   },
   methods: {
     getuserinformation () {
-      axios.get('http://ec2-18-223-111-157.us-east-2.compute.amazonaws.com:4000/api/users/0')
+      axios.get('http://ec2-3-15-32-161.us-east-2.compute.amazonaws.com:4000/api/users/0')
         .then((res) => {
           this.json = res.data.data
           this.username = this.json.firstname + ' ' + this.json.lastname
@@ -81,7 +75,7 @@ export default {
       const datetime = ''
       this.clocknotify = this.datetime
       if (this.user_id !== '') {
-        axios.post('http://ec2-18-223-111-157.us-east-2.compute.amazonaws.com:4000/api/clocks/' + this.user_id)
+        axios.post('http://ec2-3-15-32-161.us-east-2.compute.amazonaws.com:4000/api/clocks/' + this.user_id)
           .then((res) => {
             console.log(res)
             console.log(res.data)
@@ -108,7 +102,6 @@ export default {
   },
   mounted () {
     this.getuserinformation()
-    chart.render()
   }
 }
 </script>
