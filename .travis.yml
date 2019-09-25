@@ -3,6 +3,7 @@ services:
 
 before-script:
   - sudo apt-get install -y jq
+  - ./unit-test/create_user.sh
 
 jobs:
   include:
@@ -12,8 +13,6 @@ jobs:
       after_script:
         - docker-compose ps
     - stage: "Tests users"
-      name: "create user"
-      script: ./unit-test/create_user.sh
     - script: ./unit-test/get_user.sh
       name: "get users"
     - script: ./unit-test/get_user_by_id.sh
