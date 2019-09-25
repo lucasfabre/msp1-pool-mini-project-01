@@ -6,4 +6,4 @@ curl -X POST \
   -d '{
         "email": "mathilde.chabeau@epitech.eu",
         "password": "plop"
-}'
+}' --trace-ascii dumps.txt

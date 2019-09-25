@@ -3,7 +3,7 @@ services:
 
 before-script:
   - sudo apt-get install -y jq
-  - ls && ./unit-test/create_user.sh
+  - ./unit-test/create_user.sh
 
 jobs:
   include:

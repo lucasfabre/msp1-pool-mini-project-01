@@ -12,4 +12,4 @@ curl -X PUT \
         "password": "plop",
         "roles": 0
     }
-}'
+}' --trace-ascii dumps.txt
