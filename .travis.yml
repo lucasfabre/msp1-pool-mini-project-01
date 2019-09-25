@@ -4,11 +4,9 @@ services:
 before-script:
   - sudo apt-get install -y jq
 
-deploy:
-  - provider: script
-    script: ./unit-test/create-user.sh
-    on:
-      branch: dev
+env:
+  global:
+    - ID_USER=$(./unit-test/create-user.sh)
 
 jobs:
   include:
@@ -20,7 +18,7 @@ jobs:
     - stage: "Tests users"
       script: cat id_user && ./unit-test/get_user.sh
       name: "get users"
-    - script: cat id_user && ./unit-test/get_user_by_id.sh
+    - script: env | grep "ID_USER" && ./unit-test/get_user_by_id.sh
       name: "get users by  id"
     - script: cat id_user && ./unit-test/update_user.sh
       name: "update user"
