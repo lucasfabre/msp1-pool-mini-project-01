@@ -52,14 +52,14 @@ export default {
         'Content-Type': 'application/json'
       }
       if (this.input.signup.email !== '' && this.input.signup.firstname !== '' && this.input.signup.lastname !== '' && this.input.signup.password !== '' && this.input.signup.retypepassword === this.input.signup.password) {
-        axios.post('http://ec2-18-223-111-157.us-east-2.compute.amazonaws.com:4000/api/users', data, {
+        axios.post('http://ec2-18-223-111-157.us-east-2.compute.amazonaws.com:4000/api/sign_up', data, {
           headers: headers
         })
           .then((res) => {
             console.log(res)
             if (res && res.data && res.data.data) {
               console.log('sign up succeed')
-              this.$router.push({path: '/dashboard'})
+              this.$router.push({path: '/sign_in'})
             }
             else {
               console.log('sign up failed')

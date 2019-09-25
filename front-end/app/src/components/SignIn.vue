@@ -35,7 +35,7 @@ export default {
           password: ''
         }
       },
-      loginnotify: ''
+      loginnotify: '',
     }
   },
   methods: {
@@ -48,7 +48,7 @@ export default {
         'Content-Type': 'application/json'
       }
       if (this.input.signin.email !== '' && this.input.signin.password !== '') {
-        axios.post('http://ec2-18-223-111-157.us-east-2.compute.amazonaws.com:4000/api/sign_in', data, {
+        axios.post('http://ec2-3-15-32-161.us-east-2.compute.amazonaws.com:4000/api/sign_in', data, {
           headers: headers
         })
           .then((res) => {
@@ -56,11 +56,11 @@ export default {
             if (res && res.data && res.data.status) {
               this.loginnotify = 'Welcome !'
               console.log('sign in succeed')
-              localStorage.email = this.input.signin.email
+              console.log(this.$cookies);
               this.$router.push({path: '/dashboard'})
             }
             else {
-              this.loginnotify = 'The e-mail address is incorrect'
+              this.loginnotify = 'The e-mail address is unknown'
               console.log('sign in failed')
             }
           })

@@ -4,11 +4,14 @@ RUN npm install -g http-server
 
 WORKDIR /app
 
-COPY package*.json ./
+COPY app/package*.json ./
 
-RUN npm install	&& npm audit fix && \
-    npm install moment --save && \
-    npm install vue-localstorage --save
+RUN npm install	&& npm audit fix            && \
+    npm install moment --save               && \
+    npm install vue-localstorage --save     &&\
+    npm install vue-cookies --save          && \
+    npm install --save apexcharts           && \
+    npm install --save vue-apexcharts
 
 COPY app .
 

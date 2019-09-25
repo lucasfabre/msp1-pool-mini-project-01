@@ -1,3 +1,3 @@
 #!/bin/bash
 
-cd front-end/ && ./launch.sh
+cd nginx-front-end/ && ./launch.sh

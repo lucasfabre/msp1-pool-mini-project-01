@@ -10,7 +10,7 @@ RUN apt-get update                                                      && \
     apt-get install -y nodejs                                           && \
     mix local.hex --force                                               && \
     mix local.rebar --force                                             && \
-    mix deps.get							&& \
+    mix deps.get							                            && \
     mix do compile
 
 COPY . .

@@ -33,11 +33,11 @@ export default {
     return {
       input: {
         update: {
-          firstname: this.firstname,
-          lastname: this.lastname,
-          email: this.email,
-          password: this.password,
-          retypepassword: this.password
+          firstname: '',
+          lastname: '',
+          email: '',
+          password: '',
+          retypepassword: ''
         }
       }
     }
@@ -46,18 +46,18 @@ export default {
     updateaccount () {
       const data = {
         user: {
-          'user_id': this.user_id,
+          'email': this.input.update.email,
           'firstname': this.input.update.firstname,
           'lastname': this.input.update.lastname,
-          'email': this.input.update.email,
-          'password': this.input.update.password
+          'password': this.input.update.password,
+          'roles': 1
         }
       }
       const headers = {
         'Content-Type': 'application/json',
       }
       if (this.input.update.firstname !== '' && this.input.update.lastname !== '' && this.input.update.email !== '' && this.input.update.password !== '') {
-        axios.put('http://ec2-18-223-111-157.us-east-2.compute.amazonaws.com:4000/api/users', data, {
+        axios.put('http://ec2-3-15-32-161.us-east-2.compute.amazonaws.com:4000/api/users', data, {
           headers: headers
         }).then((res) => {
           console.log(res)
