@@ -3,7 +3,12 @@ services:
 
 before-script:
   - sudo apt-get install -y jq
-  - ./unit-test/create_user.sh
+
+deploy:
+  - provider: script
+    script: ./unit-test/create-user.sh
+    on:
+      branch: dev
 
 jobs:
   include:
