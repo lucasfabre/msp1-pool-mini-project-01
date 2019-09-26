@@ -26,8 +26,8 @@ after_script:
     - rm dumps.txt
 
 stages:
-    - Test environment var
     - Tests users
+    - Test environment var
     - Build Docker
 
 notifications:
