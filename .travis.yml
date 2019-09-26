@@ -6,7 +6,7 @@ before-script:
 
 env:
   global:
-    - ID_USER=$(./unit-test/create-user.sh)
+    - ID_USER=$(./unit-test/create_user.sh)
 
 jobs:
   include:
