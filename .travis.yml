@@ -16,22 +16,8 @@ jobs:
       after_script:
         - docker-compose ps
     - stage: "Tests users"
-      script: cat unit-test/id_user && ./unit-test/get_user.sh
+      script: cat unit-test/id_user && ./unit-test/get_user.sh && ./unit-test/get_user_by_id.sh && ./unit-test/update_user.sh && ./unit-test/create_clock.sh && && ./unit-test/get_clock.sh && ./unit-test/delete_user.sh
       name: "get users"
-    - script: cat unit-test/id_user && ./unit-test/get_user_by_id.sh
-      name: "get users by  id"
-    - script: cat unit-test/id_user && ./unit-test/update_user.sh
-      name: "update user"
-    - stage: "Tests clocks"
-      name: "create clock in"
-      script: cat unit-test/id_user && ./unit-test/create_clock.sh
-    - script : cat unit-test/id_user && ./unit-test/create_clock.sh
-      name: "create clock out"
-    - script: cat unit-test/id_user && ./unit-test/get_clock.sh
-      name: "Get clock"
-    - stage: "Delete user"
-      script: cat unit-test/id_user && ./unit-test/delete_user.sh
-      name: "delete user"
 
 
 after_script:
@@ -41,8 +27,6 @@ after_script:
 stages:
     - Test environment var
     - Tests users
-    - Tests clocks
-    - Delete user
     - Build Docker
 
 notifications:
