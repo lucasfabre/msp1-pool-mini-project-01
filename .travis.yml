@@ -10,9 +10,9 @@ env:
 
 jobs:
   include:
-    - stage "Test environment var"
-      name "Test env var"
-      script env | grep "ID_USER"
+    - stage: "Test environment var"
+      name: "Test environment var"
+      script: env | grep "ID_USER"
     - stage: "Build Docker"
       name: "Build Docker"
       script: docker-compose build && docker-compose up -d
