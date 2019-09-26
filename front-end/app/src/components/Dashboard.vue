@@ -62,7 +62,7 @@ export default {
   },
   methods: {
     getuserinformation () {
-      axios.get('http://ec2-13-59-172-229.us-east-2.compute.amazonaws.com:4000/api/users/0')
+      axios.get('/api/users/0')
         .then((res) => {
           this.json = res.data.data
           this.username = this.json.firstname + ' ' + this.json.lastname
@@ -73,7 +73,7 @@ export default {
       const datetime = ''
       this.clocknotify = this.datetime
       if (this.user_id !== '') {
-        axios.post('http://ec2-13-59-172-229.us-east-2.compute.amazonaws.com:4000/api/clocks/' + this.user_id)
+        axios.post('/api/clocks/' + this.user_id)
           .then((res) => {
             console.log(res)
             console.log(res.data)
