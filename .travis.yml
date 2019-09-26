@@ -16,7 +16,7 @@ jobs:
         - docker-compose ps
     - stage: "Tests users"
       name: "get users"
-      script: ./unit-test/create_user.sh && cp id_user unit-test/ && cat unit-test/id_user; ./unit-test/get_user.sh && ./unit-test/get_user_by_id.sh && ./unit-test/update_user.sh && ./unit-test/create_clock.sh && ./unit-test/get_clock.sh && ./unit-test/delete_user.sh
+      script: ./unit-test/create_user.sh && cp id_user unit-test/ && cat unit-test/id_user && cat dumps.txt; ./unit-test/get_user.sh && ./unit-test/get_user_by_id.sh && ./unit-test/update_user.sh && ./unit-test/create_clock.sh && ./unit-test/get_clock.sh && ./unit-test/delete_user.sh
 
 after_script:
     - cat dumps.txt
