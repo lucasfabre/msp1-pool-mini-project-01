@@ -3,10 +3,7 @@ services:
 
 before-script:
   - sudo apt-get install -y jq
-
-env:
-  global:
-    - ID_USER=$(./unit-test/create_user.sh)
+  - ./unit-test/create_user.sh
 
 jobs:
   include:
@@ -45,6 +42,7 @@ stages:
     - Test environment var
     - Tests users
     - Tests clocks
+    - Delete user
     - Build Docker
 
 notifications:
