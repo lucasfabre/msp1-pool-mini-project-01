@@ -1,5 +1,5 @@
 curl -X GET \
-  'http://ec2-13-59-172-229.us-east-2.compute.amazonaws.com:4000/api/users?email=mathilde.chabeau@epitech.eu' \
+  'http://ec2-13-59-172-229.us-east-2.compute.amazonaws.com:80/api/users?email=mathilde.chabeau@epitech.eu' \
   -H 'Content-Type: application/json' \
   -H 'Postman-Token: 7ef411ba-71fa-46d1-b097-1215c5119cac' \
   -H 'cache-control: no-cache' \

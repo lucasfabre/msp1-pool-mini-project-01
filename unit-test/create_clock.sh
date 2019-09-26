@@ -1,5 +1,5 @@
 curl -X POST \
-  http://ec2-13-59-172-229.us-east-2.compute.amazonaws.com:4000/api/clocks/$(cat id_user) \
+  http://ec2-13-59-172-229.us-east-2.compute.amazonaws.com:80/api/clocks/$(cat id_user) \
   -H 'Content-Type: application/json' \
   -H 'Postman-Token: 19a94fe7-b9ad-488d-bdb1-842e755b4c29' \
   -H 'cache-control: no-cache,no-cache' \
