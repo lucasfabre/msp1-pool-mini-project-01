@@ -3,34 +3,34 @@ services:
 
 install:
   - sudo apt-get install -y jq
-  - ./unit-test/create_user.sh
+  - ./unit-test/create_user.sh && cp id_user unit-test/
 
 jobs:
   include:
     - stage: "Test environment var"
       name: "Test environment var"
-      script: ls; cat id_user
+      script: ls; cat unit-test/id_user
     - stage: "Build Docker"
       name: "Build Docker"
       script: docker-compose build && docker-compose up -d
       after_script:
         - docker-compose ps
     - stage: "Tests users"
-      script: env | cat id_user && ./unit-test/get_user.sh
+      script: cat unit-test/id_user && ./unit-test/get_user.sh
       name: "get users"
-    - script: env | cat id_user && ./unit-test/get_user_by_id.sh
+    - script: cat unit-test/id_user && ./unit-test/get_user_by_id.sh
       name: "get users by  id"
-    - script: env | cat id_user && ./unit-test/update_user.sh
+    - script: cat unit-test/id_user && ./unit-test/update_user.sh
       name: "update user"
     - stage: "Tests clocks"
       name: "create clock in"
-      script: env | cat id_user && ./unit-test/create_clock.sh
-    - script : env | cat id_user && ./unit-test/create_clock.sh
+      script: cat unit-test/id_user && ./unit-test/create_clock.sh
+    - script : cat unit-test/id_user && ./unit-test/create_clock.sh
       name: "create clock out"
-    - script: env | cat id_user && ./unit-test/get_clock.sh
+    - script: cat unit-test/id_user && ./unit-test/get_clock.sh
       name: "Get clock"
     - stage: "Delete user"
-      script: env | cat id_user && ./unit-test/delete_user.sh
+      script: cat unit-test/id_user && ./unit-test/delete_user.sh
       name: "delete user"
 
 
