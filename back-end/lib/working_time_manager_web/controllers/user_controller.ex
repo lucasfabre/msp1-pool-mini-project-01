@@ -82,9 +82,10 @@ defmodule WorkingTimeManagerWeb.UserController do
     |> json(%{message: "ok"})
   end
 
-  def update(conn, %{"id" => id, "user" => user_params}) do
+  def update(conn, %{"id" => id, "user" => user_supplied_params}) do
+    hashed_password = Bcrypt.hash_pwd_salt(user_supplied_params["password"])
+    user_params = Map.put(user_supplied_params, "password", hashed_password)
     user = Resource.get_user!(id)
-
     with {:ok, %User{} = user} <- Resource.update_user(user, user_params) do
       render(conn, "show.json", user: user)
     else
@@ -94,7 +95,6 @@ defmodule WorkingTimeManagerWeb.UserController do
 
   def delete(conn, %{"id" => id}) do
     user = Resource.get_user!(id)
-
     with {:ok, %User{}} <- Resource.delete_user(user) do
       send_resp(conn, :no_content, "")
     end
