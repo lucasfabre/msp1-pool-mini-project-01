@@ -1,10 +1,8 @@
 services: 
   - docker
 
-before-script:
-  - sudo apt-get install -y jq
-
 before-install:
+  - sudo apt-get install -y jq
   - ./unit-test/create_user.sh
 
 jobs:
