@@ -1,9 +1,17 @@
 services: 
   - docker
 
+addons:
+  apt:
+    update: true
+
 script:
+  - ./before_compose.sh
   - docker-compose build
   - docker-compose up -d
+
+before_install:
+  - sudo apt-get install -y nodejs npm
 
 after_script:
   - docker-compose ps

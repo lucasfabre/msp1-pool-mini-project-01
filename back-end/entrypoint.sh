@@ -1,4 +1,4 @@
 #!/bin/bash
 
 set -xe
-mix ecto.create && mix phx.server
+mix ecto.setup && mix phx.server
