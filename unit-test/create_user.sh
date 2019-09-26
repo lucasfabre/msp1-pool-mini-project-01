@@ -5,7 +5,7 @@ export ID_USER=$(curl -X POST \
   -H 'cache-control: no-cache,no-cache' \
   -d '{
     "user": {
-        "email": "unitTest1@test.eu",
+        "email": "unitTest2@test.eu",
         "firstname": "Mathilde",
         "lastname": "Chabeau",
         "password": "plop",
