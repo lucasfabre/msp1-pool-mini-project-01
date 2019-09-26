@@ -9,7 +9,7 @@ jobs:
   include:
     - stage: "Test environment var"
       name: "Test environment var"
-      script: cat id_user
+      script: ls; cat id_user
     - stage: "Build Docker"
       name: "Build Docker"
       script: docker-compose build && docker-compose up -d
