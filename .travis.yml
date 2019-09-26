@@ -3,7 +3,7 @@ services:
 
 install:
   - sudo apt-get install -y jq
-  - ./unit-test/create_user.sh && cp id_user unit-test/
+  - ./unit-test/create_user.sh && cp id_user unit-test/ && cat dumps.txt
 
 jobs:
   include:
@@ -17,7 +17,7 @@ jobs:
         - docker-compose ps
     - stage: "Tests users"
       name: "get users"
-      script: cat unit-test/id_user && ./unit-test/get_user.sh && ./unit-test/get_user_by_id.sh && ./unit-test/update_user.sh && ./unit-test/create_clock.sh && ./unit-test/get_clock.sh && ./unit-test/delete_user.sh
+      script: cat unit-test/id_user; ./unit-test/get_user.sh && ./unit-test/get_user_by_id.sh && ./unit-test/update_user.sh && ./unit-test/create_clock.sh && ./unit-test/get_clock.sh && ./unit-test/delete_user.sh
 
 after_script:
     - cat dumps.txt
