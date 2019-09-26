@@ -11,8 +11,8 @@ global.Raphael = Raphael
 
 // JQUERY
 global.jQuery = require('jquery')
-let $ = global.jQuery
-window.$ = $
+let jQuery = global.jQuery
+window.jQuery = jQuery
 
 Vue.config.productionTip = false
 Vue.use(VueLocalStorage)
