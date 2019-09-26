@@ -26,8 +26,6 @@
 <script>
 import axios from 'axios'
 import moment from 'moment'
-import Raphael from 'raphael/raphael'
-global.Raphael = Raphael
 import { DonutChart } from 'vue-morris'
 /* eslint-disable */
 
@@ -51,7 +49,7 @@ export default {
           categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
         }
       },
-      series:[{
+      series: [{
         name: 'Hours',
         data: [30, 40, 45, 50, 49, 60, 70, 91, 30, 40, 45, 50]
       }],
@@ -64,7 +62,7 @@ export default {
   },
   methods: {
     getuserinformation () {
-      axios.get('http://ec2-3-15-32-161.us-east-2.compute.amazonaws.com:4000/api/users/0')
+      axios.get('http://ec2-13-59-172-229.us-east-2.compute.amazonaws.com:4000/api/users/0')
         .then((res) => {
           this.json = res.data.data
           this.username = this.json.firstname + ' ' + this.json.lastname
@@ -75,7 +73,7 @@ export default {
       const datetime = ''
       this.clocknotify = this.datetime
       if (this.user_id !== '') {
-        axios.post('http://ec2-3-15-32-161.us-east-2.compute.amazonaws.com:4000/api/clocks/' + this.user_id)
+        axios.post('http://ec2-13-59-172-229.us-east-2.compute.amazonaws.com:4000/api/clocks/' + this.user_id)
           .then((res) => {
             console.log(res)
             console.log(res.data)
@@ -102,6 +100,9 @@ export default {
   },
   mounted () {
     this.getuserinformation()
+  },
+  components: {
+    'donut-chart': DonutChart
   }
 }
 </script>
