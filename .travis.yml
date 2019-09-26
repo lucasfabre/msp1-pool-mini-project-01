@@ -16,9 +16,10 @@ jobs:
       after_script:
         - docker-compose ps
     - stage: "Tests users"
-      script: cat unit-test/id_user && ./unit-test/get_user.sh && ./unit-test/get_user_by_id.sh && ./unit-test/update_user.sh && ./unit-test/create_clock.sh && ./unit-test/get_clock.sh && ./unit-test/delete_user.sh
+      script: cat unit-test/id_user
       name: "get users"
-
+    - script: ./unit-test/get_user.sh && ./unit-test/get_user_by_id.sh && ./unit-test/update_user.sh && ./unit-test/create_clock.sh && ./unit-test/get_clock.sh && ./unit-test/delete_user.sh
+      name: test
 
 after_script:
     - cat dumps.txt
