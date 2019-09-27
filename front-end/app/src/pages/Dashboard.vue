@@ -68,7 +68,8 @@ export default {
       username: '',
       user_id: '',
       clockboolean: 0,
-      clocknotify: ''
+      clocknotify: '',
+      datetime: ''
     }
   },
   methods: {
@@ -88,13 +89,26 @@ export default {
       )
     },
     clock () {
-      this.user_id = '4'
       if (this.user_id !== '') {
         this.clocknotify = moment().format('LLL')
         axios.post('/api/clocks/' + this.user_id)
           .then((resp) => {
-            if (resp)
-            console.log(resp)
+            if (resp && resp.data && resp.data && resp.data.data) {
+              this.datetime = res.data.data.date
+              if (this.clockboolean === 0) {
+                this.render(start)
+                this.clockboolean = 1
+                console.log(this.clockboolean)
+              }
+              else if (this.clockboolean === 1) {
+                this.render(stop)
+                this.clockboolean = 0
+                console.log(this.clockboolean)
+              }
+              else {
+                console.log(this.clockboolean)
+              }
+            }
           }
         )
       }
@@ -102,17 +116,13 @@ export default {
         console.log('efg')
         /*this.$router.push({ name: 'Login' })*/
       }
-      if (this.clockboolean === 0) {
-        return createElement('p', 'Started at' + this.clocknotify)
-        this.clockboolean = 1
-        console.log(this.clockboolean)
-      }
-      else if (this.clockboolean === 1) {
-        return createElement('p', 'Stopped at' + this.clocknotify)
-        this.clockboolean = 0
-        console.log(this.clockboolean)
-      }
     }
+  },
+  render (start) {
+    return createElement('p', 'Started at' + this.datetime)
+  },
+  render (stop) {
+    return createElement('p', 'Stopped at' + this.datetime)
   },
   mounted () {
     this.getuserinformation()
