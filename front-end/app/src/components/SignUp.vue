@@ -52,7 +52,7 @@ export default {
         'Content-Type': 'application/json'
       }
       if (this.input.signup.email !== '' && this.input.signup.firstname !== '' && this.input.signup.lastname !== '' && this.input.signup.password !== '' && this.input.signup.retypepassword === this.input.signup.password) {
-        axios.post('http://ec2-13-59-172-229.us-east-2.compute.amazonaws.com:4000/api/sign_up', data, {
+        axios.post('/api/sign_up', data, {
           headers: headers
         })
           .then((res) => {

@@ -57,7 +57,7 @@ export default {
         'Content-Type': 'application/json',
       }
       if (this.input.update.firstname !== '' && this.input.update.lastname !== '' && this.input.update.email !== '' && this.input.update.password !== '') {
-        axios.put('http://ec2-13-59-172-229.us-east-2.compute.amazonaws.com:4000/api/users', data, {
+        axios.put('/api/users', data, {
           headers: headers
         }).then((res) => {
           console.log(res)
