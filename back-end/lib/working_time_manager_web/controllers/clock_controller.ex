@@ -9,6 +9,7 @@ defmodule WorkingTimeManagerWeb.ClockController do
   alias WorkingTimeManager.Resource
   alias WorkingTimeManager.Resource.Clock
   alias WorkingTimeManager.Utils.DateTimeHelper 
+  alias WorkingTimeManagerWeb.Controllers.ControllerHelper
 
   action_fallback WorkingTimeManagerWeb.FallbackController
 
@@ -53,12 +54,16 @@ defmodule WorkingTimeManagerWeb.ClockController do
         "date" => DateTimeHelper.parse(params["date"])
       }
     end
-    with {:ok, %Clock{} = clock} <- Resource.create_clock(clock_params) do
-      conn
-      |> put_status(:created)
-      |> render("show.json", clock: clock)
+    with {:ok, _} <- ControllerHelper.hasRightsToEditUser(conn, userid_string) do
+      with {:ok, %Clock{} = clock} <- Resource.create_clock(clock_params) do
+        conn
+        |> put_status(:created)
+        |> render("show.json", clock: clock)
+      else
+        {:error, _message} -> send_resp(conn, :not_found, "No clock")
+      end
     else
-      {:error, _message} -> send_resp(conn, :not_found, "No clock")
+      {:error, message} -> conn |> send_resp(:unauthorized, message)
     end
   end
 

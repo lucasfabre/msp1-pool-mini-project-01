@@ -6,7 +6,7 @@ defmodule WorkingTimeManagerWeb.UserController do
 
   alias WorkingTimeManager.Repo
   alias WorkingTimeManagerWeb.Authent.Token
-
+  alias WorkingTimeManagerWeb.Controllers.ControllerHelper
   alias WorkingTimeManager.Resource
   alias WorkingTimeManager.Resource.User
 
@@ -83,20 +83,28 @@ defmodule WorkingTimeManagerWeb.UserController do
   end
 
   def update(conn, %{"id" => id, "user" => user_supplied_params}) do
-    hashed_password = Bcrypt.hash_pwd_salt(user_supplied_params["password"])
-    user_params = Map.put(user_supplied_params, "password", hashed_password)
-    user = Resource.get_user!(id)
-    with {:ok, %User{} = user} <- Resource.update_user(user, user_params) do
-      render(conn, "show.json", user: user)
+    with {:ok, _} <- ControllerHelper.hasRightsToEditUser(conn, id) do
+      hashed_password = Bcrypt.hash_pwd_salt(user_supplied_params["password"])
+      user_params = Map.put(user_supplied_params, "password", hashed_password)
+      user = Resource.get_user!(id)
+      with {:ok, %User{} = user} <- Resource.update_user(user, user_params) do
+        render(conn, "show.json", user: user)
+      else
+        {:error, _message} -> send_resp(conn, :bad_request, "Bad request, cannot update user")
+      end
     else
-      {:error, _message} -> send_resp(conn, :bad_request, "Bad request, cannot update user")
+      {:error, message} -> conn |> send_resp(:unauthorized, message)
     end
   end
 
   def delete(conn, %{"id" => id}) do
-    user = Resource.get_user!(id)
-    with {:ok, %User{}} <- Resource.delete_user(user) do
-      send_resp(conn, :no_content, "")
+    with {:ok, _} <- ControllerHelper.hasRightsToEditUser(conn, id) do
+      user = Resource.get_user!(id)
+      with {:ok, %User{}} <- Resource.delete_user(user) do
+        send_resp(conn, :ok, "deleted")
+      end
+    else
+      {:error, message} -> conn |> send_resp(:unauthorized, message)
     end
   end
 end

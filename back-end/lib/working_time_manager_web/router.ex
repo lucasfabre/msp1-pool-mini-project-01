@@ -39,6 +39,7 @@ defmodule WorkingTimeManagerWeb.Router do
     end
 
     scope "/workingtimes/" do
+      pipe_through :isManager
       get    "/:userid",     WorkingTimeController, :index
       get    "/:userid/:id", WorkingTimeController, :show
       post   "/:userid",     WorkingTimeController, :create
@@ -47,6 +48,7 @@ defmodule WorkingTimeManagerWeb.Router do
     end
 
     scope "/clocks" do
+      pipe_through :isUser
       get "/:user",  ClockController, :getclock
       post "/:user", ClockController, :clock
     end

@@ -9,6 +9,7 @@ defmodule WorkingTimeManagerWeb.WorkingTimeController do
   alias WorkingTimeManager.Resource
   alias WorkingTimeManager.Utils.DateTimeHelper
   alias WorkingTimeManager.Resource.WorkingTime
+  alias WorkingTimeManagerWeb.Controllers.ControllerHelper
 
   action_fallback WorkingTimeManagerWeb.FallbackController
 
@@ -18,7 +19,7 @@ defmodule WorkingTimeManagerWeb.WorkingTimeController do
     {userid, _}  = Integer.parse(userid_param)
     workingtimes = from(w in WorkingTime, where: w.start >= ^start_date and w.end <= ^end_date and w.user == ^userid)
       |> Repo.all()
-    if workingtimes =! nil do
+    if workingtimes != nil do
       render(conn, "index.json", workingtimes: workingtimes)
     else
       send_resp(conn, :ok, "No content")
@@ -33,14 +34,18 @@ defmodule WorkingTimeManagerWeb.WorkingTimeController do
       :start => startdate,
       :end => enddate
     }
-    if Regex.match?(~r/(\d{4})-(\d{2})-(\d{2})\s(\d{2}):(\d{2}):(\d{2})$/, enddate) == false || Regex.match?(~r/(\d{4})-(\d{2})-(\d{2})\s(\d{2}):(\d{2}):(\d{2})$/, startdate) == false do
-      with {:ok, %WorkingTime{} = working_time} <- Resource.create_working_time(working_time_params) do
-        conn
-        |> put_status(:created)
-        |> render("show.json", working_time: working_time)
-      else
-        {:error, _message} -> send_resp(conn, :bad_request, "Bad request, cannot create workingtime")
+    with {:ok, _} <- ControllerHelper.hasRightsToEditUser(conn, userid) do
+      if Regex.match?(~r/(\d{4})-(\d{2})-(\d{2})\s(\d{2}):(\d{2}):(\d{2})$/, enddate) == false || Regex.match?(~r/(\d{4})-(\d{2})-(\d{2})\s(\d{2}):(\d{2}):(\d{2})$/, startdate) == false do
+        with {:ok, %WorkingTime{} = working_time} <- Resource.create_working_time(working_time_params) do
+          conn
+          |> put_status(:created)
+          |> render("show.json", working_time: working_time)
+        else
+          {:error, _message} -> send_resp(conn, :bad_request, "Bad request, cannot create workingtime")
+        end
       end
+    else
+      {:error, message} -> conn |> send_resp(:unauthorized, message)
     end
   end
 
@@ -57,16 +62,24 @@ defmodule WorkingTimeManagerWeb.WorkingTimeController do
 
   def update(conn, %{"id" => id, "working_time" => working_time_params}) do
     working_time = Resource.get_working_time!(id)
-    with {:ok, %WorkingTime{} = working_time} <- Resource.update_working_time(working_time, working_time_params) do
-      render(conn, "show.json", working_time: working_time)
+    with {:ok, _} <- ControllerHelper.hasRightsToEditUser(conn, working_time.user) do
+      with {:ok, %WorkingTime{} = working_time} <- Resource.update_working_time(working_time, working_time_params) do
+        render(conn, "show.json", working_time: working_time)
+      end
+    else
+      {:error, message} -> conn |> send_resp(:unauthorized, message)
     end
   end
 
   def delete(conn, %{"id" => id}) do
     working_time = Resource.get_working_time!(id)
-
-    with {:ok, %WorkingTime{}} <- Resource.delete_working_time(working_time) do
-      send_resp(conn, :no_content, "")
+    with {:ok, _} <- ControllerHelper.hasRightsToEditUser(conn, working_time.user) do
+      with {:ok, %WorkingTime{}} <- Resource.delete_working_time(working_time) do
+        send_resp(conn, :no_content, "")
+      end
+    else
+      {:error, message} -> conn |> send_resp(:unauthorized, message)
     end
   end
+
 end
