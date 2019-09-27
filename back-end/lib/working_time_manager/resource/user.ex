@@ -29,5 +29,7 @@ defmodule WorkingTimeManager.Resource.User do
       :password,
       :roles
     ])
+    |> validate_format(:firstname, ~r/^\w+$/)
+    |> validate_format(:lastname, ~r/^\w+$/)
   end
 end
