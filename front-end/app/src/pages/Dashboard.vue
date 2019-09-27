@@ -7,6 +7,7 @@
         <div id="timestamp">
           <button type='button' class="btn btn-success" v-on:click='clock()'>Clock !</button>
           <h4 v-if="this.clocknotify"> - {{ this.clocknotify }}</h4>
+          <p v-if="workstart">Heure de début {{ this.datetime }}</p>
         </div>
       </div>
       <br>
@@ -70,7 +71,8 @@ export default {
       clockboolean: 0,
       clocknotify: '',
       datetime: '',
-      currentClock: null
+      currentClock: null,
+      workstart: false
     }
   },
   methods: {
@@ -99,7 +101,7 @@ export default {
             if (resp && resp.data && resp.data && resp.data.data) {
               this.datetime = resp.data.data.date
               if (this.clockboolean === 0) {
-                this.render(start)
+                this.workstart = true
                 this.clockboolean = 1
                 console.log(this.clockboolean)
               }
