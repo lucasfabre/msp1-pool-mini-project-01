@@ -67,12 +67,13 @@ export default {
       json: {},
       username: '',
       user_id: '',
+      clockboolean: 0,
       clocknotify: ''
     }
   },
   methods: {
     getuserinformation () {
-      axios.get('http://ec2-13-59-172-229.us-east-2.compute.amazonaws.com/api/users/0')
+      axios.get('/api/users/0')
         .then((res) => {
           if (res && res.data && res.data && res.data.data) {
             this.json = res.data.data
@@ -83,17 +84,33 @@ export default {
             console.log('Il manque le cookie')
             /*this.$router.push({ name: 'Login' })*/
           }
-        })
+        }
+      )
     },
     clock () {
       this.user_id = '4'
       if (this.user_id !== '') {
         this.clocknotify = moment().format('LLL')
-        axios.post('http://ec2-13-59-172-229.us-east-2.compute.amazonaws.com/api/clocks/' + this.user_id)
+        axios.post('/api/clocks/' + this.user_id)
+          .then((resp) => {
+            if (resp)
+            console.log(resp)
+          }
+        )
       }
       else {
         console.log('efg')
         /*this.$router.push({ name: 'Login' })*/
+      }
+      if (this.clockboolean === 0) {
+        return createElement('p', 'Started at' + this.clocknotify)
+        this.clockboolean = 1
+        console.log(this.clockboolean)
+      }
+      else if (this.clockboolean === 1) {
+        return createElement('p', 'Stopped at' + this.clocknotify)
+        this.clockboolean = 0
+        console.log(this.clockboolean)
       }
     }
   },
