@@ -76,6 +76,7 @@ export default {
     getuserinformation () {
       axios.get('/api/users/0')
         .then((res) => {
+          console.log(res)
           if (res && res.data && res.data && res.data.data) {
             this.json = res.data.data
             this.username = this.json.firstname + ' ' + this.json.lastname
@@ -93,8 +94,9 @@ export default {
         this.clocknotify = moment().format('LLL')
         axios.post('/api/clocks/' + this.user_id)
           .then((resp) => {
+            console.log(resp)
             if (resp && resp.data && resp.data && resp.data.data) {
-              this.datetime = res.data.data.date
+              this.datetime = resp.data.data.date
               if (this.clockboolean === 0) {
                 this.render(start)
                 this.clockboolean = 1

@@ -10,7 +10,7 @@
                   <img src="static/favicon.png" alt="Time Manager Login Portal" width="180" height="180">
                   <h1 class="flex my-4 primary--text">Time Manager</h1>
                 </div>
-                <v-form>
+                <v-form @click='enterClicked()' ref='sendReply'>
                   <v-text-field
                     append-icon="person"
                     name="login"
@@ -29,7 +29,6 @@
                     v-model="password"
                     :error="error"
                     @click:append="hidePassword = !hidePassword"/>
-                  <i @click='enterClicked()' ref='sendReply'></i>
                 </v-form>
               </v-card-text>
               <v-card-actions>
