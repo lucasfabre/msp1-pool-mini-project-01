@@ -6,8 +6,9 @@
         <hr>
         <div id="timestamp">
           <button type='button' class="btn btn-success" v-on:click='clock()'>Clock !</button>
-          <h4 v-if="this.clocknotify"> - {{ this.clocknotify }}</h4>
-          <p v-if="workstart">Heure de début {{ this.datetime }}</p>
+          <br>
+          <p v-if="workstart">Heure de début: {{ this.datetime }}</p>
+          <p v-if="workstop">Heure de fin: {{ this.datetime }}</p>
         </div>
       </div>
       <br>
@@ -72,7 +73,8 @@ export default {
       clocknotify: '',
       datetime: '',
       currentClock: null,
-      workstart: false
+      workstart: false,
+      workstop: false
     }
   },
   methods: {
@@ -87,7 +89,7 @@ export default {
           }
           else {
             console.log('Il manque le cookie')
-            /*this.$router.push({ name: 'Login' })*/
+            this.$router.push({ name: 'Login' })
           }
         }
       )
@@ -106,7 +108,7 @@ export default {
                 console.log(this.clockboolean)
               }
               else if (this.clockboolean === 1) {
-                this.render(stop)
+                this.workstop = true
                 this.clockboolean = 0
                 console.log(this.clockboolean)
               }

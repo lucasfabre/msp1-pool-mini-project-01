@@ -10,7 +10,7 @@
                   <img src="static/favicon.png" alt="Time Manager Login Portal" width="180" height="180">
                   <h1 class="flex my-4 primary--text">Time Manager</h1>
                 </div>
-                <v-form @click='enterClicked()' ref='sendReply'>
+                <v-form>
                   <v-text-field
                     append-icon="person"
                     name="login"
@@ -28,7 +28,8 @@
                     :rules="[rules.required]"
                     v-model="password"
                     :error="error"
-                    @click:append="hidePassword = !hidePassword"/>
+                    @click:append="hidePassword = !hidePassword"
+                    @keyup.enter.native="this.login()"/>
                 </v-form>
               </v-card-text>
               <v-card-actions>
@@ -104,9 +105,6 @@ export default {
         vm.result = "Email or Password is incorrect.";
         vm.showResult = true;
       }
-    },
-    enterClicked(){
-      this.login()
     },
     trigger () {
     	this.$refs.sendReply.click()
