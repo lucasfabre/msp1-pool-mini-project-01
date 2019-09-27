@@ -139,6 +139,8 @@ export default {
   },
   created () {
     this.getUserInformation()
+  },
+  mounted () {
     this.getCurrentClock()
   },
   components: {
