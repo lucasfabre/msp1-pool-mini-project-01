@@ -8,7 +8,10 @@
           <button type='button' class="btn btn-success" v-on:click='clock()'>Clock !</button>
           <br>
           <p v-if="workstart">Heure de début: {{ this.datetime }}</p>
+          <br>
           <p v-if="workstop">Heure de fin: {{ this.datetime }}</p>
+          <br>
+          <button type='button' class="btn btn-success" v-on:click='getCurrentClock()'>Display clocks</button>
         </div>
       </div>
       <br>
@@ -71,7 +74,6 @@ export default {
       user_id: '',
       clockboolean: 0,
       clocknotify: '',
-      datetime: '',
       currentClock: null,
       workstart: false,
       workstop: false
@@ -95,6 +97,7 @@ export default {
       )
     },
     clock () {
+      datetime = ''
       if (this.user_id !== '') {
         this.clocknotify = moment().format('LLL')
         axios.post('/api/clocks/' + this.user_id)
@@ -143,9 +146,6 @@ export default {
   },
   created () {
     this.getUserInformation()
-  },
-  mounted () {
-    this.getCurrentClock()
   },
   components: {
     'donut-chart': DonutChart, BarChart

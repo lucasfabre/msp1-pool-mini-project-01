@@ -28,8 +28,7 @@
                     :rules="[rules.required]"
                     v-model="password"
                     :error="error"
-                    @click:append="hidePassword = !hidePassword"
-                    @keyup.enter.native="this.login()"/>
+                    @click:append="hidePassword = !hidePassword"/>
                 </v-form>
               </v-card-text>
               <v-card-actions>
