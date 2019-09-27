@@ -69,7 +69,8 @@ export default {
       user_id: '',
       clockboolean: 0,
       clocknotify: '',
-      datetime: ''
+      datetime: '',
+      currentClock: null
     }
   },
   methods: {
@@ -118,6 +119,16 @@ export default {
         console.log('efg')
         /*this.$router.push({ name: 'Login' })*/
       }
+    },
+    getCurrentClock () {
+      axios.get('/api/clocks/' + this.user_id)
+        .then(response => {
+          this.currentClock = response.data
+          console.log(this.currentClock)
+        })
+        .catch(error => {
+          console.log(error.message)
+        })
     }
   },
   render (start) {
@@ -125,6 +136,9 @@ export default {
   },
   render (stop) {
     return createElement('p', 'Stopped at' + this.datetime)
+  },
+  created () {
+    this.getCurrentClock()
   },
   mounted () {
     this.getuserinformation()
