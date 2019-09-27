@@ -74,7 +74,7 @@ export default {
     }
   },
   methods: {
-    getuserinformation () {
+    getUserInformation () {
       axios.get('/api/users/0')
         .then((res) => {
           console.log(res)
@@ -129,19 +129,17 @@ export default {
         .catch(error => {
           console.log(error.message)
         })
-    }
-  },
-  render (start) {
-    return createElement('p', 'Started at' + this.datetime)
-  },
-  render (stop) {
-    return createElement('p', 'Stopped at' + this.datetime)
+    },
+    render (start) {
+      return createElement('p', 'Started at' + this.datetime)
+    },
+    render (stop) {
+      return createElement('p', 'Stopped at' + this.datetime)
+    },
   },
   created () {
+    this.getUserInformation()
     this.getCurrentClock()
-  },
-  mounted () {
-    this.getuserinformation()
   },
   components: {
     'donut-chart': DonutChart, BarChart
