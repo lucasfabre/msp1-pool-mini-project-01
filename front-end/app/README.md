@@ -1,6 +1,24 @@
-# wilfried
+# Vue Admin Template
+Sample Admin Template based on Vuejs &amp; Vuetify.
 
-> test
+## Introduction
+Vue Admin Template is a Vue.js Based Admin Template. This template uses the vuetify components and styles.
+
+## Demo
+[Live Demo](https://fatihunlu.github.io/vue-admin-template)
+
+## Preview
+
+![Preview](https://github.com/fatihunlu/vue-admin-template/blob/master/static/template.gif)
+
+
+### Reference
+
+* [Vue.js](https://vuejs.org/)
+* [Vuetifyjs](https://vuetifyjs.com/)
+* [VueChartKick](https://github.com/ankane/vue-chartkick)
+* [vue-fullcalendar](https://github.com/Wanderxx/vue-fullcalendar)
+* [vue-swatches](https://saintplay.github.io/vue-swatches/#sub-using-a-preset)
 
 ## Build Setup
 
@@ -16,16 +34,13 @@ npm run build
 
 # build for production and view the bundle analyzer report
 npm run build --report
-
-# run unit tests
-npm run unit
-
-# run e2e tests
-npm run e2e
-
-# run all tests
-npm test
 ```
-
 For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
-# front-end-bootstrap
+
+### How can I support developers?
+- Star my GitHub repo :star:
+- Create pull requests, submit bugs, suggest new features or documentation updates :wrench:
+
+<a href="https://www.patreon.com/fatihunlu">
+  <img src="https://c5.patreon.com/external/logo/become_a_patron_button@2x.png" width="160">
+</a>
