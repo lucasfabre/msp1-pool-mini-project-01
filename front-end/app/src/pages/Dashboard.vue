@@ -7,8 +7,9 @@
         <div id="timestamp">
           <button type='button' class="btn btn-success" v-on:click='clock()'>Clock !</button>
           <br><br>
-          <p v-if="workstart">Heure de début: {{ this.clockstartnotify }}</p>
-          <p v-if="workstop">Heure de fin: {{ this.clockstopnotify }}</p>
+          <p v-if="workstart">Start time: {{ this.clockstartnotify }}</p>
+          <p v-if="workstop">End time: {{ this.clockstopnotify }}</p>
+          <p v-if="timeWorked">Time worked: {{ this.timeWorked }}</p>
           <br>
           <button type='button' class="btn btn-success" v-on:click='getCurrentClock()'>Display clocks</button>
         </div>
@@ -74,7 +75,8 @@ export default {
       clockboolean: 0,
       currentClock: null,
       workstart: false,
-      workstop: false
+      workstop: false,
+      timeWorked: false
     }
   },
   methods: {
@@ -113,6 +115,9 @@ export default {
                 this.clockboolean = 0
                 console.log(this.clockboolean)
                 this.clockstopnotify = moment().format('LLL')
+              }
+              else if (this.clockstartnotify !== '' && this.clockstopnotify !== '') {
+                this.timeWorked = moment.utc(moment(this.clockstartnotify,'LLL').diff(moment(this.clockstopnotify,'LLL'))).format("HH:mm")
               }
               else {
                 console.log(this.clockboolean)
