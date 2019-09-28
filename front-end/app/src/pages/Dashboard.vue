@@ -7,8 +7,8 @@
         <div id="timestamp">
           <button type='button' class="btn btn-success" v-on:click='clock()'>Clock !</button>
           <br><br>
-          <p v-if="workstart">Heure de début: {{ this.datetime }}</p>
-          <p v-if="workstop">Heure de fin: {{ this.datetime }}</p>
+          <p v-if="workstart">Heure de début: {{ this.clocknotify }}</p>
+          <p v-if="workstop">Heure de fin: {{ this.clocknotify }}</p>
           <br>
           <button type='button' class="btn btn-success" v-on:click='getCurrentClock()'>Display clocks</button>
         </div>
