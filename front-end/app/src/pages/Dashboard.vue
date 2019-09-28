@@ -72,7 +72,6 @@ export default {
       username: '',
       user_id: '',
       clockboolean: 0,
-      clocknotify: '',
       currentClock: null,
       workstart: false,
       workstop: false
@@ -96,9 +95,8 @@ export default {
       )
     },
     clock () {
-      const datetime = ''
+      const clocknotify = ''
       if (this.user_id !== '') {
-        this.clocknotify = moment().format('LLL')
         axios.post('/api/clocks/' + this.user_id)
           .then((resp) => {
             console.log(resp)
@@ -107,13 +105,13 @@ export default {
                 this.workstart = true
                 this.clockboolean = 1
                 console.log(this.clockboolean)
-                this.datetime = resp.data.data.date
+                this.clocknotify = moment().format('LLL')
               }
               else if (this.clockboolean === 1) {
                 this.workstop = true
                 this.clockboolean = 0
                 console.log(this.clockboolean)
-                this.datetime = resp.data.data.date
+                this.clocknotify = moment().format('LLL')
               }
               else {
                 console.log(this.clockboolean)
