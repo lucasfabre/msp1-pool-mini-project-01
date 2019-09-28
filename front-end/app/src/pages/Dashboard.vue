@@ -103,18 +103,17 @@ export default {
           .then((resp) => {
             console.log(resp)
             if (resp && resp.data && resp.data && resp.data.data) {
-              this.datetime = resp.data.data.date
               if (this.clockboolean === 0) {
                 this.workstart = true
                 this.clockboolean = 1
                 console.log(this.clockboolean)
-                this.datetime = ''
+                this.datetime = resp.data.data.date
               }
               else if (this.clockboolean === 1) {
                 this.workstop = true
                 this.clockboolean = 0
                 console.log(this.clockboolean)
-                this.datetime = ''
+                this.datetime = resp.data.data.date
               }
               else {
                 console.log(this.clockboolean)
