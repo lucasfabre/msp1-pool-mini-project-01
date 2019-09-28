@@ -6,9 +6,8 @@
         <hr>
         <div id="timestamp">
           <button type='button' class="btn btn-success" v-on:click='clock()'>Clock !</button>
-          <br>
+          <br><br>
           <p v-if="workstart">Heure de début: {{ this.datetime }}</p>
-          <br>
           <p v-if="workstop">Heure de fin: {{ this.datetime }}</p>
           <br>
           <button type='button' class="btn btn-success" v-on:click='getCurrentClock()'>Display clocks</button>
@@ -109,11 +108,13 @@ export default {
                 this.workstart = true
                 this.clockboolean = 1
                 console.log(this.clockboolean)
+                this.datetime = ''
               }
               else if (this.clockboolean === 1) {
                 this.workstop = true
                 this.clockboolean = 0
                 console.log(this.clockboolean)
+                this.datetime = ''
               }
               else {
                 console.log(this.clockboolean)
