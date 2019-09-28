@@ -97,7 +97,7 @@ export default {
       )
     },
     clock () {
-      datetime = ''
+      const datetime = ''
       if (this.user_id !== '') {
         this.clocknotify = moment().format('LLL')
         axios.post('/api/clocks/' + this.user_id)
@@ -163,7 +163,6 @@ export default {
   width: 800px;
 }
 #timestamp {
-  display: flex;
-  flex-basis: 30%;
+  margin: auto
 }
 </style>
