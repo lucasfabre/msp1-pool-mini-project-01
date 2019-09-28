@@ -7,8 +7,8 @@
         <div id="timestamp">
           <button type='button' class="btn btn-success" v-on:click='clock()'>Clock !</button>
           <br><br>
-          <p v-if="workstart">Heure de début: {{ this.clocknotify }}</p>
-          <p v-if="workstop">Heure de fin: {{ this.clocknotify }}</p>
+          <p v-if="workstart">Heure de début: {{ this.clockstartnotify }}</p>
+          <p v-if="workstop">Heure de fin: {{ this.clockstopnotify }}</p>
           <br>
           <button type='button' class="btn btn-success" v-on:click='getCurrentClock()'>Display clocks</button>
         </div>
@@ -95,7 +95,8 @@ export default {
       )
     },
     clock () {
-      const clocknotify = ''
+      const clockstartnotify = ''
+      const clockstopnotify = ''
       if (this.user_id !== '') {
         axios.post('/api/clocks/' + this.user_id)
           .then((resp) => {
@@ -105,13 +106,13 @@ export default {
                 this.workstart = true
                 this.clockboolean = 1
                 console.log(this.clockboolean)
-                this.clocknotify = moment().format('LLL')
+                this.clockstartnotify = moment().format('LLL')
               }
               else if (this.clockboolean === 1) {
                 this.workstop = true
                 this.clockboolean = 0
                 console.log(this.clockboolean)
-                this.clocknotify = moment().format('LLL')
+                this.clockstopnotify = moment().format('LLL')
               }
               else {
                 console.log(this.clockboolean)
