@@ -12,7 +12,7 @@ defmodule WorkingTimeManagerWeb.ClockView do
 
   def render("clock.json", %{clock: clock}) do
     %{id: clock.id,
-      date: clock.date,
+      date: WorkingTimeManager.Utils.DateTimeHelper.format(clock.date),
       status: clock.status,
       user: clock.user}
   end

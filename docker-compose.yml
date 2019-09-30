@@ -8,7 +8,7 @@ services:
     depends_on:
       - db
     ports:
-      - "4000:4000"
+      - "80:4000"
     environment: 
       - DATABASE_URL=ecto://postgres:postgres@db:5432/working_time_manager_dev
 
@@ -21,16 +21,8 @@ services:
       - PGDATABASE=working_time_manager_dev
       - PGUSER=postgres
       - PGPASSWORD=postgres
-
-  app:
-    build:
-      context: ./front-end
-    restart: unless-stopped
-    depends_on:
-      - phoenix
-    ports:
-      - "8080:8080"
-
+  
 volumes:
+  build:
   dbdata:
     external: false
