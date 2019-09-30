@@ -15,18 +15,20 @@
                     name="firstname"
                     label="Firstname"
                     type="text"
+                    v-model="firstname"
                     :error="error"
                     :rules="[rules.required]"/>
                   <v-text-field
-                    name="lasttname"
+                    name="lastname"
                     label="Lastname"
                     type="text"
+                    v-model="lastname"
                     :error="error"
                     :rules="[rules.required]"/>
                   <v-text-field
                     append-icon="person"
                     name="login"
-                    label="Login"
+                    label="E-mail address"
                     type="text"
                     v-model="email"
                     :error="error"
@@ -42,7 +44,7 @@
                     :error="error"
                     @click:append="hidePassword = !hidePassword"/>
                   <v-text-field
-                    :type="hidePassword ? 'password' : 'text'"
+                    :type="hidePassword ? 'retypePassword' : 'text'"
                     :append-icon="hidePassword ? 'visibility_off' : 'visibility'"
                     name="retypePassword"
                     label="Retype your password"
@@ -95,34 +97,35 @@ export default {
 
   methods: {
     signUp() {
-      const vm = this
       const data = {
-        'email': vm.email,
-        'firstname': vm.firstname,
-        'lastname': vm.lastname,
-        'password': vm.password,
-        'roles': 1
+        user: {
+          'email': this.email,
+          'firstname': this.firstname,
+          'lastname': this.lastname,
+          'password': this.password,
+          'roles': 1
+        }
       }
       const headers = {
         'Content-Type': 'application/json'
       }
-      if (vm.email !== '' && vm.firstname !== '' && vm.lastname !== '' && vm.password !== '' && vm.retypePassword === vm.password) {
-        axios.post('/api/sign_in', data, {
+      if (this.email !== '' && this.firstname !== '' && this.lastname !== '' && this.password !== '' && this.retypePassword === this.password) {
+        axios.post('/api/sign_up', data, {
           headers: headers
         })
           .then((res) => {
             if (res && res.data && res.data.data) {
-              vm.$router.push({ name: 'SignUp' })
+              this.$router.push({ name: 'Login' })
             }
             else {
-              vm.result = "All fields have to be completed"
+              this.result = "pb"
             }
           })
       }
       else {
-        vm.error = true;
-        vm.result = "All fields have to be completed";
-        vm.showResult = true;
+        this.error = true;
+        this.result = "All fields have to be completed";
+        this.showResult = true;
       }
     },
     trigger () {
