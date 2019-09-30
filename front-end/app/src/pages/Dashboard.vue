@@ -10,9 +10,6 @@
           <p v-if="workstart">Start time: {{ this.clockstartnotify }}</p>
           <p v-if="workstop">End time: {{ this.clockstopnotify }}</p>
           <p v-if="timeWorked">Time worked (hh:mm:ss): {{ this.timeWorked }}</p>
-          <br>
-          <button type='button' class="btn btn-success" v-on:click='getCurrentClock()'>Display clocks</button>
-          <button type='button' class="btn btn-success" v-on:click='postWorkingTimes()'>POST workingTimes</button>
         </div>
       </div>
       <br>
@@ -89,7 +86,6 @@
                 return new Promise((resolve) => {
                     axios.get('/api/users/0')
                         .then((res) => {
-                                console.log(res)
                                 if (res && res.data && res.data && res.data.data) {
                                     this.json = res.data.data
                                     this.username = this.json.firstname + ' ' + this.json.lastname
@@ -97,7 +93,6 @@
                                     resolve(this.json);
                                 }
                                 else {
-                                    console.log('Il manque le cookie')
                                     this.$router.push({ name: 'Login' })
                                 }
                             }
@@ -118,32 +113,8 @@
                 };
                 axios.get('/api/workingtimes/' + this.user_id + '?start=' + bounds.start + '&end=' + bounds.end)
                     .then((res) => {
-                        console.log(res)
                         if (res && res.data && res.data && res.data.data) {
                             this.workingTimes = res.data.data;
-                            console.log(this.workingTimes);
-                            this.setBarData();
-                        }
-                    })
-            },
-            postWorkingTimes () {
-                const data = {
-                    "working_time": {
-                        "start": "2019-09-12 09:19:59",
-                        "end": "2019-09-12 09:35:40"
-                    }
-                }
-                const headers = {
-                    'Content-Type': 'application/json'
-                }
-                axios.post('/api/workingtimes/' + this.user_id, data, {
-                    headers: headers
-                })
-                    .then((res) => {
-                        console.log(res)
-                        if (res && res.data && res.data && res.data.data) {
-                            this.workingTimes = res.data.data;
-                            console.log(this.workingTimes);
                             this.setBarData();
                         }
                     })
@@ -157,9 +128,7 @@
                 const stopWorkingTime = ''
                 if (this.clockboolean === 0 && this.clockReload === false) {
                     this.workstart = true
-                    this.clockboolean = 1
-
-                    console.log(this.clockboolean)
+                    this.clockboolean = 1 
                     this.clockstart = moment().format()
                     this.clockstartnotify = moment(this.clockstart).format('MMMM Do YYYY, hh:mm:ss')
                 }
@@ -171,12 +140,6 @@
                     this.timeWorked = moment.utc(moment(this.clockstopnotify, 'MMMM Do YYYY, hh:mm:ss').diff(moment(this.clockstartnotify, 'MMMM Do YYYY, hh:mm:ss'))).format("HH:mm:ss")
                     this.startWorkingTime = this.clockstart.replace('T', ' ').split('+')[0]
                     this.stopWorkingTime = this.clockstop.replace('T', ' ').split('+')[0]
-                    console.log(this.clockstartnotify)
-                    console.log(this.clockstopnotify)
-                    console.log(this.momentConvertedStart)
-                    console.log(this.momentConvertedStop)
-                    console.log(this.startWorkingTime)
-                    console.log(this.stopWorkingTime)
                     const data = {
                         "working_time": {
                             "start": this.startWorkingTime,
@@ -190,30 +153,17 @@
                         headers: headers
                     })
                         .then((res) => {
-                            console.log(res)
                             if (res && res.data && res.data && res.data.data) {
                                 this.workingTimes = res.data.data;
-                                console.log(this.workingTimes);
                                 this.setBarData();
                             }
                         })
                 }
                 else {
-                    console.log(this.clockboolean)
                     this.clockstartnotify = ''
                     this.clockstopnotify = ''
                     this.clockReload = false
                 }
-            },
-            getCurrentClock () {
-                axios.get('/api/clocks/' + this.user_id)
-                    .then(response => {
-                        this.currentClock = response.data
-                        console.log(this.currentClock)
-                    })
-                    .catch(error => {
-                        console.log(error.message)
-                    })
             },
             setBarData: function () {
 

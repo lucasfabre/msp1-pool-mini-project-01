@@ -92,7 +92,6 @@ export default {
           headers: headers
         })
           .then((res) => {
-            console.log(res)
             if (res && res.data && res.data.status) {
               vm.$router.push({ name: 'Dashboard' })
             }
