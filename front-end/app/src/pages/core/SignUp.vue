@@ -1,5 +1,5 @@
 <template>
-  <v-app id="login" class="secondary">
+  <v-app id="signup" class="secondary">
     <v-content>
       <v-container fluid fill-height>
         <v-layout align-center justify-center>
@@ -12,9 +12,23 @@
                 </div>
                 <v-form>
                   <v-text-field
+                    name="firstname"
+                    label="Firstname"
+                    type="text"
+                    v-model="firstname"
+                    :error="error"
+                    :rules="[rules.required]"/>
+                  <v-text-field
+                    name="lastname"
+                    label="Lastname"
+                    type="text"
+                    v-model="lastname"
+                    :error="error"
+                    :rules="[rules.required]"/>
+                  <v-text-field
                     append-icon="person"
                     name="login"
-                    label="Login"
+                    label="E-mail address"
                     type="text"
                     v-model="email"
                     :error="error"
@@ -29,12 +43,21 @@
                     v-model="password"
                     :error="error"
                     @click:append="hidePassword = !hidePassword"/>
+                  <v-text-field
+                    :type="hidePassword ? 'retypePassword' : 'text'"
+                    :append-icon="hidePassword ? 'visibility_off' : 'visibility'"
+                    name="retypePassword"
+                    label="Retype your password"
+                    id="retypePassword"
+                    :rules="[rules.required]"
+                    v-model="retypePassword"
+                    :error="error"
+                    @click:append="hidePassword = !hidePassword"/>
                 </v-form>
               </v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn block color="primary" @click="signUp" :loading="loading">Create new account</v-btn>
-                <v-btn block color="primary" @click="login" :loading="loading">Login</v-btn>
+                <v-btn block color="primary" @click="signUp" :loading="loading">Create account</v-btn>
               </v-card-actions>
             </v-card>
           </v-flex>
@@ -57,8 +80,11 @@ export default {
   data() {
     return {
       loading: false,
+      firstname: '',
+      lastname: '',
       email: '',
       password: '',
+      retypePassword: '',
       hidePassword: true,
       error: false,
       showResult: false,
@@ -70,54 +96,47 @@ export default {
   },
 
   methods: {
-    login() {
-      const vm = this
+    signUp() {
       const data = {
-        'email': vm.email,
-        'password': vm.password
+        user: {
+          'email': this.email,
+          'firstname': this.firstname,
+          'lastname': this.lastname,
+          'password': this.password,
+          'roles': 1
+        }
       }
       const headers = {
         'Content-Type': 'application/json'
       }
-      if (!vm.email || !vm.password) {
-
-        vm.result = "Email and Password can't be null.";
-        vm.showResult = true;
-
-        return
-      }
-
-      if (vm.email !== '' && vm.password !== '') {
-        axios.post('/api/sign_in', data, {
+      if (this.email !== '' && this.firstname !== '' && this.lastname !== '' && this.password !== '' && this.retypePassword === this.password) {
+        axios.post('/api/sign_up', data, {
           headers: headers
         })
           .then((res) => {
-            if (res && res.data && res.data.status) {
-              vm.$router.push({ name: 'Dashboard' })
+            if (res && res.data && res.data.data) {
+              this.$router.push({ name: 'Login' })
             }
             else {
-              vm.result = "Email or Password is incorrect."
+              this.result = "pb"
             }
           })
       }
       else {
-        vm.error = true;
-        vm.result = "Email or Password is incorrect.";
-        vm.showResult = true;
+        this.error = true;
+        this.result = "All fields have to be completed";
+        this.showResult = true;
       }
     },
     trigger () {
     	this.$refs.sendReply.click()
-    },
-    signUp () {
-      this.$router.push({path: '/signup'})
     }
   }
 }
 </script>
 
 <style scoped lang="css">
-  #login {
+  #signup {
     height: 50%;
     width: 100%;
     position: absolute;

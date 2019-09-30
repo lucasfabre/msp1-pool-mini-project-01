@@ -9,6 +9,7 @@ import Chart from '../pages/Chart.vue';
 import Mailbox from '../pages/Mailbox.vue';
 import Calendar from '../pages/Calendar.vue';
 import Login from '../pages/core/Login.vue';
+import SignUp from '../pages/core/SignUp.vue';
 import Error from '../pages/core/Error.vue';
 
 
@@ -97,6 +98,14 @@ export default new Router({
       path: '/login',
       name: 'Login',
       component: Login,
+      meta: {
+        allowAnonymous: true
+      }
+    },
+    {
+      path: '/signup',
+      name: 'SignUp',
+      component: SignUp,
       meta: {
         allowAnonymous: true
       }
