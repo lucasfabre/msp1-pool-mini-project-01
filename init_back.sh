@@ -1,3 +1,3 @@
 #!/bin/bash
 
-cd back-end/ && ./launch.sh
+cd back-end/ && ./init.sh
