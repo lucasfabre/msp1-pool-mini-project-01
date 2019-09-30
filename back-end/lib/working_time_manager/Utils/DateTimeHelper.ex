@@ -2,7 +2,7 @@ defmodule WorkingTimeManager.Utils.DateTimeHelper do
     
     def format(dateTime) do
         str = NaiveDateTime.to_string(dateTime)
-        String.slice(str, 0..-2)
+        String.slice(str, 0..-1)
     end
 
     def parse(datestring) do
