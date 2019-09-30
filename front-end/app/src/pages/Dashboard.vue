@@ -76,7 +76,9 @@ export default {
       currentClock: null,
       workstart: false,
       workstop: false,
-      timeWorked: false
+      timeWorked: false,
+      clockReload: false,
+      mondayWorked: 7
     }
   },
   methods: {
@@ -99,36 +101,25 @@ export default {
     clock () {
       const clockstartnotify = ''
       const clockstopnotify = ''
-      if (this.user_id !== '') {
-        axios.post('/api/clocks/' + this.user_id)
-          .then((resp) => {
-            console.log(resp)
-            if (resp && resp.data && resp.data && resp.data.data) {
-              if (this.clockboolean === 0) {
-                this.workstart = true
-                this.clockboolean = 1
-                console.log(this.clockboolean)
-                this.clockstartnotify = moment().format('LLL')
-              }
-              else if (this.clockboolean === 1) {
-                this.workstop = true
-                this.clockboolean = 0
-                console.log(this.clockboolean)
-                this.clockstopnotify = moment().format('LLL')
-              }
-              else if (this.clockstartnotify !== '' && this.clockstopnotify !== '') {
-                this.timeWorked = moment.utc(moment(this.clockstartnotify,'LLL').diff(moment(this.clockstopnotify,'LLL'))).format("HH:mm")
-              }
-              else {
-                console.log(this.clockboolean)
-              }
-            }
-          }
-        )
+      if (this.clockboolean === 0 && this.clockReload === false) {
+        this.workstart = true
+        this.clockboolean = 1
+        
+        console.log(this.clockboolean)
+        this.clockstartnotify = moment().format('LLL')
+      }
+      else if (this.clockboolean === 1 && this.clockReload === false) {
+        this.workstop = true
+        this.clockboolean = 0
+        console.log(this.clockboolean)
+        this.clockstopnotify = moment().format('LLL')
+        this.timeWorked = moment.utc(moment(this.clockstopnotify,'LLL').diff(moment(this.clockstartnotify,'LLL'))).format("HH:mm")
       }
       else {
-        console.log('efg')
-        /*this.$router.push({ name: 'Login' })*/
+        console.log(this.clockboolean)
+        this.clockstartnotify = ''
+        this.clockstopnotify = ''
+        this.clockReload = false
       }
     },
     getCurrentClock () {
