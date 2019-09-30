@@ -129,7 +129,7 @@
     <v-menu offset-y origin="center center" :nudge-bottom="10" transition="scale-transition">
       <v-btn icon large flat slot="activator" :ripple="false">
         <v-avatar size="42px">
-          <img src=/static/user.png"/>
+          <img src="/static/user.png"/>
         </v-avatar>
       </v-btn>
       <v-list>

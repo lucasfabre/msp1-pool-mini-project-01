@@ -9,7 +9,7 @@
           <br><br>
           <p v-if="workstart">Start time: {{ this.clockstartnotify }}</p>
           <p v-if="workstop">End time: {{ this.clockstopnotify }}</p>
-          <p v-if="timeWorked">Time worked: {{ this.timeWorked }}</p>
+          <p v-if="timeWorked">Time worked (hh:mm:ss): {{ this.timeWorked }}</p>
           <br>
           <button type='button' class="btn btn-success" v-on:click='getCurrentClock()'>Display clocks</button>
           <button type='button' class="btn btn-success" v-on:click='postWorkingTimes()'>POST workingTimes</button>
@@ -19,7 +19,7 @@
       <h1>Workingtime</h1>
       <hr><br>
       <div class="workingtime">
-        <bar-chart 
+        <bar-chart
           id="bar"
           :data="barData"
           xkey="day"
@@ -47,187 +47,200 @@
 </template>
 
 <script>
-import { DonutChart } from 'vue-morris'
-import { BarChart } from 'vue-morris'
-import axios from 'axios'
-import moment from 'moment'
+    import { DonutChart } from 'vue-morris'
+    import { BarChart } from 'vue-morris'
+    import axios from 'axios'
+    import moment from 'moment'
 
-export default {
-  data() {
-    return {
-      donutData: [
-        { label: 'Hours worked', value: 300 },
-        { label: 'Overtime', value: 100 },
-        { label: 'Remaining hours', value: 50 },
-        { label: 'Hours of absence', value: 8 }
-      ],
-      barData: [
-        { "day": "Monday", "wor": 7, "ove": 1, "rem": 0, "abs": 0 },
-        { "day": "Tuesday","wor": 7, "ove": 0, "rem": 0, "abs": 0 },
-        { "day": "Wednesday", "wor": 6, "ove": 0, "rem": 0, "abs": 1 },
-        { "day": "Thursday", "wor": 7, "ove": 1, "rem": 0, "abs": 0 },
-        { "day": "Friday", "wor": 4, "ove": 0, "rem": 3, "abs": 0 }
-      ],
-      email: '',
-      data: {},
-      json: {},
-      username: '',
-      user_id: '',
-      clockboolean: 0,
-      currentClock: null,
-      workstart: false,
-      workstop: false,
-      timeWorked: false,
-      clockReload: false,
-      mondayWorked: 7
-    }
-  },
-  methods: {
-    getUserInformation () {
-      return new Promise((resolve) => {
-        axios.get('/api/users/0')
-          .then((res) => {
-            console.log(res)
-            if (res && res.data && res.data && res.data.data) {
-              this.json = res.data.data
-              this.username = this.json.firstname + ' ' + this.json.lastname
-              this.user_id = this.json.id
-              resolve(this.json);
+    export default {
+        data() {
+            return {
+                donutData: [
+                    { label: 'Hours worked', value: 300 },
+                    { label: 'Overtime', value: 100 },
+                    { label: 'Remaining hours', value: 50 },
+                    { label: 'Hours of absence', value: 8 }
+                ],
+                barData: [
+                    { "day": "Monday", "wor": 7, "ove": 1, "rem": 0, "abs": 0 },
+                    { "day": "Tuesday","wor": 7, "ove": 0, "rem": 0, "abs": 0 },
+                    { "day": "Wednesday", "wor": 6, "ove": 0, "rem": 0, "abs": 1 },
+                    { "day": "Thursday", "wor": 7, "ove": 1, "rem": 0, "abs": 0 },
+                    { "day": "Friday", "wor": 4, "ove": 0, "rem": 3, "abs": 0 }
+                ],
+                email: '',
+                data: {},
+                json: {},
+                username: '',
+                user_id: '',
+                clockboolean: 0,
+                currentClock: null,
+                workstart: false,
+                workstop: false,
+                timeWorked: false,
+                clockReload: false,
+                mondayWorked: 7,
+                momentConvertedStart: '',
+                momentConvertedStop: ''
             }
-            else {
-              console.log('Il manque le cookie')
-              this.$router.push({ name: 'Login' })
-            }
-          }
-        )
-        .catch((err) => {
-            this.$router.push({ name: 'Login' })
-        });
-      });
-    },
-    getWorkingTimes () {
-        const start = new Date();
-        start.setDate(start.getDate() - 20);
-        const end = new Date();
-        end.setDate(end.getDate() + 1);
-        const bounds = {
-            start: start.toISOString().replace('T', ' ').split('.')[0],
-            end: end.toISOString().replace('T', ' ').split('.')[0]
-        };
-      axios.get('/api/workingtimes/' + this.user_id + '?start=' + bounds.start + '&end=' + bounds.end)
-        .then((res) => {
-          console.log(res)
-            if (res && res.data && res.data && res.data.data) {
-              this.workingTimes = res.data.data;
-              console.log(this.workingTimes);
-              this.setBarData();
-           }
-        })
-    },
-    postWorkingTimes () {
-      const data = {
-        "working_time": {
-          "start": "2019-09-12 09:19:59",
-          "end": "2019-09-12 09:35:40"
-        }
-      }
-      const headers = {
-        'Content-Type': 'application/json'
-      }
-      axios.post('/api/workingtimes/' + this.user_id, data, {
-        headers: headers
-      })
-        .then((res) => {
-          console.log(res)
-          if (res && res.data && res.data && res.data.data) {
-            this.workingTimes = res.data.data;
-            console.log(this.workingTimes);
-            this.setBarData();
-          }
-        })
-    },
-    clock () {
-      const clockstartnotify = ''
-      const clockstopnotify = ''
-      if (this.clockboolean === 0 && this.clockReload === false) {
-        this.workstart = true
-        this.clockboolean = 1
-        
-        console.log(this.clockboolean)
-        this.clockstartnotify = moment().format('LLL')
-      }
-      else if (this.clockboolean === 1 && this.clockReload === false) {
-        this.workstop = true
-        this.clockboolean = 0
-        console.log(this.clockboolean)
-        this.clockstopnotify = moment().format('LLL')
-        this.timeWorked = moment.utc(moment(this.clockstopnotify,'LLL').diff(moment(this.clockstartnotify,'LLL'))).format("HH:mm")
-        console.log(this.clockstartnotify)
-        console.log(this.clockstopnotify)
-        const data = {
-          "working_time": {
-            "start": this.clockstartnotify,
-            "end": this.clockstopnotify
-          }
-        }
-        const headers = {
-          'Content-Type': 'application/json'
-        }
-        axios.post('/api/workingtimes/' + this.user_id, data, {
-          headers: headers
-        })
-          .then((res) => {
-            console.log(res)
-            if (res && res.data && res.data && res.data.data) {
-              this.workingTimes = res.data.data;
-              console.log(this.workingTimes);
-              this.setBarData();
-            }
-          })
-        }
-      else {
-        console.log(this.clockboolean)
-        this.clockstartnotify = ''
-        this.clockstopnotify = ''
-        this.clockReload = false
-      }
-    },
-    getCurrentClock () {
-      axios.get('/api/clocks/' + this.user_id)
-        .then(response => {
-          this.currentClock = response.data
-          console.log(this.currentClock)
-        })
-        .catch(error => {
-          console.log(error.message)
-        })
-    },
-    setBarData: function () {
+        },
+        methods: {
+            getUserInformation () {
+                return new Promise((resolve) => {
+                    axios.get('http://localhost/api/users/0')
+                        .then((res) => {
+                                console.log(res)
+                                if (res && res.data && res.data && res.data.data) {
+                                    this.json = res.data.data
+                                    this.username = this.json.firstname + ' ' + this.json.lastname
+                                    this.user_id = this.json.id
+                                    resolve(this.json);
+                                }
+                                else {
+                                    console.log('Il manque le cookie')
+                                    this.$router.push({ name: 'Login' })
+                                }
+                            }
+                        )
+                        .catch((err) => {
+                            this.$router.push({ name: 'Login' })
+                        });
+                });
+            },
+            getWorkingTimes () {
+                const start = new Date();
+                start.setDate(start.getDate() - 20);
+                const end = new Date();
+                end.setDate(end.getDate() + 1);
+                const bounds = {
+                    start: start.toISOString().replace('T', ' ').split('.')[0],
+                    end: end.toISOString().replace('T', ' ').split('.')[0]
+                };
+                axios.get('http://localhost/api/workingtimes/' + this.user_id + '?start=' + bounds.start + '&end=' + bounds.end)
+                    .then((res) => {
+                        console.log(res)
+                        if (res && res.data && res.data && res.data.data) {
+                            this.workingTimes = res.data.data;
+                            console.log(this.workingTimes);
+                            this.setBarData();
+                        }
+                    })
+            },
+            postWorkingTimes () {
+                const data = {
+                    "working_time": {
+                        "start": "2019-09-12 09:19:59",
+                        "end": "2019-09-12 09:35:40"
+                    }
+                }
+                const headers = {
+                    'Content-Type': 'application/json'
+                }
+                axios.post('http://localhost/api/workingtimes/' + this.user_id, data, {
+                    headers: headers
+                })
+                    .then((res) => {
+                        console.log(res)
+                        if (res && res.data && res.data && res.data.data) {
+                            this.workingTimes = res.data.data;
+                            console.log(this.workingTimes);
+                            this.setBarData();
+                        }
+                    })
+            },
+            clock () {
+                const clockstop = ''
+                const clockstart = ''
+                const clockstartnotify = ''
+                const clockstopnotify = ''
+                const startWorkingTime = ''
+                const stopWorkingTime = ''
+                if (this.clockboolean === 0 && this.clockReload === false) {
+                    this.workstart = true
+                    this.clockboolean = 1
 
+                    console.log(this.clockboolean)
+                    this.clockstart = moment().format()
+                    this.clockstartnotify = moment(this.clockstart).format('MMMM Do YYYY, hh:mm:ss')
+                }
+                else if (this.clockboolean === 1 && this.clockReload === false) {
+                    this.workstop = true
+                    this.clockboolean = 0
+                    this.clockstop = moment().format()
+                    this.clockstopnotify = moment(this.clockstop).format('MMMM Do YYYY, hh:mm:ss')
+                    this.timeWorked = moment.utc(moment(this.clockstopnotify, 'MMMM Do YYYY, hh:mm:ss').diff(moment(this.clockstartnotify, 'MMMM Do YYYY, hh:mm:ss'))).format("HH:mm:ss")
+                    this.startWorkingTime = this.clockstart.replace('T', ' ').split('+')[0]
+                    this.stopWorkingTime = this.clockstop.replace('T', ' ').split('+')[0]
+                    console.log(this.clockstartnotify)
+                    console.log(this.clockstopnotify)
+                    console.log(this.momentConvertedStart)
+                    console.log(this.momentConvertedStop)
+                    console.log(this.startWorkingTime)
+                    console.log(this.stopWorkingTime)
+                    const data = {
+                        "working_time": {
+                            "start": this.startWorkingTime,
+                            "end": this.stopWorkingTime
+                        }
+                    }
+                    const headers = {
+                        'Content-Type': 'application/json'
+                    }
+                    axios.post('http://localhost/api/workingtimes/' + this.user_id, data, {
+                        headers: headers
+                    })
+                        .then((res) => {
+                            console.log(res)
+                            if (res && res.data && res.data && res.data.data) {
+                                this.workingTimes = res.data.data;
+                                console.log(this.workingTimes);
+                                this.setBarData();
+                            }
+                        })
+                }
+                else {
+                    console.log(this.clockboolean)
+                    this.clockstartnotify = ''
+                    this.clockstopnotify = ''
+                    this.clockReload = false
+                }
+            },
+            getCurrentClock () {
+                axios.get('http://localhost/api/clocks/' + this.user_id)
+                    .then(response => {
+                        this.currentClock = response.data
+                        console.log(this.currentClock)
+                    })
+                    .catch(error => {
+                        console.log(error.message)
+                    })
+            },
+            setBarData: function () {
+
+            }
+        },
+        created () {
+            this.getUserInformation()
+                .then(() => {
+                    this.getWorkingTimes()
+                })
+        },
+        components: {
+            'donut-chart': DonutChart, BarChart
+        }
     }
-  },
-  created () {
-    this.getUserInformation()
-      .then(() => {
-         this.getWorkingTimes()   
-      })
-  },
-  components: {
-    'donut-chart': DonutChart, BarChart
-  }
-}
 </script>
 
 <style>
-.workingtime {
-  display: flex;
-  margin: 0 auto;
-  width: 80%;
-}
-#bar {
-  width: 800px;
-}
-#timestamp {
-  margin: auto
-}
+  .workingtime {
+    display: flex;
+    margin: 0 auto;
+    width: 80%;
+  }
+  #bar {
+    width: 800px;
+  }
+  #timestamp {
+    margin: auto
+  }
 </style>
