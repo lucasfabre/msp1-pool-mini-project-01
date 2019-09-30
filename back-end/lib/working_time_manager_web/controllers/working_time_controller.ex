@@ -35,7 +35,6 @@ defmodule WorkingTimeManagerWeb.WorkingTimeController do
       :end => enddate
     }
     with {:ok, _} <- ControllerHelper.hasRightsToEditUser(conn, userid) do
-      if Regex.match?(~r/(\d{4})-(\d{2})-(\d{2})\s(\d{2}):(\d{2}):(\d{2})$/, enddate) == false || Regex.match?(~r/(\d{4})-(\d{2})-(\d{2})\s(\d{2}):(\d{2}):(\d{2})$/, startdate) == false do
         with {:ok, %WorkingTime{} = working_time} <- Resource.create_working_time(working_time_params) do
           conn
           |> put_status(:created)
@@ -43,7 +42,6 @@ defmodule WorkingTimeManagerWeb.WorkingTimeController do
         else
           {:error, _message} -> send_resp(conn, :bad_request, "Bad request, cannot create workingtime")
         end
-      end
     else
       {:error, message} -> conn |> send_resp(:unauthorized, message)
     end
