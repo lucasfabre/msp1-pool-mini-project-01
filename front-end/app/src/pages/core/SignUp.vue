@@ -1,80 +1,145 @@
 <template>
-  <div>
-    <div id='title'>
-      <h1>Welcome to TimeManager</h1>
-    </div>
-    <div id='block'>
-      <h1 id='title'>Sign up</h1>
-      <br>
-      <p><label for="firstname">First name</label><input type='text' class='rectangle' name='firstname' v-model='input.signup.firstname' placeholder='Antoine'/></p>
-      <p><label for="lastname">Last name</label><input type='text' class='rectangle' name='lastname' v-model='input.signup.lastname' placeholder='Dupont'/></p>
-      <p><label for="email">E-mail address</label><input type='email' class='rectangle' name='email' v-model='input.signup.email' placeholder='exemple@domain.com'/></p>
-      <p><label for="pasword">Password</label><input type='password' class='rectangle' name='password' v-model='input.signup.password' placeholder='Password'/></p>
-      <p><label for="retypepassword">Retype password</label><input type='password' class='rectangle' name='retypepassword' v-model='input.signup.retypepassword' placeholder='Retype password'/></p>
-      <div id='buttonblock'>
-        <button type='button' class='button' v-on:click='signUp()'>Create account</button>
-      </div>
-      <br><br>
-    </div>
-  </div>
+  <v-app id="signup" class="secondary">
+    <v-content>
+      <v-container fluid fill-height>
+        <v-layout align-center justify-center>
+          <v-flex xs12 sm8 md4 lg4>
+            <v-card class="elevation-1 pa-3">
+              <v-card-text>
+                <div class="layout column align-center">
+                  <img src="static/favicon.png" alt="Time Manager Login Portal" width="180" height="180">
+                  <h1 class="flex my-4 primary--text">Time Manager</h1>
+                </div>
+                <v-form>
+                  <v-text-field
+                    name="firstname"
+                    label="Firstname"
+                    type="text"
+                    :error="error"
+                    :rules="[rules.required]"/>
+                  <v-text-field
+                    name="lasttname"
+                    label="Lastname"
+                    type="text"
+                    :error="error"
+                    :rules="[rules.required]"/>
+                  <v-text-field
+                    append-icon="person"
+                    name="login"
+                    label="Login"
+                    type="text"
+                    v-model="email"
+                    :error="error"
+                    :rules="[rules.required]"/>
+                  <v-text-field
+                    :type="hidePassword ? 'password' : 'text'"
+                    :append-icon="hidePassword ? 'visibility_off' : 'visibility'"
+                    name="password"
+                    label="Password"
+                    id="password"
+                    :rules="[rules.required]"
+                    v-model="password"
+                    :error="error"
+                    @click:append="hidePassword = !hidePassword"/>
+                  <v-text-field
+                    :type="hidePassword ? 'password' : 'text'"
+                    :append-icon="hidePassword ? 'visibility_off' : 'visibility'"
+                    name="retypePassword"
+                    label="Retype your password"
+                    id="retypePassword"
+                    :rules="[rules.required]"
+                    v-model="retypePassword"
+                    :error="error"
+                    @click:append="hidePassword = !hidePassword"/>
+                </v-form>
+              </v-card-text>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn block color="primary" @click="signUp" :loading="loading">Create account</v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-flex>
+        </v-layout>
+      </v-container>
+      <v-snackbar
+        v-model="showResult"
+        :timeout="2000"
+        top>
+        {{ result }}
+      </v-snackbar>
+    </v-content>
+  </v-app>
 </template>
 
 <script>
 import axios from 'axios'
-/* eslint-disable */
+
 export default {
-  name: 'Signup',
-  data () {
+  data() {
     return {
-      input: {
-        signup: {
-          firstname: '',
-          lastname: '',
-          email: '',
-          password: ''
-        }
+      loading: false,
+      firstname: '',
+      lastname: '',
+      email: '',
+      password: '',
+      retypePassword: '',
+      hidePassword: true,
+      error: false,
+      showResult: false,
+      result: '',
+      rules: {
+        required: value => !!value || 'Required.'
       }
     }
   },
+
   methods: {
-    signUp () {
+    signUp() {
+      const vm = this
       const data = {
-        user: {
-          'email': this.input.signup.email,
-          'firstname': this.input.signup.firstname,
-          'lastname': this.input.signup.lastname,
-          'password': this.input.signup.password,
-          'roles': 1
-        }
+        'email': vm.email,
+        'firstname': vm.firstname,
+        'lastname': vm.lastname,
+        'password': vm.password,
+        'roles': 1
       }
       const headers = {
         'Content-Type': 'application/json'
       }
-      if (this.input.signup.email !== '' && this.input.signup.firstname !== '' && this.input.signup.lastname !== '' && this.input.signup.password !== '' && this.input.signup.retypepassword === this.input.signup.password) {
-        axios.post('/api/sign_up', data, {
+      if (vm.email !== '' && vm.firstname !== '' && vm.lastname !== '' && vm.password !== '' && vm.retypePassword === vm.password) {
+        axios.post('/api/sign_in', data, {
           headers: headers
         })
           .then((res) => {
-            console.log(res)
             if (res && res.data && res.data.data) {
-              console.log('sign up succeed')
-              this.$router.push({path: '/sign_in'})
+              vm.$router.push({ name: 'SignUp' })
             }
             else {
-              console.log('sign up failed')
+              vm.result = "All fields have to be completed"
             }
-          })
-          .catch((err) => {
-            console.error(err)
           })
       }
       else {
-        console.log('An e-mail address and password must be present')
+        vm.error = true;
+        vm.result = "All fields have to be completed";
+        vm.showResult = true;
       }
+    },
+    trigger () {
+    	this.$refs.sendReply.click()
     }
   }
 }
 </script>
 
-<style scoped>
+<style scoped lang="css">
+  #signup {
+    height: 50%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    content: "";
+    z-index: 0;
+  }
 </style>

@@ -33,6 +33,7 @@
               </v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
+                <v-btn block color="primary" @click="signUp" :loading="loading">Create new account</v-btn>
                 <v-btn block color="primary" @click="login" :loading="loading">Login</v-btn>
               </v-card-actions>
             </v-card>
@@ -109,7 +110,7 @@ export default {
     	this.$refs.sendReply.click()
     },
     signUp () {
-      this.$router.push({path: '/sign_up'})
+      this.$router.push({path: '/signup'})
     }
   }
 }

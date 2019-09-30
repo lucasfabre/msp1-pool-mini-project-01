@@ -103,7 +103,7 @@ export default new Router({
       }
     },
     {
-      path: '/sign_up',
+      path: '/signup',
       name: 'SignUp',
       component: SignUp,
       meta: {
