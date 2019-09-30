@@ -87,7 +87,7 @@
         methods: {
             getUserInformation () {
                 return new Promise((resolve) => {
-                    axios.get('http://localhost/api/users/0')
+                    axios.get('/api/users/0')
                         .then((res) => {
                                 console.log(res)
                                 if (res && res.data && res.data && res.data.data) {
@@ -116,7 +116,7 @@
                     start: start.toISOString().replace('T', ' ').split('.')[0],
                     end: end.toISOString().replace('T', ' ').split('.')[0]
                 };
-                axios.get('http://localhost/api/workingtimes/' + this.user_id + '?start=' + bounds.start + '&end=' + bounds.end)
+                axios.get('/api/workingtimes/' + this.user_id + '?start=' + bounds.start + '&end=' + bounds.end)
                     .then((res) => {
                         console.log(res)
                         if (res && res.data && res.data && res.data.data) {
@@ -136,7 +136,7 @@
                 const headers = {
                     'Content-Type': 'application/json'
                 }
-                axios.post('http://localhost/api/workingtimes/' + this.user_id, data, {
+                axios.post('/api/workingtimes/' + this.user_id, data, {
                     headers: headers
                 })
                     .then((res) => {
@@ -186,7 +186,7 @@
                     const headers = {
                         'Content-Type': 'application/json'
                     }
-                    axios.post('http://localhost/api/workingtimes/' + this.user_id, data, {
+                    axios.post('/api/workingtimes/' + this.user_id, data, {
                         headers: headers
                     })
                         .then((res) => {
@@ -206,7 +206,7 @@
                 }
             },
             getCurrentClock () {
-                axios.get('http://localhost/api/clocks/' + this.user_id)
+                axios.get('/api/clocks/' + this.user_id)
                     .then(response => {
                         this.currentClock = response.data
                         console.log(this.currentClock)
