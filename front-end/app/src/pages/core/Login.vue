@@ -87,7 +87,7 @@ export default {
       }
 
       if (vm.email !== '' && vm.password !== '') {
-        axios.post('http://ec2-13-59-172-229.us-east-2.compute.amazonaws.com/api/sign_in', data, {
+        axios.post('/api/sign_in', data, {
           headers: headers
         })
           .then((res) => {
@@ -104,9 +104,6 @@ export default {
         vm.result = "Email or Password is incorrect.";
         vm.showResult = true;
       }
-    },
-    enterClicked(){
-      this.login()
     },
     trigger () {
     	this.$refs.sendReply.click()

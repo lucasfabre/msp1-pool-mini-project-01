@@ -6,7 +6,12 @@
         <hr>
         <div id="timestamp">
           <button type='button' class="btn btn-success" v-on:click='clock()'>Clock !</button>
-          <h4 v-if="this.clocknotify"> - {{ this.clocknotify }}</h4>
+          <br><br>
+          <p v-if="workstart">Start time: {{ this.clockstartnotify }}</p>
+          <p v-if="workstop">End time: {{ this.clockstopnotify }}</p>
+          <p v-if="timeWorked">Time worked: {{ this.timeWorked }}</p>
+          <br>
+          <button type='button' class="btn btn-success" v-on:click='getCurrentClock()'>Display clocks</button>
         </div>
       </div>
       <br>
@@ -67,13 +72,20 @@ export default {
       json: {},
       username: '',
       user_id: '',
-      clocknotify: ''
+      clockboolean: 0,
+      currentClock: null,
+      workstart: false,
+      workstop: false,
+      timeWorked: false,
+      clockReload: false,
+      mondayWorked: 7
     }
   },
   methods: {
-    getuserinformation () {
-      axios.get('http://ec2-13-59-172-229.us-east-2.compute.amazonaws.com/api/users/0')
+    getUserInformation () {
+      axios.get('/api/users/0')
         .then((res) => {
+          console.log(res)
           if (res && res.data && res.data && res.data.data) {
             this.json = res.data.data
             this.username = this.json.firstname + ' ' + this.json.lastname
@@ -81,24 +93,54 @@ export default {
           }
           else {
             console.log('Il manque le cookie')
-            /*this.$router.push({ name: 'Login' })*/
+            this.$router.push({ name: 'Login' })
           }
-        })
+        }
+      )
     },
     clock () {
-      this.user_id = '4'
-      if (this.user_id !== '') {
-        this.clocknotify = moment().format('LLL')
-        axios.post('http://ec2-13-59-172-229.us-east-2.compute.amazonaws.com/api/clocks/' + this.user_id)
+      const clockstartnotify = ''
+      const clockstopnotify = ''
+      if (this.clockboolean === 0 && this.clockReload === false) {
+        this.workstart = true
+        this.clockboolean = 1
+        
+        console.log(this.clockboolean)
+        this.clockstartnotify = moment().format('LLL')
+      }
+      else if (this.clockboolean === 1 && this.clockReload === false) {
+        this.workstop = true
+        this.clockboolean = 0
+        console.log(this.clockboolean)
+        this.clockstopnotify = moment().format('LLL')
+        this.timeWorked = moment.utc(moment(this.clockstopnotify,'LLL').diff(moment(this.clockstartnotify,'LLL'))).format("HH:mm")
       }
       else {
-        console.log('efg')
-        /*this.$router.push({ name: 'Login' })*/
+        console.log(this.clockboolean)
+        this.clockstartnotify = ''
+        this.clockstopnotify = ''
+        this.clockReload = false
       }
-    }
+    },
+    getCurrentClock () {
+      axios.get('/api/clocks/' + this.user_id)
+        .then(response => {
+          this.currentClock = response.data
+          console.log(this.currentClock)
+        })
+        .catch(error => {
+          console.log(error.message)
+        })
+    },
+    render (start) {
+      return createElement('p', 'Started at' + this.datetime)
+    },
+    render (stop) {
+      return createElement('p', 'Stopped at' + this.datetime)
+    },
   },
-  mounted () {
-    this.getuserinformation()
+  created () {
+    this.getUserInformation()
   },
   components: {
     'donut-chart': DonutChart, BarChart
@@ -116,7 +158,6 @@ export default {
   width: 800px;
 }
 #timestamp {
-  display: flex;
-  flex-basis: 30%;
+  margin: auto
 }
 </style>
