@@ -101,6 +101,25 @@ export default {
           this.$router.push({ name: 'Login' })
       })
     },
+    getWorkingTimes () {
+        const start = new Date();
+        start.setDate(start.getDate() - 20);
+        const end = new Date();
+        end.setDate(end.getDate() + 1);
+        const bounds = {
+            start: start.toISOString().replace('T', ' ').split('.')[0],
+            end: end.toISOString().replace('T', ' ').split('.')[0]
+        };
+      axios.get('/api/workingtimes/' + this.user_id + '?start=' + bounds.start + '&end=' + bounds.end)
+        .then((res) => {
+          console.log(res)
+            if (res && res.data && res.data && res.data.data) {
+              this.workingTimes = res.data.data;
+              console.log(this.workingTimes);
+              this.setBarData();
+           }
+        })
+    },
     clock () {
       const clockstartnotify = ''
       const clockstopnotify = ''
@@ -135,15 +154,15 @@ export default {
           console.log(error.message)
         })
     },
-    render (start) {
-      return createElement('p', 'Started at' + this.datetime)
-    },
-    render (stop) {
-      return createElement('p', 'Stopped at' + this.datetime)
-    },
+    setBarData: function () {
+      
+    }
   },
   created () {
     this.getUserInformation()
+      .then(() => {
+         this.getWorkingTimes()   
+      })
   },
   components: {
     'donut-chart': DonutChart, BarChart
