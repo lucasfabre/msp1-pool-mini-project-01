@@ -4,10 +4,10 @@
     fixed app>
     <v-toolbar flat dark :color="$root.themeColor" class="toolbar">
       <router-link :to="{ name: 'Dashboard' }">
-        <img src="static/logo.png" width="36px"></img>
+        <img src="static/favicon.png" width="36px">
       </router-link>
       <router-link :to="{ name: 'Dashboard' }" class="text">
-         Vue Admin Template
+        Time Manager
       </router-link>
     </v-toolbar>
     <v-list>
@@ -25,50 +25,12 @@
         <v-list-tile-title :class="[{'active': selectedIndex === 2}, 'item-title' ]">Calendar</v-list-tile-title>
       </v-list-tile>
 
-      <v-list-tile @click="changeRoute('Mailbox', 3)">
+      <v-list-tile @click="changeRoute('Snackbar', 7)">
         <v-list-tile-action>
-          <v-icon>inbox</v-icon>
+          <v-icon>event_note</v-icon>
         </v-list-tile-action>
-        <v-list-tile-title :class="[{'active': selectedIndex === 3}, 'item-title' ]">Mailbox</v-list-tile-title>
+        <v-list-tile-title :class="[{'active': selectedIndex === 7}, 'item-title' ]">Snackbar</v-list-tile-title>
       </v-list-tile>
-
-      <v-list-group
-        prepend-icon="pageview">
-        <v-list-tile slot="activator">
-          <v-list-tile-title class="item-title">Widgets</v-list-tile-title>
-        </v-list-tile>
-        <v-list-tile @click="changeRoute('Social', 4)">
-          <v-list-tile-action>
-            <v-icon>group</v-icon>
-          </v-list-tile-action>
-          <v-list-tile-title :class="[{'active': selectedIndex === 4}, 'item-title' ]">Social</v-list-tile-title>
-        </v-list-tile>
-        <v-list-tile @click="changeRoute('Chart', 5)">
-          <v-list-tile-action>
-            <v-icon>bar_chart</v-icon>
-          </v-list-tile-action>
-          <v-list-tile-title :class="[{'active': selectedIndex === 5}, 'item-title' ]">Charts</v-list-tile-title>
-        </v-list-tile>
-        <v-list-tile @click="changeRoute('Media', 6)">
-          <v-list-tile-action>
-            <v-icon>perm_media</v-icon>
-          </v-list-tile-action>
-          <v-list-tile-title :class="[{'active': selectedIndex === 6}, 'item-title' ]">Media</v-list-tile-title>
-        </v-list-tile>
-    </v-list-group>
-
-      <v-list-group
-        prepend-icon="select_all">
-        <v-list-tile slot="activator">
-          <v-list-tile-title class="item-title">Overlays</v-list-tile-title>
-        </v-list-tile>
-        <v-list-tile @click="changeRoute('Snackbar', 7)">
-          <v-list-tile-action>
-            <v-icon>event_note</v-icon>
-          </v-list-tile-action>
-          <v-list-tile-title :class="[{'active': selectedIndex === 7}, 'item-title' ]">Snackbar</v-list-tile-title>
-        </v-list-tile>
-    </v-list-group>
 
       <v-list-group
         prepend-icon="fingerprint">

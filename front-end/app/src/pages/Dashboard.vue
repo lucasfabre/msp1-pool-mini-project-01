@@ -12,6 +12,7 @@
           <p v-if="timeWorked">Time worked: {{ this.timeWorked }}</p>
           <br>
           <button type='button' class="btn btn-success" v-on:click='getCurrentClock()'>Display clocks</button>
+          <button type='button' class="btn btn-success" v-on:click='postWorkingTimes()'>POST workingTimes</button>
         </div>
       </div>
       <br>
@@ -123,6 +124,28 @@ export default {
            }
         })
     },
+    postWorkingTimes () {
+      const data = {
+        "working_time": {
+          "start": "2019-09-12 09:19:59",
+          "end": "2019-09-12 09:35:40"
+        }
+      }
+      const headers = {
+        'Content-Type': 'application/json'
+      }
+      axios.post('/api/workingtimes/' + this.user_id, data, {
+        headers: headers
+      })
+        .then((res) => {
+          console.log(res)
+          if (res && res.data && res.data && res.data.data) {
+            this.workingTimes = res.data.data;
+            console.log(this.workingTimes);
+            this.setBarData();
+          }
+        })
+    },
     clock () {
       const clockstartnotify = ''
       const clockstopnotify = ''
@@ -139,7 +162,29 @@ export default {
         console.log(this.clockboolean)
         this.clockstopnotify = moment().format('LLL')
         this.timeWorked = moment.utc(moment(this.clockstopnotify,'LLL').diff(moment(this.clockstartnotify,'LLL'))).format("HH:mm")
-      }
+        console.log(this.clockstartnotify)
+        console.log(this.clockstopnotify)
+        const data = {
+          "working_time": {
+            "start": this.clockstartnotify,
+            "end": this.clockstopnotify
+          }
+        }
+        const headers = {
+          'Content-Type': 'application/json'
+        }
+        axios.post('/api/workingtimes/' + this.user_id, data, {
+          headers: headers
+        })
+          .then((res) => {
+            console.log(res)
+            if (res && res.data && res.data && res.data.data) {
+              this.workingTimes = res.data.data;
+              console.log(this.workingTimes);
+              this.setBarData();
+            }
+          })
+        }
       else {
         console.log(this.clockboolean)
         this.clockstartnotify = ''
