@@ -83,23 +83,26 @@ export default {
   },
   methods: {
     getUserInformation () {
-      axios.get('/api/users/0')
-        .then((res) => {
-          console.log(res)
-          if (res && res.data && res.data && res.data.data) {
-            this.json = res.data.data
-            this.username = this.json.firstname + ' ' + this.json.lastname
-            this.user_id = this.json.id
+      return new Promise((resolve) => {
+        axios.get('/api/users/0')
+          .then((res) => {
+            console.log(res)
+            if (res && res.data && res.data && res.data.data) {
+              this.json = res.data.data
+              this.username = this.json.firstname + ' ' + this.json.lastname
+              this.user_id = this.json.id
+              resolve(this.json);
+            }
+            else {
+              console.log('Il manque le cookie')
+              this.$router.push({ name: 'Login' })
+            }
           }
-          else {
-            console.log('Il manque le cookie')
+        )
+        .catch((err) => {
             this.$router.push({ name: 'Login' })
-          }
-        }
-      )
-      .catch((err) => {
-          this.$router.push({ name: 'Login' })
-      })
+        });
+      });
     },
     getWorkingTimes () {
         const start = new Date();
@@ -155,7 +158,7 @@ export default {
         })
     },
     setBarData: function () {
-      
+
     }
   },
   created () {
