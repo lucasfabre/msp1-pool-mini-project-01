@@ -7,7 +7,7 @@ COPY ./app/package.json .
 RUN apt-get update && apt-get upgrade -y                        && \
     apt-get install -y apt-utils git openssh-client python2.7
 
-RUN npm install                                                 &&\
+RUN npm install && npm audit fix                                && \
     npm install -g node-gyp 
 
 COPY ./app .

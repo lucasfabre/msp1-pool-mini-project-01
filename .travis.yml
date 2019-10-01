@@ -1,6 +1,30 @@
 services: 
   - docker
 
+install:
+  - sudo apt-get install -y jq
+
+jobs:
+  include:
+    - stage: "Test environment var"
+      name: "Test environment var"
+      script: ls; cat unit-test/id_user
+    - stage: "Build Docker"
+      name: "Build Docker"
+      script: docker-compose build && docker-compose up -d
+      after_script:
+        - docker-compose ps
+    - stage: "Tests users"
+      name: "get users"
+      script:
+        - ./unit-test/create_user.sh && cp id_user unit-test/ && cat unit-test/id_user && cat dumps.txt;
+        - ./unit-test/get_user.sh && cat dumps.txt;
+        - ./unit-test/get_user_by_id.sh && cat dumps.txt;
+        - ./unit-test/update_user.sh && cat dumps.txt;
+        - ./unit-test/create_clock.sh && cat dumps.txt;
+        - ./unit-test/get_clock.sh && cat dumps.txt;
+        - ./unit-test/delete_user.sh && cat dumps.txt;
+
 addons:
   apt:
     update: true
@@ -14,7 +38,13 @@ before_install:
   - sudo apt-get install -y nodejs npm
 
 after_script:
-  - docker-compose ps
+    - cat dumps.txt
+    - rm dumps.txt
+
+stages:
+    - Tests users
+    - Test environment var
+    - Build Docker
 
 notifications:
   webhooks: https://outlook.office.com/webhook/fda60e47-d851-46da-9879-4a6c58bbfc04@901cb4ca-b862-4029-9306-e5cd0f6d9f86/TravisCI/7ca4246150114f65a5b731008b9d8bc6/c755656a-9f25-4fa1-8c17-f1c880043093
